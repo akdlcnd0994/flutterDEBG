@@ -15,7 +15,6 @@ class Navigation extends StatefulWidget {
 
 class _NavigationState extends State<Navigation> {
   int currentPageIndex = 0;
-
   get navigationelements => null;
 
   @override
