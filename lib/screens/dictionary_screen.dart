@@ -1,8 +1,7 @@
 // 질환백과 페이지
 
 import 'package:flutter/material.dart';
-
-import '../http/connect.dart';
+import '../http/dictionaryInfo.dart';
 
 Container DicionaryScreen() {
   return Container(
@@ -62,7 +61,7 @@ Container DicionaryScreen() {
                           // 질환백과 사이드 메뉴바
                           IconButton(
                             onPressed: () async {
-                              await Session()
+                              await DictionaryInfo()
                                   .sendDataToJSP('고환암'); //선택된 병명 변수를 넣으면됨
                             },
                             icon: const Icon(
