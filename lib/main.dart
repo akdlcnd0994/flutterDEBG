@@ -8,6 +8,7 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsFlutterBinding.ensureInitialized();
     return MaterialApp(
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),
