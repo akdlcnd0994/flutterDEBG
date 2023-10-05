@@ -15,7 +15,7 @@ class MainDrawer extends StatelessWidget {
             ),
             title: const Text('Home'),
             onTap: () {
-              print('Home is clicked');
+              Navigator.pushNamed(context, '');
             },
             trailing: const Icon(Icons.add),
           ),
