@@ -48,15 +48,32 @@ class MyChatUIState extends State<QNAScreen> {
             backgroundImage: NetworkImage(url),
           ),
           title: const Text(
-            'Q & A',
+            'Q&A',
             style: TextStyle(
                 fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 20),
-            child: Icon(Icons.videocam_rounded),
+            padding: const EdgeInsets.only(right: 20),
+            child: IconButton(
+              icon: const Icon(Icons.question_mark_rounded),
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext con) {
+                      return AlertDialog(
+                        title: const Text("ChatGPT를 연동한 Q&A"),
+                        content: SingleChildScrollView(
+                          child: Container(
+                            child: const Text("xxxxxxxxxxxxxxxx"),
+                          ),
+                        ),
+                      );
+                    });
+                print("question mark is clicked");
+              },
+            ),
           ),
         ],
       ),
@@ -91,6 +108,7 @@ class MyChatUIState extends State<QNAScreen> {
                 ),
                 Expanded(
                   child: TextFormField(
+                    cursorColor: Colors.blue[800],
                     maxLines: 6,
                     minLines: 1,
                     keyboardType: TextInputType.multiline,
@@ -99,11 +117,11 @@ class MyChatUIState extends State<QNAScreen> {
                       controller.text = value;
                     },
                     decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.only(left: 8),
-                      border: InputBorder.none,
-                      focusColor: Colors.white,
-                      hintText: 'Type a message',
-                    ),
+                        contentPadding: EdgeInsets.only(left: 8),
+                        border: InputBorder.none,
+                        focusColor: Colors.white,
+                        hintText: 'Type a question',
+                        hintStyle: TextStyle(color: Colors.grey)),
                   ),
                 ),
                 const Padding(

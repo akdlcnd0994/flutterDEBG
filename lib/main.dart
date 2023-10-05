@@ -13,8 +13,11 @@ class Main extends StatelessWidget {
       routes: const {
         //'/login': (context) => LoginScreen();
       },
-      theme: ThemeData(),
-      darkTheme: ThemeData.dark(),
+      theme: ThemeData(
+        textTheme: const TextTheme(
+          titleMedium: TextStyle(color: Colors.black),
+        ),
+      ),
       home: const NavigationScreen(),
       debugShowCheckedModeBanner: false,
     );

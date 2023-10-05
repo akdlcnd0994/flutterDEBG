@@ -32,7 +32,7 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationState extends State<NavigationScreen> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  int currentPageIndex = 0;
+  int currentPageIndex = 2; // 2번이 Home
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +70,8 @@ class _NavigationState extends State<NavigationScreen> {
             label: titles[2],
           ),
           NavigationDestination(
-            selectedIcon: const Icon(Icons.search),
-            icon: const Icon(Icons.search_outlined),
+            selectedIcon: const Icon(Icons.question_answer),
+            icon: const Icon(Icons.question_answer_outlined),
             label: titles[3],
           ),
           NavigationDestination(
