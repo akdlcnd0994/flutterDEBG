@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:medicalapp/widget/drawer.dart';
 
 class DicionaryScreen extends StatelessWidget {
   const DicionaryScreen({super.key});
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.zero,
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
+    return Scaffold(
+      backgroundColor: Colors.white,
+      key: scaffoldKey,
+      drawer: const MainDrawer(),
       // 상단 메뉴바, 제목, 검색관련 컨테이너
-      child: Container(
+      body: Container(
         padding: EdgeInsets.zero,
         color: Colors.teal[300],
         height: 280,
@@ -18,12 +22,12 @@ class DicionaryScreen extends StatelessWidget {
                 const SizedBox(
                   height: 60,
                 ),
-                const Row(
+                Row(
                   children: [
-                    SizedBox(
+                    const SizedBox(
                       width: 140,
                     ),
-                    Column(
+                    const Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
@@ -48,16 +52,27 @@ class DicionaryScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 70,
                     ),
                     Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
-                          children: [],
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                scaffoldKey.currentState?.openDrawer();
+                              },
+                              icon: const Icon(
+                                Icons.menu,
+                                size: 40,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
                         )
                       ],
                     ),

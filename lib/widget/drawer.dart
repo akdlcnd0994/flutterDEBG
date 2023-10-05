@@ -6,36 +6,46 @@ class MainDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Colors.white,
       child: ListView(
         children: <Widget>[
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.home,
-              color: Colors.grey[850],
+              color: Colors.black,
             ),
-            title: const Text('Home'),
+            title: const Text(
+              'Home',
+              style: TextStyle(color: Colors.black),
+            ),
             onTap: () {
-              Navigator.pushNamed(context, '');
+              print("Home is Clicked");
             },
             trailing: const Icon(Icons.add),
           ),
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.settings,
-              color: Colors.grey[850],
+              color: Colors.black,
             ),
-            title: const Text('Setting'),
+            title: const Text(
+              'Setting',
+              style: TextStyle(color: Colors.black),
+            ),
             onTap: () {
               print('Setting is clicked');
             },
             trailing: const Icon(Icons.add),
           ),
           ListTile(
-            leading: Icon(
+            leading: const Icon(
               Icons.question_answer,
-              color: Colors.grey[850],
+              color: Colors.black,
             ),
-            title: const Text('Q&A'),
+            title: const Text(
+              'Q&A',
+              style: TextStyle(color: Colors.black),
+            ),
             onTap: () {
               print('Q&A is clicked');
             },
