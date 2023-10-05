@@ -5,10 +5,15 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
-      alignment: Alignment.center,
-      child: const Text('Page 3'),
+    return Scaffold(
+      body: Container(
+        color: Colors.white,
+        alignment: Alignment.center,
+        child: const Text(
+          'Page 3',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
     );
   }
 }
