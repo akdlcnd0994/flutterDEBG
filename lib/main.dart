@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medicalapp/widget/navigation.dart';
+import 'package:medicalapp/widget/navigation_screen.dart';
 
 void main() => runApp(const Main());
 
@@ -8,10 +8,14 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WidgetsFlutterBinding.ensureInitialized();
     return MaterialApp(
+      routes: const {
+        //'/login': (context) => LoginScreen();
+      },
       theme: ThemeData(),
       darkTheme: ThemeData.dark(),
-      home: const Navigation(),
+      home: const NavigationScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
