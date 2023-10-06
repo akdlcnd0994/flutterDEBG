@@ -291,13 +291,13 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
 
   Container poKeyword(String disease, double height, double width) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         border: Border(
-          bottom: BorderSide(color: Colors.grey),
+          bottom: BorderSide(color: Colors.grey.withOpacity(0.4)),
         ),
       ),
       child: Material(
-        color: const Color.fromARGB(255, 235, 254, 252),
+        color: const Color.fromARGB(255, 251, 251, 255),
         child: InkWell(
           splashColor: Colors.grey,
           onTap: () {
@@ -335,7 +335,6 @@ class MainDrawer extends StatelessWidget {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
 
     return Drawer(
-      backgroundColor: const Color.fromARGB(255, 246, 255, 255),
       child: ListView(
         children: <Widget>[
           const ListTile(
@@ -344,7 +343,7 @@ class MainDrawer extends StatelessWidget {
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 26,
-                  fontWeight: FontWeight.w900),
+                  fontWeight: FontWeight.w800),
             ),
           ),
           for (String part in parts) drawerMenu(part),
@@ -356,7 +355,11 @@ class MainDrawer extends StatelessWidget {
   ListTile drawerMenu(String menuName) {
     return ListTile(
       shape: const Border(bottom: BorderSide(color: Colors.grey)),
-      splashColor: Colors.teal[200],
+      splashColor: Colors.teal[100],
+      leading: Icon(
+        Icons.double_arrow,
+        color: Colors.teal[100],
+      ),
       title: Text(
         menuName,
         style: const TextStyle(
@@ -365,7 +368,6 @@ class MainDrawer extends StatelessWidget {
       onTap: () {
         print(menuName);
       },
-      trailing: const Icon(Icons.add),
     );
   }
 }
