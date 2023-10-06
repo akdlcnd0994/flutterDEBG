@@ -36,6 +36,30 @@ List<String> recentSearch = <String>[
   "최근 15",
 ];
 
+List<String> parts = <String>[
+  "가슴",
+  "골반",
+  "귀",
+  "기타",
+  "눈",
+  "다리",
+  "등/허리",
+  "머리",
+  "목",
+  "발",
+  "배",
+  "생식기",
+  "손",
+  "얼굴",
+  "엉덩이",
+  "유방",
+  "입",
+  "전신",
+  "코",
+  "팔",
+  "피부"
+];
+
 class DicionaryScreen extends StatefulWidget {
   const DicionaryScreen({super.key});
 
@@ -308,58 +332,40 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height; // 화면의 높이
+
     return Drawer(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 246, 255, 255),
       child: ListView(
         children: <Widget>[
           const ListTile(
             title: Text(
-              "질환백과",
+              "부위별 질환 검색",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 26,
                   fontWeight: FontWeight.w900),
             ),
           ),
-          ListTile(
-            leading: const Icon(
-              Icons.personal_injury,
-              color: Colors.black,
-            ),
-            title: const Text(
-              '부위별 질환 찾기',
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-            ),
-            onTap: () {
-              print("부위별 질환 찾기");
-            },
-            trailing: const Icon(
-              Icons.add,
-            ),
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.settings,
-              color: Colors.black,
-            ),
-            title: const Text(
-              'Setting',
-              style: TextStyle(color: Colors.black),
-            ),
-            onTap: () {
-              print('Setting is clicked');
-            },
-            trailing: const Icon(Icons.add),
-          ),
-          const SizedBox(
-            height: 565,
-          ),
-          const BottomAppBar(
-            child: Text("by asan"),
-          )
+          for (String part in parts) drawerMenu(part),
         ],
       ),
+    );
+  }
+
+  ListTile drawerMenu(String menuName) {
+    return ListTile(
+      shape: const Border(bottom: BorderSide(color: Colors.grey)),
+      splashColor: Colors.teal[200],
+      title: Text(
+        menuName,
+        style: const TextStyle(
+            color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+      ),
+      onTap: () {
+        print(menuName);
+      },
+      trailing: const Icon(Icons.add),
     );
   }
 }
