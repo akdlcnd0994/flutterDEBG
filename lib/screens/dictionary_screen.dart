@@ -1,12 +1,54 @@
 import 'package:flutter/material.dart';
 
-class DicionaryScreen extends StatelessWidget {
+List<String> diseases = <String>[
+  "질환 1",
+  "질환 2",
+  "질환 3",
+  "질환 4",
+  "질환 5",
+  "질환 6",
+  "질환 7",
+  "질환 8",
+  "질환 9",
+  "질환 10",
+  "질환 11",
+  "질환 12",
+  "질환 13",
+  "질환 14",
+  "질환 15",
+];
+
+List<String> recentSearch = <String>[
+  "최근 1",
+  "최근 2",
+  "최근 3",
+  "최근 4",
+  "최근 5",
+  "최근 6",
+  "최근 7",
+  "최근 8",
+  "최근 9",
+  "최근 10",
+  "최근 11",
+  "최근 12",
+  "최근 13",
+  "최근 14",
+  "최근 15",
+];
+
+class DicionaryScreen extends StatefulWidget {
   const DicionaryScreen({super.key});
+
+  @override
+  State<DicionaryScreen> createState() => _DicionaryScreenState();
+}
+
+class _DicionaryScreenState extends State<DicionaryScreen> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
     double width = MediaQuery.of(context).size.width; // 화면의
-
+    List<String> pokeywords = <String>[];
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -76,7 +118,7 @@ class DicionaryScreen extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: height * 0.01,
+                                  height: height * 0.02,
                                 )
                               ],
                             )
@@ -124,7 +166,7 @@ class DicionaryScreen extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        SizedBox(height: height * 0.055),
+                        SizedBox(height: height * 0.04),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -139,7 +181,7 @@ class DicionaryScreen extends StatelessWidget {
                                   splashColor: Colors.teal[200],
                                   borderRadius: BorderRadius.circular(24.0),
                                   onTap: () {
-                                    print("ontap1");
+                                    print("많이 찾는 질환");
                                   },
                                   child: SizedBox(
                                     height: height * 0.045,
@@ -172,7 +214,7 @@ class DicionaryScreen extends StatelessWidget {
                                   splashColor: Colors.teal[200],
                                   borderRadius: BorderRadius.circular(24.0),
                                   onTap: () {
-                                    print("ontap1");
+                                    print("최근 검색 기록");
                                   },
                                   child: SizedBox(
                                     height: height * 0.045,
@@ -207,64 +249,52 @@ class DicionaryScreen extends StatelessWidget {
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
+                      for (String disease in diseases)
+                        poKeyword(disease, height, width),
+                      SizedBox(
+                        height: height * 0.095,
+                      )
                     ],
                   ),
                 ),
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container poKeyword(String disease, double height, double width) {
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.grey),
+        ),
+      ),
+      child: Material(
+        color: const Color.fromARGB(255, 235, 254, 252),
+        child: InkWell(
+          splashColor: Colors.grey,
+          onTap: () {
+            print(disease);
+          },
+          child: SizedBox(
+            height: height * 0.0545,
+            width: width,
+            child: Padding(
+              padding: EdgeInsets.only(left: (width * 0.1)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    disease,
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),

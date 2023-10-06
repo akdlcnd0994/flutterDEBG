@@ -80,19 +80,20 @@ class MyChatUIState extends State<QNAScreen> {
       body: Column(
         children: [
           Flexible(
-              flex: 1,
-              fit: FlexFit.tight,
-              child: ListView.builder(
-                controller: scrollController,
-                physics: const BouncingScrollPhysics(),
-                itemCount: chatModelList.length,
-                itemBuilder: (context, index) =>
-                    chatModelList.elementAt(index).isMee
-                        ? SenderRowView(
-                            index: index,
-                          )
-                        : ReceiverRowView(index: index),
-              )),
+            flex: 1,
+            fit: FlexFit.tight,
+            child: ListView.builder(
+              controller: scrollController,
+              physics: const BouncingScrollPhysics(),
+              itemCount: chatModelList.length,
+              itemBuilder: (context, index) =>
+                  chatModelList.elementAt(index).isMee
+                      ? SenderRowView(
+                          index: index,
+                        )
+                      : ReceiverRowView(index: index),
+            ),
+          ),
           Container(
             alignment: Alignment.center,
             color: Colors.white,
