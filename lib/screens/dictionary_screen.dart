@@ -203,7 +203,7 @@ class DicionaryScreen extends StatelessWidget {
               ),
               // 경계 아래 부분
               SizedBox(
-                height: height * 0.56,
+                height: height * 0.65,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
