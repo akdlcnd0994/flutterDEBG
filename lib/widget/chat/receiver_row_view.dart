@@ -1,11 +1,10 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:medicalapp/model/global_members.dart';
 import 'package:medicalapp/screens/qna_screen.dart';
 import 'package:http/http.dart' as http;
 
-const apiKey = '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';
+const apiKey = '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';
 const apiUrl = 'https://api.openai.com/v1/completions';
 
 class ReceiverRowView extends StatelessWidget {
@@ -69,7 +68,7 @@ Future<String> generateText(String prompt) async {
   Map<String, dynamic> newresponse =
       jsonDecode(utf8.decode(response.bodyBytes));
 
-  return newresponse['choices'][0]['text'];
+  return response.body; // API 응답에서 받아온 텍스트를 추출하여 반환
 }
 
 class ResultPage extends StatefulWidget {

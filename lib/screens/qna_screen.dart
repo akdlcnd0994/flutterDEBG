@@ -1,3 +1,4 @@
+import 'package:bard_api/bard_api.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/model/ChatMessagesModel.dart';
 import 'package:medicalapp/model/global_members.dart';
@@ -132,21 +133,21 @@ class MyChatUIState extends State<QNAScreen> {
                 ),
                 GestureDetector(
                   // send 버튼 한번 누르기
-                  onTap: () {
+                  onTap: () async {
+                    final bard = ChatBot(
+                        sessionId:
+                            "bwjGxmcF-HqxN5N4ELL3gR9BM-qLsqfYcCaVvorhNstMksOb8y1CS2rtNHAhaiMzXqBoDw.");
+                    final result = bard.ask("Hello?");
+                    print(result);
                     setState(() {
                       chatModelList.add(ChatModel(controller.text, true));
                       animateList();
                       controller.clear();
+
+                      //controller.text를 함수로 보내고 값을 돌려받은 뒤 onLongPress의 함수로 보내기
                     });
                   },
-                  // send 버튼 길게 누르기
-                  onLongPress: () {
-                    setState(() {
-                      chatModelList.add(ChatModel(controller.text, false));
-                      animateList();
-                      controller.clear();
-                    });
-                  },
+
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 8, right: 8),
                     child: CircleAvatar(
