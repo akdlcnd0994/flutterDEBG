@@ -7,9 +7,9 @@ class healthCheckScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 12,
+        elevation: 0,
         titleSpacing: 10,
-        backgroundColor: Colors.cyan[200],
+        backgroundColor: Colors.teal[400],
         leading: const Padding(
           padding: EdgeInsets.all(8.0),
         ),
@@ -45,7 +45,13 @@ class healthCheckScreen extends StatelessWidget {
           ),
         ],
       ),
-      drawer: const Drawer(),
+      body: ListView(
+        children: const <Widget>[
+          Column(
+            children: [],
+          )
+        ],
+      ),
     );
   }
 }

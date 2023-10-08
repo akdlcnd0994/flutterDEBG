@@ -36,7 +36,8 @@ class MyChatUIState extends State<QNAScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 236, 244, 249),
       appBar: AppBar(
-        elevation: 12,
+        toolbarHeight: 40,
+        elevation: 0,
         titleSpacing: 10,
         backgroundColor: Colors.blue[300],
         leading: const Padding(
@@ -45,6 +46,7 @@ class MyChatUIState extends State<QNAScreen> {
         leadingWidth: 10,
         title: ListTile(
           leading: CircleAvatar(
+            radius: 18,
             backgroundImage: NetworkImage(url),
           ),
           title: const Text(

@@ -6,11 +6,12 @@ class MyInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        elevation: 12,
+        toolbarHeight: 50,
+        elevation: 0,
         titleSpacing: 10,
-        backgroundColor: Colors.orange[100],
+        backgroundColor: Colors.white,
         leading: const Padding(
           padding: EdgeInsets.all(8.0),
         ),

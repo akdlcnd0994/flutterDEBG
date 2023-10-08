@@ -66,7 +66,7 @@ class DicionaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
-    double width = MediaQuery.of(context).size.width; // 화면의
+    double width = MediaQuery.of(context).size.width; // 화면의 가로
     List<String> pokeywords = <String>[];
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     return Scaffold(
@@ -83,7 +83,7 @@ class DicionaryScreen extends StatelessWidget {
               Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
-                  color: Colors.teal[300],
+                  color: Colors.teal[500],
                   borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(20),
                     bottomRight: Radius.circular(20),
@@ -202,7 +202,7 @@ class DicionaryScreen extends StatelessWidget {
                               ),
                               child: Material(
                                 borderRadius: BorderRadius.circular(24.0),
-                                color: Colors.teal[500],
+                                color: Colors.teal[700],
                                 child: InkWell(
                                   splashColor: Colors.teal[200],
                                   borderRadius: BorderRadius.circular(24.0),
@@ -235,7 +235,7 @@ class DicionaryScreen extends StatelessWidget {
                               ),
                               child: Material(
                                 borderRadius: BorderRadius.circular(24.0),
-                                color: Colors.teal[700],
+                                color: Colors.teal[900],
                                 child: InkWell(
                                   splashColor: Colors.teal[200],
                                   borderRadius: BorderRadius.circular(24.0),
@@ -339,7 +339,6 @@ class MainDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
-
     return Drawer(
       child: ListView(
         physics: const BouncingScrollPhysics(),
@@ -363,7 +362,7 @@ class MainDrawer extends StatelessWidget {
     return ListTile(
       shape: const Border(bottom: BorderSide(color: Colors.grey)),
       splashColor: Colors.teal[100],
-      leading: Icon(
+      trailing: Icon(
         Icons.double_arrow,
         color: Colors.teal[100],
       ),

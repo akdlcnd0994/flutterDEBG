@@ -50,7 +50,7 @@ class _NavigationState extends State<NavigationScreen> {
             currentPageIndex = index;
           });
         },
-        indicatorColor: Colors.teal[200],
+        indicatorColor: Colors.grey[400],
         elevation: 1.0,
         selectedIndex: currentPageIndex,
         destinations: <Widget>[
