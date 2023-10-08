@@ -60,14 +60,9 @@ List<String> parts = <String>[
   "피부"
 ];
 
-class DicionaryScreen extends StatefulWidget {
+class DicionaryScreen extends StatelessWidget {
   const DicionaryScreen({super.key});
 
-  @override
-  State<DicionaryScreen> createState() => _DicionaryScreenState();
-}
-
-class _DicionaryScreenState extends State<DicionaryScreen> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
@@ -81,13 +76,20 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
       drawer: const MainDrawer(),
       // 상단 메뉴바, 제목, 검색관련 컨테이너
       body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         child: SizedBox(
-          height: height,
           child: Column(
             children: [
               Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.teal[300],
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
+                ),
                 padding: EdgeInsets.zero,
-                color: Colors.teal[300],
                 height: height * 0.35,
                 child: Column(
                   children: [
@@ -268,22 +270,26 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
                 ),
               ),
               // 경계 아래 부분
-              SizedBox(
-                height: height * 0.65,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      for (String disease in diseases)
-                        poKeyword(disease, height, width),
-                      SizedBox(
-                        height: height * 0.095,
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              newMethod(height, width),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  SizedBox newMethod(double height, double width) {
+    return SizedBox(
+      height: height * 0.65,
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            for (String disease in diseases) poKeyword(disease, height, width),
+            SizedBox(
+              height: height * 0.095,
+            )
+          ],
         ),
       ),
     );
@@ -297,7 +303,7 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
         ),
       ),
       child: Material(
-        color: const Color.fromARGB(255, 251, 251, 255),
+        color: Colors.white,
         child: InkWell(
           splashColor: Colors.grey,
           onTap: () {
@@ -336,6 +342,7 @@ class MainDrawer extends StatelessWidget {
 
     return Drawer(
       child: ListView(
+        physics: const BouncingScrollPhysics(),
         children: <Widget>[
           const ListTile(
             title: Text(

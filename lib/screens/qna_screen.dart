@@ -38,7 +38,7 @@ class MyChatUIState extends State<QNAScreen> {
       appBar: AppBar(
         elevation: 12,
         titleSpacing: 10,
-        backgroundColor: Colors.blue[400],
+        backgroundColor: Colors.blue[300],
         leading: const Padding(
           padding: EdgeInsets.all(8.0),
         ),
