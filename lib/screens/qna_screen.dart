@@ -36,15 +36,17 @@ class MyChatUIState extends State<QNAScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 236, 244, 249),
       appBar: AppBar(
-        elevation: 12,
+        toolbarHeight: 40,
+        elevation: 0,
         titleSpacing: 10,
-        backgroundColor: Colors.blue[400],
+        backgroundColor: Colors.blue[300],
         leading: const Padding(
           padding: EdgeInsets.all(8.0),
         ),
         leadingWidth: 10,
         title: ListTile(
           leading: CircleAvatar(
+            radius: 18,
             backgroundImage: NetworkImage(url),
           ),
           title: const Text(
@@ -80,19 +82,20 @@ class MyChatUIState extends State<QNAScreen> {
       body: Column(
         children: [
           Flexible(
-              flex: 1,
-              fit: FlexFit.tight,
-              child: ListView.builder(
-                controller: scrollController,
-                physics: const BouncingScrollPhysics(),
-                itemCount: chatModelList.length,
-                itemBuilder: (context, index) =>
-                    chatModelList.elementAt(index).isMee
-                        ? SenderRowView(
-                            index: index,
-                          )
-                        : ReceiverRowView(index: index),
-              )),
+            flex: 1,
+            fit: FlexFit.tight,
+            child: ListView.builder(
+              controller: scrollController,
+              physics: const BouncingScrollPhysics(),
+              itemCount: chatModelList.length,
+              itemBuilder: (context, index) =>
+                  chatModelList.elementAt(index).isMee
+                      ? SenderRowView(
+                          index: index,
+                        )
+                      : ReceiverRowView(index: index),
+            ),
+          ),
           Container(
             alignment: Alignment.center,
             color: Colors.white,

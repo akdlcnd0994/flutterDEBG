@@ -1,12 +1,73 @@
 import 'package:flutter/material.dart';
 
+List<String> diseases = <String>[
+  "질환 1",
+  "질환 2",
+  "질환 3",
+  "질환 4",
+  "질환 5",
+  "질환 6",
+  "질환 7",
+  "질환 8",
+  "질환 9",
+  "질환 10",
+  "질환 11",
+  "질환 12",
+  "질환 13",
+  "질환 14",
+  "질환 15",
+];
+
+List<String> recentSearch = <String>[
+  "최근 1",
+  "최근 2",
+  "최근 3",
+  "최근 4",
+  "최근 5",
+  "최근 6",
+  "최근 7",
+  "최근 8",
+  "최근 9",
+  "최근 10",
+  "최근 11",
+  "최근 12",
+  "최근 13",
+  "최근 14",
+  "최근 15",
+];
+
+List<String> parts = <String>[
+  "가슴",
+  "골반",
+  "귀",
+  "기타",
+  "눈",
+  "다리",
+  "등/허리",
+  "머리",
+  "목",
+  "발",
+  "배",
+  "생식기",
+  "손",
+  "얼굴",
+  "엉덩이",
+  "유방",
+  "입",
+  "전신",
+  "코",
+  "팔",
+  "피부"
+];
+
 class DicionaryScreen extends StatelessWidget {
   const DicionaryScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
-    double width = MediaQuery.of(context).size.width; // 화면의
-
+    double width = MediaQuery.of(context).size.width; // 화면의 가로
+    List<String> pokeywords = <String>[];
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -15,13 +76,20 @@ class DicionaryScreen extends StatelessWidget {
       drawer: const MainDrawer(),
       // 상단 메뉴바, 제목, 검색관련 컨테이너
       body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
         child: SizedBox(
-          height: height,
           child: Column(
             children: [
               Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.teal[500],
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
+                ),
                 padding: EdgeInsets.zero,
-                color: Colors.teal[300],
                 height: height * 0.35,
                 child: Column(
                   children: [
@@ -76,7 +144,7 @@ class DicionaryScreen extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: height * 0.01,
+                                  height: height * 0.02,
                                 )
                               ],
                             )
@@ -124,7 +192,7 @@ class DicionaryScreen extends StatelessWidget {
                     ),
                     Column(
                       children: [
-                        SizedBox(height: height * 0.055),
+                        SizedBox(height: height * 0.04),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -134,12 +202,12 @@ class DicionaryScreen extends StatelessWidget {
                               ),
                               child: Material(
                                 borderRadius: BorderRadius.circular(24.0),
-                                color: Colors.teal[500],
+                                color: Colors.teal[700],
                                 child: InkWell(
                                   splashColor: Colors.teal[200],
                                   borderRadius: BorderRadius.circular(24.0),
                                   onTap: () {
-                                    print("ontap1");
+                                    print("많이 찾는 질환");
                                   },
                                   child: SizedBox(
                                     height: height * 0.045,
@@ -167,12 +235,12 @@ class DicionaryScreen extends StatelessWidget {
                               ),
                               child: Material(
                                 borderRadius: BorderRadius.circular(24.0),
-                                color: Colors.teal[700],
+                                color: Colors.teal[900],
                                 child: InkWell(
                                   splashColor: Colors.teal[200],
                                   borderRadius: BorderRadius.circular(24.0),
                                   onTap: () {
-                                    print("ontap1");
+                                    print("최근 검색 기록");
                                   },
                                   child: SizedBox(
                                     height: height * 0.045,
@@ -202,69 +270,61 @@ class DicionaryScreen extends StatelessWidget {
                 ),
               ),
               // 경계 아래 부분
-              SizedBox(
-                height: height * 0.56,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                      const Text("data"),
-                      SizedBox(height: height * 0.01),
-                    ],
-                  ),
-                ),
-              ),
+              newMethod(height, width),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  SizedBox newMethod(double height, double width) {
+    return SizedBox(
+      height: height * 0.65,
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: [
+            for (String disease in diseases) poKeyword(disease, height, width),
+            SizedBox(
+              height: height * 0.095,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container poKeyword(String disease, double height, double width) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.grey.withOpacity(0.4)),
+        ),
+      ),
+      child: Material(
+        color: Colors.white,
+        child: InkWell(
+          splashColor: Colors.grey,
+          onTap: () {
+            print(disease);
+          },
+          child: SizedBox(
+            height: height * 0.0545,
+            width: width,
+            child: Padding(
+              padding: EdgeInsets.only(left: (width * 0.1)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    disease,
+                    style: const TextStyle(
+                        fontSize: 14, fontWeight: FontWeight.w600),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -278,58 +338,42 @@ class MainDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height; // 화면의 높이
     return Drawer(
-      backgroundColor: Colors.white,
       child: ListView(
+        physics: const BouncingScrollPhysics(),
         children: <Widget>[
           const ListTile(
             title: Text(
-              "질환백과",
+              "부위별 질환 검색",
               style: TextStyle(
                   color: Colors.black,
                   fontSize: 26,
-                  fontWeight: FontWeight.w900),
+                  fontWeight: FontWeight.w800),
             ),
           ),
-          ListTile(
-            leading: const Icon(
-              Icons.personal_injury,
-              color: Colors.black,
-            ),
-            title: const Text(
-              '부위별 질환 찾기',
-              style:
-                  TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-            ),
-            onTap: () {
-              print("부위별 질환 찾기");
-            },
-            trailing: const Icon(
-              Icons.add,
-            ),
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.settings,
-              color: Colors.black,
-            ),
-            title: const Text(
-              'Setting',
-              style: TextStyle(color: Colors.black),
-            ),
-            onTap: () {
-              print('Setting is clicked');
-            },
-            trailing: const Icon(Icons.add),
-          ),
-          const SizedBox(
-            height: 565,
-          ),
-          const BottomAppBar(
-            child: Text("by asan"),
-          )
+          for (String part in parts) drawerMenu(part),
         ],
       ),
+    );
+  }
+
+  ListTile drawerMenu(String menuName) {
+    return ListTile(
+      shape: const Border(bottom: BorderSide(color: Colors.grey)),
+      splashColor: Colors.teal[100],
+      trailing: Icon(
+        Icons.double_arrow,
+        color: Colors.teal[100],
+      ),
+      title: Text(
+        menuName,
+        style: const TextStyle(
+            color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
+      ),
+      onTap: () {
+        print(menuName);
+      },
     );
   }
 }

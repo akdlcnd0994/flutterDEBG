@@ -6,49 +6,46 @@ class MyInfoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Container(
-              height: 70,
-              margin: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Container(
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border:
-                                    Border.all(color: Colors.black, width: 2)),
-                            child: const CircleAvatar(radius: 25),
-                          ),
-                          const SizedBox(width: 16),
-                          const Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "db1_address",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                      const SizedBox(width: 16),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+      backgroundColor: Colors.grey[200],
+      appBar: AppBar(
+        toolbarHeight: 50,
+        elevation: 0,
+        titleSpacing: 10,
+        backgroundColor: Colors.white,
+        leading: const Padding(
+          padding: EdgeInsets.all(8.0),
         ),
+        leadingWidth: 10,
+        title: const ListTile(
+          title: Text(
+            '내 정보',
+            style: TextStyle(
+                fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+          ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.savings,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: const Icon(
+                    Icons.notifications_none,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

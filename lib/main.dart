@@ -18,7 +18,7 @@ class Main extends StatelessWidget {
           titleMedium: TextStyle(color: Colors.black),
         ),
       ),
-      home: const NavigationScreen(),
+      home: NavigationScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
