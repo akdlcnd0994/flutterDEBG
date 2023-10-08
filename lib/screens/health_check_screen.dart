@@ -5,12 +5,8 @@ class healthCheckScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height; // 화면의 높이
-    double width = MediaQuery.of(context).size.width; // 화면의 가로
     return Scaffold(
-      backgroundColor: Colors.teal[100],
       appBar: AppBar(
-        toolbarHeight: 40,
         elevation: 0,
         titleSpacing: 10,
         backgroundColor: Colors.teal[400],
@@ -22,7 +18,7 @@ class healthCheckScreen extends StatelessWidget {
           title: Text(
             '문진',
             style: TextStyle(
-                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+                fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
         actions: [
@@ -33,14 +29,14 @@ class healthCheckScreen extends StatelessWidget {
                 IconButton(
                   icon: const Icon(
                     Icons.savings,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   onPressed: () {},
                 ),
                 IconButton(
                   icon: const Icon(
                     Icons.notifications_none,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                   onPressed: () {},
                 ),
@@ -50,22 +46,9 @@ class healthCheckScreen extends StatelessWidget {
         ],
       ),
       body: ListView(
-        children: <Widget>[
+        children: const <Widget>[
           Column(
-            children: [
-              Column(
-                children: [
-                  SizedBox(
-                    height: height * 0.1,
-                  ),
-                  Container(
-                    decoration: const BoxDecoration(color: Colors.white),
-                    height: height * 0.4,
-                    width: width * 0.7,
-                  )
-                ],
-              )
-            ],
+            children: [],
           )
         ],
       ),
