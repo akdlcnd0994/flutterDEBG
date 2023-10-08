@@ -5,8 +5,12 @@ class healthCheckScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height; // 화면의 높이
+    double width = MediaQuery.of(context).size.width; // 화면의 가로
     return Scaffold(
+      backgroundColor: Colors.teal[100],
       appBar: AppBar(
+        toolbarHeight: 40,
         elevation: 0,
         titleSpacing: 10,
         backgroundColor: Colors.teal[400],
@@ -46,9 +50,22 @@ class healthCheckScreen extends StatelessWidget {
         ],
       ),
       body: ListView(
-        children: const <Widget>[
+        children: <Widget>[
           Column(
-            children: [],
+            children: [
+              Column(
+                children: [
+                  SizedBox(
+                    height: height * 0.1,
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(color: Colors.white),
+                    height: height * 0.4,
+                    width: width * 0.7,
+                  )
+                ],
+              )
+            ],
           )
         ],
       ),

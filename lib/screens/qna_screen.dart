@@ -46,7 +46,7 @@ class MyChatUIState extends State<QNAScreen> {
         leadingWidth: 10,
         title: ListTile(
           leading: CircleAvatar(
-            radius: 18,
+            radius: 16,
             backgroundImage: NetworkImage(url),
           ),
           title: const Text(
