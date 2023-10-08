@@ -1,5 +1,5 @@
 class IP {
-  var ip = "222.96.167.81";
+  var ip = "211.108.193.125";
 
   String getIp() {
     return ip;
