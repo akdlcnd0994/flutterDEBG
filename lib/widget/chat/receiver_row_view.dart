@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:medicalapp/model/global_members.dart';
 import 'package:medicalapp/screens/qna_screen.dart';
 
@@ -13,7 +14,7 @@ class ReceiverRowView extends StatelessWidget {
       leading: Padding(
         padding: const EdgeInsets.only(bottom: 10),
         child: CircleAvatar(
-          backgroundImage: NetworkImage(url),
+          backgroundImage: NetworkImage(chatBotImg),
         ),
       ),
       title: Wrap(children: [
@@ -34,9 +35,10 @@ class ReceiverRowView extends StatelessWidget {
       trailing: Container(
         width: 50,
       ),
-      subtitle: const Padding(
-        padding: EdgeInsets.only(left: 8, top: 4),
-        child: Text('8:04 AM', style: TextStyle(fontSize: 10)),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(left: 8, top: 4),
+        child: Text(DateFormat('aa hh:mm').format(DateTime.now()),
+            style: const TextStyle(fontSize: 10)),
       ),
     );
   }

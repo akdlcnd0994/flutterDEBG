@@ -22,7 +22,7 @@ class healthCheckScreen extends StatelessWidget {
           title: Text(
             '문진',
             style: TextStyle(
-                fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
         actions: [
@@ -33,14 +33,14 @@ class healthCheckScreen extends StatelessWidget {
                 IconButton(
                   icon: const Icon(
                     Icons.savings,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                   onPressed: () {},
                 ),
                 IconButton(
                   icon: const Icon(
                     Icons.notifications_none,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                   onPressed: () {},
                 ),

@@ -4,10 +4,10 @@ import 'package:medicalapp/model/global_members.dart';
 import 'package:medicalapp/widget/chat/receiver_row_view.dart';
 import 'package:medicalapp/widget/chat/sender_row_view.dart';
 
-var url =
-    'https://i.pinimg.com/736x/fd/6e/04/fd6e04548095d7f767917f344a904ff1.jpg';
-var urlTwo =
-    'https://sguru.org/wp-content/uploads/2017/03/cute-n-stylish-boys-fb-dp-2016.jpg';
+var chatBotImg =
+    'https://github.com/jongwon-kr/flutterDEBG/blob/main/lib/assets/chatbot.png?raw=true';
+var myQuestionImg =
+    'https://github.com/jongwon-kr/flutterDEBG/blob/main/lib/assets/yellow%20question%20mark.png?raw=true';
 
 class QNAScreen extends StatefulWidget {
   const QNAScreen({Key? key}) : super(key: key);
@@ -47,7 +47,7 @@ class MyChatUIState extends State<QNAScreen> {
         title: ListTile(
           leading: CircleAvatar(
             radius: 16,
-            backgroundImage: NetworkImage(url),
+            backgroundImage: NetworkImage(chatBotImg),
           ),
           title: const Text(
             'Q&A',
