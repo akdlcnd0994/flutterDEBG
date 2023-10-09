@@ -1,7 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:medicalapp/screens/login/login_screen.dart';
 import 'package:medicalapp/widget/navigation_screen.dart';
 
-void main() => runApp(const Main());
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(const Main());
+}
 
 class Main extends StatelessWidget {
   const Main({super.key});
@@ -10,15 +16,15 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsFlutterBinding.ensureInitialized();
     return MaterialApp(
-      routes: const {
-        //'/login': (context) => LoginScreen();
+      routes: {
+        '/login': (context) => const LoginScreen(),
       },
       theme: ThemeData(
         textTheme: const TextTheme(
           titleMedium: TextStyle(color: Colors.black),
         ),
       ),
-      home: NavigationScreen(),
+      home: const NavigationScreen(),
       debugShowCheckedModeBanner: false,
     );
   }

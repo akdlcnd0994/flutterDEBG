@@ -1,19 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:medicalapp/screens/login/chat_screen.dart';
 import 'package:medicalapp/screens/login/constants.dart';
 
-class LoginScreen extends StatefulWidget {
-  static String id = "login_screen";
+class RegistrationScreen extends StatefulWidget {
+  static String id = "Registration_screen";
 
-  const LoginScreen({super.key});
+  const RegistrationScreen({super.key});
 
   @override
-  LoginScreenState createState() => LoginScreenState();
+  _RegistrationScreenState createState() => _RegistrationScreenState();
 }
 
-class LoginScreenState extends State<LoginScreen> {
+class _RegistrationScreenState extends State<RegistrationScreen> {
   bool showSpinner = false;
   String email = '';
   String password = '';
@@ -29,6 +28,9 @@ class LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            const SizedBox(
+              height: 48.0,
+            ),
             TextField(
               textAlign: TextAlign.center,
               keyboardType: TextInputType.emailAddress,
@@ -54,15 +56,15 @@ class LoginScreenState extends State<LoginScreen> {
               height: 24.0,
             ),
             ElevatedButton(
-                child: const Text('Log in'),
+                child: const Text('Register'),
                 onPressed: () async {
                   setState(() {
                     showSpinner = true;
                   });
-                  //Login to existing account
+                  //Create new Account
                   try {
                     await _auth
-                        .signInWithEmailAndPassword(
+                        .createUserWithEmailAndPassword(
                             email: email, password: password)
                         .then((value) {
                       setState(() {
@@ -72,12 +74,12 @@ class LoginScreenState extends State<LoginScreen> {
                           context,
                           MaterialPageRoute(
                               builder: (context) => const ChatScreen()));
+                      print('Successfully Created');
                     });
-                    print('Successfully Login');
                   } catch (e) {
                     print(e);
                   }
-                }),
+                })
           ],
         ),
       ),

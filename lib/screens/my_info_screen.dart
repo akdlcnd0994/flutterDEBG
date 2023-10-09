@@ -5,6 +5,8 @@ class MyInfoScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height; // 화면의 높이
+    double width = MediaQuery.of(context).size.width; // 화
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
@@ -45,6 +47,49 @@ class MyInfoScreen extends StatelessWidget {
               ],
             ),
           ),
+        ],
+      ),
+      body: ListView(
+        children: [
+          Column(
+            children: [
+              SizedBox(
+                height: height * 0.02,
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(24.0),
+                ),
+                child: Material(
+                  borderRadius: BorderRadius.circular(24.0),
+                  color: Colors.grey[400],
+                  child: InkWell(
+                    splashColor: Colors.white,
+                    borderRadius: BorderRadius.circular(24.0),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/login');
+                    },
+                    child: SizedBox(
+                      height: height * 0.06,
+                      width: width * 0.6,
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "로그인 후 이용이 가능합니다.",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )
         ],
       ),
     );
