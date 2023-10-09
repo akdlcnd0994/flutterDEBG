@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:medicalapp/model/diseaseModel.dart';
 
 class HealthInfoListScreen extends StatelessWidget {
   String part;
-
+  List<String> list = [];
   HealthInfoListScreen({required this.part, super.key});
 
   @override
@@ -19,5 +20,9 @@ class HealthInfoListScreen extends StatelessWidget {
         ));
   }
 
-  void choice() {}
+  void choice() {
+    if (part == "가슴") {
+      list = chest;
+    }
+  }
 }
