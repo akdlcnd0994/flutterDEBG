@@ -8,7 +8,7 @@ class MyInfoScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-        toolbarHeight: 50,
+        toolbarHeight: 40,
         elevation: 0,
         titleSpacing: 10,
         backgroundColor: Colors.white,
