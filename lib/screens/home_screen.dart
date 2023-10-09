@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width; // 화면의 가로
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 50,
+        toolbarHeight: 40,
         shadowColor: Colors.white,
         centerTitle: true,
         elevation: 0,
