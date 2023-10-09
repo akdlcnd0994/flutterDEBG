@@ -1,11 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:medicalapp/http/dictionaryInfo.dart';
-
-List<String> diseases = <String>[
-  "횡격막 탈장(Diaphragmatic hernia)",
-  "처그 스트라우스 증후군(Churg strauss syndrome)",
-  "이물질에 의한 기도 막힘(Airway obstruction)",
-  "폐결절(Pulmonary nodule)",
+List<String> chest = [
   "인플루엔자(Influenza)",
   "폐결핵(Pulmonary tuberculosis)",
   "흉곽출구 증후군(Thoracic outlet syndrome)",
@@ -121,7 +114,9 @@ List<String> diseases = <String>[
   "기관지확장증(Bronchiectasis)",
   "노카르디아증(Nocardiosis)",
   "늑막염(Pleurisy)",
-  "신종 플루(Novel swine-origin influenza A(H1N1))",
+  "신종 플루(Novel swine-origin influenza A(H1N1))"
+];
+List<String> pelvis = [
   "만성 전립선염(Chronic prostatitis)",
   "PSA 상승(Elevated PSA)",
   "샅(서혜)육아종(Granuloma inguinale)",
@@ -242,7 +237,9 @@ List<String> diseases = <String>[
   "신장 이형성증(Renal dysplasia)",
   "조기 폐경(Premature ovarian failure)",
   "자궁의 비염증성 장애(Noninflammatory disorders of uterus)",
-  "과민성 방광(Overactive Bladder)",
+  "과민성 방광(Overactive Bladder)"
+];
+List<String> ear = [
   "급성 중이염(Acute otitis media)",
   "외이도염(Otitis externa)",
   "돌출귀(Prominent Ear)",
@@ -265,7 +262,9 @@ List<String> diseases = <String>[
   "이명(Tinnitus)",
   "거대세포 바이러스 질환(Cytomegaloviral diseases)",
   "이루증(Otorrhea)",
-  "비용종(Nasal polyp)",
+  "비용종(Nasal polyp)"
+];
+List<String> etc = [
   "양극성 장애(Bipolar disorder)",
   "새집 증후군(Sick building syndrome)",
   "우울증(Depressive disorder)",
@@ -284,7 +283,9 @@ List<String> diseases = <String>[
   "불면증(Insomnia)",
   "강박 장애(Obsessive-Compulsive Disorder)",
   "알코올 의존성(Dependance of alcohol)",
-  "적응 장애(Adjustment disorder)",
+  "적응 장애(Adjustment disorder)"
+];
+List<String> eye = [
   "노안(Presbyopia)",
   "망막아세포종(Retinoblastoma)",
   "망막색소변성증(Retinitis Pigmentosa)",
@@ -345,7 +346,9 @@ List<String> diseases = <String>[
   "설맹(Snow blindness)",
   "눈물흘림증(Epiphora)",
   "안암(eye cancer)",
-  "각막 부종(Corneal Edema)",
+  "각막 부종(Corneal Edema)"
+];
+List<String> leg = [
   "대퇴 골절(Fracture of femur)",
   "하지불안증후군(Restless Legs Syndrome)",
   "좌골신경통(Sciatica)",
@@ -392,7 +395,9 @@ List<String> diseases = <String>[
   "대퇴골두 무혈관성 괴사(AVN of hip(femoral head))",
   "지체장애(Physical disability)",
   "통풍성 관절염(gouty arthritis)",
-  "림프부종(Lymphedema)",
+  "림프부종(Lymphedema)"
+];
+List<String> waist = [
   "퇴행성 척추 장애(Degenerative spinal disorder)",
   "요추관 협착증(Lumbar spinal stenosis)",
   "척추 골수염(Vertebral osteomyelitis)",
@@ -419,7 +424,9 @@ List<String> diseases = <String>[
   "지체장애(Physical disability)",
   "요로 감염(Urinary tract infection)",
   "신경근병증(Radiculopathy)",
-  "신장 결석(Renal stone)",
+  "신장 결석(Renal stone)"
+];
+List<String> head = [
   "생식선 및 생식 세포의 신생물(Gonadal and germ cell neoplasma)",
   "악성 신경교종(Malignant Glioma)",
   "안면인식장애(Prosopagnosia)",
@@ -543,7 +550,9 @@ List<String> diseases = <String>[
   "군발성 두통 증후군(Cluster headache syndrome)",
   "적응 장애(Adjustment disorder)",
   "뇌출혈(Cerebral hemorrhage)",
-  "소아청소년기 우울증(Depression in childhood and adolescence)",
+  "소아청소년기 우울증(Depression in childhood and adolescence)"
+];
+List<String> neck = [
   "디프테리아(Diphtheritia)",
   "새열 낭종(Branchial Cyst)",
   "거북목 증후군(Turtle neck syndrome)",
@@ -595,7 +604,9 @@ List<String> diseases = <String>[
   "비인두 종양(Nasopharyngeal tumor)",
   "후두개염(Epiglottitis)",
   "VDT 증후군(Visual Display Terminal Syndrome)",
-  "식도의 이물(Foreign body in esophagus)",
+  "식도의 이물(Foreign body in esophagus)"
+];
+List<String> foot = [
   "떨림, 진전(Tremor)",
   "족저 근막염(Plantar Fasciitis)",
   "수족냉증(Coldness of hands and feet)",
@@ -624,7 +635,9 @@ List<String> diseases = <String>[
   "다발성 신경병증(Polyneuropathy)",
   "건초염(Tenosynovitis)",
   "염좌(sprain)",
-  "국소 다한증(Localized hyperhidrosis)",
+  "국소 다한증(Localized hyperhidrosis)"
+];
+List<String> stomach = [
   "제대 탈장(Umbilical hernia)",
   "기능성 위장 장애(Functional Gastrointestinal Disorder)",
   "신동맥 협착증(Renal artery stenosis)",
@@ -833,7 +846,9 @@ List<String> diseases = <String>[
   "이소성 췌장(Ectopic pancreas)",
   "췌장암(Pancreatic cancer)",
   "반티 증후군(Banti syndrome)",
-  "간문부 담관암(Klatskin's tumor)",
+  "간문부 담관암(Klatskin's tumor)"
+];
+List<String> organs = [
   "자궁내막암(Endometrial cancer)",
   "사춘기 조숙(Precocious puberty)",
   "외음질의 이물(Foreign body in vulva and vagina)",
@@ -914,7 +929,9 @@ List<String> diseases = <String>[
   "만성 전립선염(Chronic prostatitis)",
   "조루증(Premature ejaculation)",
   "자궁의 비염증성 장애(Noninflammatory disorders of uterus)",
-  "분만 후 출혈(Postpartum hemorrhage)",
+  "분만 후 출혈(Postpartum hemorrhage)"
+];
+List<String> hand = [
   "방아쇠 수지(Trigger finger)",
   "당뇨병성 말초신경병증(Diabetic polyneuropathy)",
   "골절 후 부정 유합, 불유합(Malunion & nonunion of fracture)",
@@ -944,10 +961,14 @@ List<String> diseases = <String>[
   "희발월경(Oligomenorrhea)",
   "손목 수근관 증후군(Carpal tunnel syndrome)",
   "국소 다한증(Localized hyperhidrosis)",
-  "듀피트렌 구축(Dupuytren's contracture)",
+  "듀피트렌 구축(Dupuytren's contracture)"
+];
+List<String> face = [
   "히스토플라즈마증(Histoplasmosis)",
   "사각턱(Prominent mandible angle)",
-  "돌출입(Class II malocclusion)",
+  "돌출입(Class II malocclusion)"
+];
+List<String> hip = [
   "요충증(Enterobiasis)",
   "항문 폐쇄증(Imperforate anus)",
   "항문 주위 농양(Perianal abscess)",
@@ -970,7 +991,9 @@ List<String> diseases = <String>[
   "변실금(Fecal incontinence)",
   "과립막 세포종(Granulosa cell tumor)",
   "욕창(Skin defect (and/or) soft tissue defect)",
-  "천추골 골절(sacral fracture)",
+  "천추골 골절(sacral fracture)"
+];
+List<String> breast = [
   "유방 농양(Abscess of breast)",
   "유선염(Mastitis)",
   "유방암(Breast cancer)",
@@ -986,7 +1009,9 @@ List<String> diseases = <String>[
   "유방의 미세석회화(Microcalcification of breast)",
   "파라핀종(Paraffinoma)",
   "유방의 엽상 종양(Benign phyllodes tumor of breast)",
-  "유방의 섬유선종(Fibroadenoma of breast)",
+  "유방의 섬유선종(Fibroadenoma of breast)"
+];
+List<String> mouth = [
   "턱관절 탈구(Luxation of the mandible)",
   "무치아증(Anodontia)",
   "안면 비대칭(Facial asymmetry)",
@@ -1025,7 +1050,9 @@ List<String> diseases = <String>[
   "설소대 단축증(Tongue tie)",
   "치근낭(Radicular cyst)",
   "RS바이러스 감염증(RS virus infection)",
-  "함몰 유두(Inverted nipple)",
+  "함몰 유두(Inverted nipple)"
+];
+List<String> body = [
   "각기병(Beriberi)",
   "18번 염색체 장완결실 증후군 (18q monosomy)",
   "괴혈병(scurvy)",
@@ -1373,7 +1400,9 @@ List<String> diseases = <String>[
   "렙토스피라증(Leptospirosis)",
   "스핑고 지질증(Other sphingolipidosis)",
   "당뇨병성 케톤산증 (Diabetic ketoacidosis)",
-  "가스 괴저(Gas gangrene)",
+  "가스 괴저(Gas gangrene)"
+];
+List<String> nose = [
   "비 변형(Nose deformity)",
   "비인두 종양(Nasopharyngeal tumor)",
   "비부비동 종양(Sinonasal Tumor)",
@@ -1393,7 +1422,9 @@ List<String> diseases = <String>[
   "안면 마비(Facial palsy)",
   "꽃가루 알레르기(Pollen allergy)",
   "디프테리아(Diphtheritia)",
-  "만성 부비동염(Chronic rhinosinusitis)",
+  "만성 부비동염(Chronic rhinosinusitis)"
+];
+List<String> arm = [
   "각기병(Beriberi)",
   "국소 다한증(Localized hyperhidrosis)",
   "근감소증(Sarcopenia)",
@@ -1427,7 +1458,9 @@ List<String> diseases = <String>[
   "통풍(Gout)",
   "당뇨병성 말초신경병증(Diabetic polyneuropathy)",
   "신경종(Neuroma)",
-  "VDT 증후군(Visual Display Terminal Syndrome)",
+  "VDT 증후군(Visual Display Terminal Syndrome)"
+];
+List<String> skin = [
   "습진(Eczema)",
   "수두(Varicella (chickenpox))",
   "수족구병(Hand, foot and mouth disease)",
@@ -1509,370 +1542,5 @@ List<String> diseases = <String>[
   "백반증(Vitiligo)",
   "풍진(Rubella(German measles))",
   "방선균증(Actinomycosis)",
-  "악성 흑색종(Malignant melanoma)",
+  "악성 흑색종(Malignant melanoma)"
 ];
-
-List<String> recentSearch = <String>[
-  "최근 1",
-  "최근 2",
-  "최근 3",
-  "최근 4",
-  "최근 5",
-  "최근 6",
-  "최근 7",
-  "최근 8",
-  "최근 9",
-  "최근 10",
-  "최근 11",
-  "최근 12",
-  "최근 13",
-  "최근 14",
-  "최근 15",
-];
-
-List<String> parts = <String>[
-  "가슴",
-  "골반",
-  "귀",
-  "기타",
-  "눈",
-  "다리",
-  "등/허리",
-  "머리",
-  "목",
-  "발",
-  "배",
-  "생식기",
-  "손",
-  "얼굴",
-  "엉덩이",
-  "유방",
-  "입",
-  "전신",
-  "코",
-  "팔",
-  "피부"
-];
-
-class DicionaryScreen extends StatelessWidget {
-  const DicionaryScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height; // 화면의 높이
-    double width = MediaQuery.of(context).size.width; // 화면의 가로
-    List<String> pokeywords = <String>[];
-    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
-      key: scaffoldKey,
-      drawer: const MainDrawer(),
-      // 상단 메뉴바, 제목, 검색관련 컨테이너
-      body: SingleChildScrollView(
-        physics: const NeverScrollableScrollPhysics(),
-        child: SizedBox(
-          child: Column(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  color: Colors.teal[500],
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                  ),
-                ),
-                padding: EdgeInsets.zero,
-                height: height * 0.35,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: height * 0.07,
-                    ),
-                    Row(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: width * 0.01,
-                            ),
-                            Column(
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    scaffoldKey.currentState?.openDrawer();
-                                  },
-                                  icon: const Icon(
-                                    Icons.menu,
-                                    size: 40,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: height * 0.023,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              width: width * 0.22,
-                            ),
-                            Column(
-                              children: [
-                                const Text(
-                                  '질환백과',
-                                  style: TextStyle(
-                                    fontSize: 28,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                const Text(
-                                  'dictionary of diseases',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w400,
-                                    fontStyle: FontStyle.italic,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: height * 0.02,
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                    // 검색 바
-                    Padding(
-                      padding: const EdgeInsets.all(
-                        15,
-                      ),
-                      child: TextField(
-                        textInputAction: TextInputAction.go,
-                        onSubmitted: (value) {},
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(8),
-                          isDense: true,
-                          filled: true,
-                          fillColor: Colors.white,
-                          iconColor: Colors.white,
-                          hintStyle: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey,
-                          ),
-                          hintText: 'Type a keyword',
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                            borderSide: BorderSide.none,
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          prefixIcon: const Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Icon(
-                              Icons.search,
-                              color: Colors.grey,
-                              size: 30,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Column(
-                      children: [
-                        SizedBox(height: height * 0.04),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(24.0),
-                              ),
-                              child: Material(
-                                borderRadius: BorderRadius.circular(24.0),
-                                color: Colors.teal[700],
-                                child: InkWell(
-                                  splashColor: Colors.teal[200],
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  onTap: () {
-                                    print("많이 찾는 질환");
-                                  },
-                                  child: SizedBox(
-                                    height: height * 0.045,
-                                    width: width * 0.45,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "많이 찾는 질환",
-                                          style: TextStyle(
-                                              color: Colors.teal[50],
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(24.0),
-                              ),
-                              child: Material(
-                                borderRadius: BorderRadius.circular(24.0),
-                                color: Colors.teal[900],
-                                child: InkWell(
-                                  splashColor: Colors.teal[200],
-                                  borderRadius: BorderRadius.circular(24.0),
-                                  onTap: () {
-                                    print("최근 검색 기록");
-                                  },
-                                  child: SizedBox(
-                                    height: height * 0.045,
-                                    width: width * 0.45,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "최근 검색 기록",
-                                          style: TextStyle(
-                                              color: Colors.teal[50],
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              // 경계 아래 부분
-              newMethod(context, height, width),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  SizedBox newMethod(BuildContext context, height, double width) {
-    return SizedBox(
-      height: height * 0.65,
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            for (String disease in diseases)
-              poKeyword(context, disease, height, width),
-            SizedBox(
-              height: height * 0.095,
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Container poKeyword(
-      BuildContext context, String disease, double height, double width) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Colors.grey.withOpacity(0.4)),
-        ),
-      ),
-      child: Material(
-        color: Colors.white,
-        child: InkWell(
-          splashColor: Colors.grey,
-          onTap: () {
-            DictionaryInfo().sendDataToJSP(context, disease);
-          },
-          child: SizedBox(
-            height: height * 0.0545,
-            width: width,
-            child: Padding(
-              padding: EdgeInsets.only(left: (width * 0.1)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    disease,
-                    style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// drawer
-class MainDrawer extends StatelessWidget {
-  const MainDrawer({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height; // 화면의 높이
-    return Drawer(
-      child: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: <Widget>[
-          const ListTile(
-            title: Text(
-              "부위별 질환 검색",
-              style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 26,
-                  fontWeight: FontWeight.w800),
-            ),
-          ),
-          for (String part in parts) drawerMenu(context, part),
-        ],
-      ),
-    );
-  }
-
-  ListTile drawerMenu(BuildContext context, menuName) {
-    return ListTile(
-      shape: const Border(bottom: BorderSide(color: Colors.grey)),
-      splashColor: Colors.teal[100],
-      trailing: Icon(
-        Icons.double_arrow,
-        color: Colors.teal[100],
-      ),
-      title: Text(
-        menuName,
-        style: const TextStyle(
-            color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
-      ),
-      onTap: () {
-        // Navigator.push(
-        //   context,
-        // );
-        print(menuName);
-      },
-    );
-  }
-}
