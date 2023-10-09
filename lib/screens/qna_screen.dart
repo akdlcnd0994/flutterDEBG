@@ -1,13 +1,14 @@
+import 'package:bard_api/bard_api.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/model/ChatMessagesModel.dart';
 import 'package:medicalapp/model/global_members.dart';
 import 'package:medicalapp/widget/chat/receiver_row_view.dart';
 import 'package:medicalapp/widget/chat/sender_row_view.dart';
 
-var chatBotImg =
-    'https://github.com/jongwon-kr/flutterDEBG/blob/main/lib/assets/chatbot.png?raw=true';
-var myQuestionImg =
-    'https://github.com/jongwon-kr/flutterDEBG/blob/main/lib/assets/yellow%20question%20mark.png?raw=true';
+var url =
+    'https://i.pinimg.com/736x/fd/6e/04/fd6e04548095d7f767917f344a904ff1.jpg';
+var urlTwo =
+    'https://sguru.org/wp-content/uploads/2017/03/cute-n-stylish-boys-fb-dp-2016.jpg';
 
 class QNAScreen extends StatefulWidget {
   const QNAScreen({Key? key}) : super(key: key);
@@ -46,8 +47,8 @@ class MyChatUIState extends State<QNAScreen> {
         leadingWidth: 10,
         title: ListTile(
           leading: CircleAvatar(
-            radius: 16,
-            backgroundImage: NetworkImage(chatBotImg),
+            radius: 18,
+            backgroundImage: NetworkImage(url),
           ),
           title: const Text(
             'Q&A',
@@ -132,21 +133,21 @@ class MyChatUIState extends State<QNAScreen> {
                 ),
                 GestureDetector(
                   // send 버튼 한번 누르기
-                  onTap: () {
+                  onTap: () async {
+                    final bard = ChatBot(
+                        sessionId:
+                            "bwjGxmcF-HqxN5N4ELL3gR9BM-qLsqfYcCaVvorhNstMksOb8y1CS2rtNHAhaiMzXqBoDw.");
+                    final result = bard.ask("Hello?");
+                    print(result);
                     setState(() {
                       chatModelList.add(ChatModel(controller.text, true));
                       animateList();
                       controller.clear();
+
+                      //controller.text를 함수로 보내고 값을 돌려받은 뒤 onLongPress의 함수로 보내기
                     });
                   },
-                  // send 버튼 길게 누르기
-                  onLongPress: () {
-                    setState(() {
-                      chatModelList.add(ChatModel(controller.text, false));
-                      animateList();
-                      controller.clear();
-                    });
-                  },
+
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 8, right: 8),
                     child: CircleAvatar(
