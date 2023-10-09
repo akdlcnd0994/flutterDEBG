@@ -38,7 +38,7 @@ class SenderRowView extends StatelessWidget {
         ),
       ),
       trailing: CircleAvatar(
-        backgroundImage: NetworkImage(urlTwo),
+        backgroundImage: NetworkImage(myQuestionImg),
       ),
     );
   }

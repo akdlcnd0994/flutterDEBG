@@ -18,7 +18,7 @@ class ReceiverRowView extends StatelessWidget {
       leading: Padding(
         padding: const EdgeInsets.only(bottom: 10),
         child: CircleAvatar(
-          backgroundImage: NetworkImage(url),
+          backgroundImage: NetworkImage(chatBotImg),
         ),
       ),
       title: Wrap(children: [
