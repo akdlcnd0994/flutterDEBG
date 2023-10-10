@@ -59,29 +59,30 @@ class _ChatScreenState extends State<ChatScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             StreamBuilder(
-                stream: _firestore
-                    .collection('messages')
-                    .orderBy('createdAt', descending: true)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else {
-                    final message = snapshot.data?.docs;
-                    List<MessageBubble> messages = [];
-                    for (var msg in message!) {
-                      final messageTxt = (msg.data())['text'];
-                      final messageSender = (msg.data())['sender'];
-                      final currentUser = loggedInUser.email;
-                      messages.add(MessageBubble(
-                          messageTxt: messageTxt,
-                          messageSender: messageSender,
-                          isMe: currentUser == messageSender));
-                    }
-                    return Expanded(
-                        child: ListView(reverse: true, children: messages));
+              stream: _firestore
+                  .collection('messages')
+                  .orderBy('createdAt', descending: true)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  final message = snapshot.data?.docs;
+                  List<MessageBubble> messages = [];
+                  for (var msg in message!) {
+                    final messageTxt = (msg.data())['text'];
+                    final messageSender = (msg.data())['sender'];
+                    final currentUser = loggedInUser.email;
+                    messages.add(MessageBubble(
+                        messageTxt: messageTxt,
+                        messageSender: messageSender,
+                        isMe: currentUser == messageSender));
                   }
-                }),
+                  return Expanded(
+                      child: ListView(reverse: true, children: messages));
+                }
+              },
+            ),
             Container(
               decoration: kMessageContainerDecoration,
               child: Row(

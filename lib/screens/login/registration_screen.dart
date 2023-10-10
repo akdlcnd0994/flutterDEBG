@@ -71,9 +71,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         showSpinner = false;
                       });
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ChatScreen()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const ChatScreen(),
+                        ),
+                      );
                       print('Successfully Created');
                     });
                   } catch (e) {

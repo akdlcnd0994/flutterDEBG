@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medicalapp/screens/login/welcome_screen.dart';
 
 class MyInfoScreen extends StatelessWidget {
   const MyInfoScreen({super.key});
@@ -67,7 +68,12 @@ class MyInfoScreen extends StatelessWidget {
                     splashColor: Colors.white,
                     borderRadius: BorderRadius.circular(24.0),
                     onTap: () {
-                      Navigator.pushNamed(context, '/login');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const WelcomeScreen(),
+                        ),
+                      );
                     },
                     child: SizedBox(
                       height: height * 0.06,

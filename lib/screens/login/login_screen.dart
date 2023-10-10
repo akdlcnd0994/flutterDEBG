@@ -17,7 +17,7 @@ class LoginScreenState extends State<LoginScreen> {
   bool showSpinner = false;
   String email = '';
   String password = '';
-  final _auth = FirebaseAuth.instance;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -54,30 +54,39 @@ class LoginScreenState extends State<LoginScreen> {
               height: 24.0,
             ),
             ElevatedButton(
-                child: const Text('Log in'),
-                onPressed: () async {
-                  setState(() {
-                    showSpinner = true;
-                  });
-                  //Login to existing account
-                  try {
-                    await _auth
-                        .signInWithEmailAndPassword(
-                            email: email, password: password)
-                        .then((value) {
-                      setState(() {
-                        showSpinner = false;
-                      });
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const ChatScreen()));
+              child: const Text('Log in'),
+              onPressed: () async {
+                setState(() {
+                  showSpinner = true;
+                });
+                //Login to existing account
+                try {
+                  await _auth
+                      .signInWithEmailAndPassword(
+                          email: email, password: password)
+                      .then((value) {
+                    setState(() {
+                      showSpinner = false;
                     });
-                    print('Successfully Login');
-                  } catch (e) {
-                    print(e);
+                    value.user!.emailVerified == true
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ChatScreen()))
+                        : print(_auth.currentUser);
+                    return value;
+                  });
+                } on FirebaseAuthException catch (e) {
+                  if (e.code == 'user-not-found') {
+                    print('등록되지 않은 이메일입니다');
+                  } else if (e.code == 'wrong-password') {
+                    print('비밀번호가 틀렸습니다');
+                  } else {
+                    print(e.code);
                   }
-                }),
+                }
+              },
+            ),
           ],
         ),
       ),
