@@ -22,7 +22,17 @@ class DictionaryInfo {
 
     if (response.statusCode == 200) {
       // 전송 성공 시 처리할 내용을 작성해주세요
-      List<String> temp = response.body.split("\n");
+
+      String t = response.body;
+
+      t = t.replaceAll(RegExp('[\r\n]'), "");
+
+      t = t.split('㉿')[0];
+      List<String> temp = t.split("㉾");
+
+      for (String a in temp) {
+        print("info = $a");
+      }
 
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => HealthInfoScreen(temp)));

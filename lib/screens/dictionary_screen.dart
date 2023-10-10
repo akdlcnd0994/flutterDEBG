@@ -1,24 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:medicalapp/http/dictionaryInfo.dart';
+import 'package:medicalapp/http/ranking.dart';
+import 'package:medicalapp/screens/health_info_list_screen.dart';
 
-List<String> diseases = <String>[
-  "질환 1",
-  "질환 2",
-  "질환 3",
-  "질환 4",
-  "질환 5",
-  "질환 6",
-  "질환 7",
-  "질환 8",
-  "질환 9",
-  "질환 10",
-  "질환 11",
-  "질환 12",
-  "질환 13",
-  "질환 14",
-  "질환 15",
-];
-
+List<String> diseases = <String>[];
 List<String> recentSearch = <String>[
   "최근 1",
   "최근 2",
@@ -61,14 +46,21 @@ List<String> parts = <String>[
   "피부"
 ];
 
-class DicionaryScreen extends StatelessWidget {
+class DicionaryScreen extends StatefulWidget {
   const DicionaryScreen({super.key});
 
+  @override
+  State<DicionaryScreen> createState() => _DicionaryScreenState();
+}
+
+class _DicionaryScreenState extends State<DicionaryScreen> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
     double width = MediaQuery.of(context).size.width; // 화면의 가로
-    List<String> pokeywords = <String>[];
+
+    SizedBox myBox = newMethod(context, height, width);
+    // List<String> pokeywords = <String>[];
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -208,7 +200,25 @@ class DicionaryScreen extends StatelessWidget {
                                   splashColor: Colors.teal[200],
                                   borderRadius: BorderRadius.circular(24.0),
                                   onTap: () {
-                                    print("많이 찾는 질환");
+                                    fetchData().then((data) {
+                                      Future<String> rank;
+                                      String r;
+                                      rank = Ranking().sendDataToJSP();
+
+                                      rank.then(
+                                        (String value) {
+                                          r = value;
+                                          r = r.replaceAll(
+                                              RegExp('[\r\n]'), "");
+                                          diseases = r.split("㉾");
+                                          print(diseases);
+                                          setState(() {
+                                            myBox = newMethod(
+                                                context, height, width);
+                                          });
+                                        },
+                                      );
+                                    });
                                   },
                                   child: SizedBox(
                                     height: height * 0.045,
@@ -271,12 +281,20 @@ class DicionaryScreen extends StatelessWidget {
                 ),
               ),
               // 경계 아래 부분
-              newMethod(context, height, width),
+              myBox,
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<String> fetchData() async {
+    Future<String> rank;
+    String r;
+    rank = Ranking().sendDataToJSP();
+
+    return rank;
   }
 
   SizedBox newMethod(BuildContext context, height, double width) {
@@ -287,7 +305,7 @@ class DicionaryScreen extends StatelessWidget {
         child: Column(
           children: [
             for (String disease in diseases)
-              poKeyword(context, disease, height, width),
+              if (disease != '') poKeyword(context, disease, height, width),
             SizedBox(
               height: height * 0.095,
             )
@@ -375,10 +393,10 @@ class MainDrawer extends StatelessWidget {
             color: Colors.black, fontSize: 16, fontWeight: FontWeight.w600),
       ),
       onTap: () {
-        // Navigator.push(
-        //   context,
-        // );
-        print(menuName);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => HealthInfoListScreen(menuName)));
       },
     );
   }
