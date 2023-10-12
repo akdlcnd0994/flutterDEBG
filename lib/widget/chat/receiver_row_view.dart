@@ -41,7 +41,8 @@ class ReceiverRowView extends StatelessWidget {
       ),
       subtitle: const Padding(
         padding: EdgeInsets.only(left: 8, top: 4),
-        child: Text('8:04 AM', style: TextStyle(fontSize: 10)),
+        child: Text(DateFormat('aa hh:mm').format(DateTime.now()),
+            style: TextStyle(fontSize: 10)),
       ),
     );
   }
