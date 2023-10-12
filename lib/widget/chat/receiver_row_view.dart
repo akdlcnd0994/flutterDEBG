@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:medicalapp/model/global_members.dart';
 import 'package:medicalapp/screens/qna_screen.dart';
 import 'package:http/http.dart' as http;
@@ -39,10 +40,10 @@ class ReceiverRowView extends StatelessWidget {
       trailing: Container(
         width: 50,
       ),
-      subtitle: const Padding(
-        padding: EdgeInsets.only(left: 8, top: 4),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(left: 8, top: 4),
         child: Text(DateFormat('aa hh:mm').format(DateTime.now()),
-            style: TextStyle(fontSize: 10)),
+            style: const TextStyle(fontSize: 10)),
       ),
     );
   }
