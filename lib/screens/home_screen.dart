@@ -1,7 +1,40 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  static String id = "chat_screen";
+
   const HomeScreen({super.key});
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final messageTextController = TextEditingController();
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  late User loggedInUser;
+  late String messageText;
+
+  @override
+  void initState() {
+    getCurrentUser();
+    super.initState();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +52,10 @@ class HomeScreen extends StatelessWidget {
           padding: EdgeInsets.all(8.0),
         ),
         leadingWidth: 10,
-        title: const ListTile(
+        title: ListTile(
           title: Text(
-            'Home',
-            style: TextStyle(
+            "${loggedInUser.email}님 어서오세요",
+            style: const TextStyle(
                 fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
@@ -128,6 +161,57 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class MessageBubble extends StatelessWidget {
+  final String messageTxt;
+  final String messageSender;
+  final bool isMe;
+
+  const MessageBubble(
+      {Key? key,
+      required this.messageTxt,
+      required this.messageSender,
+      required this.isMe})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment:
+          isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      children: [
+        Text(
+          messageSender,
+          style: const TextStyle(color: Colors.black54, fontSize: 12),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Material(
+            elevation: 5.0,
+            borderRadius: BorderRadius.only(
+                topLeft: isMe
+                    ? const Radius.circular(30.0)
+                    : const Radius.circular(0),
+                bottomLeft: const Radius.circular(30.0),
+                bottomRight: const Radius.circular(30.0),
+                topRight: isMe
+                    ? const Radius.circular(0)
+                    : const Radius.circular(30)),
+            color: isMe ? Colors.lightBlueAccent : Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Text(
+                messageTxt,
+                style: TextStyle(
+                    color: isMe ? Colors.white : Colors.black54, fontSize: 20),
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
