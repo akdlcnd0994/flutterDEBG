@@ -14,10 +14,11 @@ class RegistrationScreen extends StatefulWidget {
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
   bool showSpinner = false;
-  String email = '';
-  String password = '';
+  String _email = '';
+  String _password = '';
   final _auth = FirebaseAuth.instance;
-
+  String get email => _email;
+  String get password => _password;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +36,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               textAlign: TextAlign.center,
               keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
-                email = value;
+                _email = value;
               },
               decoration:
                   kTextFieldDecoration.copyWith(hintText: 'Enter your email '),
@@ -47,7 +48,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
               textAlign: TextAlign.center,
               obscureText: true,
               onChanged: (value) {
-                password = value;
+                _password = value;
               },
               decoration: kTextFieldDecoration.copyWith(
                   hintText: 'Enter your password '),
