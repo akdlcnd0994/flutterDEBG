@@ -47,14 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         elevation: 0,
         titleSpacing: 10,
-        backgroundColor: const Color.fromARGB(255, 211, 218, 224),
+        backgroundColor: const Color.fromARGB(255, 189, 219, 244),
         leading: const Padding(
           padding: EdgeInsets.all(8.0),
         ),
         leadingWidth: 10,
         title: ListTile(
           title: Text(
-            "${loggedInUser.email}님 어서오세요",
+            "${loggedInUser.email?.split("@")[0]}님 어서오세요",
             style: const TextStyle(
                 fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
           ),
@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: Container(
-        color: const Color.fromARGB(255, 211, 218, 224),
+        color: const Color.fromARGB(255, 210, 229, 245),
         child: ListView(
           children: <Widget>[
             Column(
@@ -100,23 +100,36 @@ class _HomeScreenState extends State<HomeScreen> {
                     Container(
                       padding: const EdgeInsets.all(10),
                       height: height * 0.15,
-                      width: width * 0.425,
+                      width: width * 0.27,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15),
                       ),
+                      child: const Text("문진"),
                     ),
                     Container(
                       padding: const EdgeInsets.all(10),
                       height: height * 0.15,
-                      width: width * 0.425,
+                      width: width * 0.27,
                       decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                    )
+                      child: const Text("아두이노 일일검진"),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      height: height * 0.15,
+                      width: width * 0.27,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: const Text("OX퀴즈"),
+                    ),
                   ],
                 ),
                 SizedBox(
