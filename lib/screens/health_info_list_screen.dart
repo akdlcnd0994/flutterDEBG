@@ -4,14 +4,20 @@ import 'package:medicalapp/model/diseaseModel.dart';
 
 class HealthInfoListScreen extends StatelessWidget {
   final String part;
+  final String keyword;
   List<String> list = [];
-  HealthInfoListScreen(this.part, {super.key});
+  HealthInfoListScreen(this.part, this.keyword, {super.key});
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
     double width = MediaQuery.of(context).size.width; // 화면의 가로
-    choice();
+    if (part != '') {
+      choice();
+    } else {
+      search();
+    }
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
@@ -56,6 +62,15 @@ class HealthInfoListScreen extends StatelessWidget {
               )
           ],
         ));
+  }
+
+  void search() {
+    // all에 포함되어있는 것만 찾아내서 list에 추가
+    for (String str in all) {
+      if (str.contains(keyword)) {
+        list.add(str);
+      }
+    }
   }
 
   void choice() {

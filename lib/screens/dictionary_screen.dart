@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medicalapp/http/dictionaryInfo.dart';
 import 'package:medicalapp/http/ranking.dart';
 import 'package:medicalapp/screens/health_info_list_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 List<String> diseases = <String>[];
 List<String> recentSearch = <String>[
@@ -45,6 +46,8 @@ List<String> parts = <String>[
   "팔",
   "피부"
 ];
+late SharedPreferences prefs;
+List<String> recent = [];
 
 class DicionaryScreen extends StatefulWidget {
   const DicionaryScreen({super.key});
@@ -54,12 +57,24 @@ class DicionaryScreen extends StatefulWidget {
 }
 
 class _DicionaryScreenState extends State<DicionaryScreen> {
+  void checkPrefs() async {
+    prefs = await SharedPreferences.getInstance();
+    String? temp = prefs.getString('recent');
+
+    if (temp != null) {
+      print(temp);
+      recent = temp.split('\n');
+    }
+  }
+
+  SizedBox myBox = const SizedBox();
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
     double width = MediaQuery.of(context).size.width; // 화면의 가로
 
-    SizedBox myBox = newMethod(context, height, width);
+    checkPrefs();
+
     // List<String> pokeywords = <String>[];
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey();
     return Scaffold(
@@ -152,7 +167,19 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
                       ),
                       child: TextField(
                         textInputAction: TextInputAction.go,
-                        onSubmitted: (value) {},
+                        onSubmitted: (value) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      HealthInfoListScreen('', value)));
+                          recent.add(value);
+                          String temp = '';
+                          for (String str in recent) {
+                            temp += '\n$str';
+                          }
+                          prefs.setString('recent', temp);
+                        },
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.all(8),
@@ -214,7 +241,7 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
                                           print(diseases);
                                           setState(() {
                                             myBox = newMethod(
-                                                context, height, width);
+                                                context, height, width, true);
                                           });
                                         },
                                       );
@@ -251,7 +278,10 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
                                   splashColor: Colors.teal[200],
                                   borderRadius: BorderRadius.circular(24.0),
                                   onTap: () {
-                                    print("최근 검색 기록");
+                                    setState(() {
+                                      myBox = newMethod(
+                                          context, height, width, false);
+                                    });
                                   },
                                   child: SizedBox(
                                     height: height * 0.045,
@@ -291,28 +321,47 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
 
   Future<String> fetchData() async {
     Future<String> rank;
-    String r;
     rank = Ranking().sendDataToJSP();
 
     return rank;
   }
 
-  SizedBox newMethod(BuildContext context, height, double width) {
-    return SizedBox(
-      height: height * 0.65,
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            for (String disease in diseases)
-              if (disease != '') poKeyword(context, disease, height, width),
-            SizedBox(
-              height: height * 0.095,
-            )
-          ],
+  SizedBox newMethod(BuildContext context, height, double width, bool tf) {
+    SizedBox sb = const SizedBox();
+    if (tf) {
+      sb = SizedBox(
+        height: height * 0.65,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              for (String disease in diseases)
+                if (disease != '') poKeyword(context, disease, height, width),
+              SizedBox(
+                height: height * 0.095,
+              )
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      sb = SizedBox(
+        height: height * 0.65,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(
+            children: [
+              for (String str in recent)
+                if (str != '') poKeyword(context, str, height, width),
+              SizedBox(
+                height: height * 0.095,
+              )
+            ],
+          ),
+        ),
+      );
+    }
+    return sb;
   }
 
   Container poKeyword(
@@ -396,7 +445,7 @@ class MainDrawer extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => HealthInfoListScreen(menuName)));
+                builder: (context) => HealthInfoListScreen(menuName, '')));
       },
     );
   }
