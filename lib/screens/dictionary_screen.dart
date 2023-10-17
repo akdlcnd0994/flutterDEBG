@@ -65,6 +65,8 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
       print(temp);
       recent = temp.split('\n');
     }
+
+    recent = recent.reversed.toList();
   }
 
   SizedBox myBox = const SizedBox();

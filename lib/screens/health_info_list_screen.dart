@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:medicalapp/http/dictionaryInfo.dart';
 import 'package:medicalapp/model/diseaseModel.dart';
 
+//ignore: must_be_immutable
 class HealthInfoListScreen extends StatelessWidget {
   final String part;
   final String keyword;
@@ -26,7 +27,7 @@ class HealthInfoListScreen extends StatelessWidget {
         ),
         body: ListView(
           children: <Widget>[
-            for (String dis in list)
+            for (int i = 0; i < list.length && i < 10; i++)
               Container(
                 decoration: BoxDecoration(
                   border: Border(
@@ -38,7 +39,7 @@ class HealthInfoListScreen extends StatelessWidget {
                   child: InkWell(
                     splashColor: Colors.grey,
                     onTap: () {
-                      DictionaryInfo().sendDataToJSP(context, dis);
+                      DictionaryInfo().sendDataToJSP(context, list[i]);
                     },
                     child: SizedBox(
                       height: height * 0.0545,
@@ -49,7 +50,7 @@ class HealthInfoListScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              dis,
+                              list[i],
                               style: const TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.w600),
                             ),
@@ -71,6 +72,7 @@ class HealthInfoListScreen extends StatelessWidget {
         list.add(str);
       }
     }
+    list = list.toSet().toList();
   }
 
   void choice() {
