@@ -8,18 +8,18 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsFlutterBinding.ensureInitialized();
-    return MaterialApp(
-      routes: const {
-        //'/login': (context) => LoginScreen();
-      },
-      theme: ThemeData(
-        textTheme: const TextTheme(
-          titleMedium: TextStyle(color: Colors.black),
+      WidgetsFlutterBinding.ensureInitialized();
+      return MaterialApp(
+        routes: const {
+          //'/login': (context) => LoginScreen();
+        },
+        theme: ThemeData(
+          textTheme: const TextTheme(
+            titleMedium: TextStyle(color: Colors.black),
+          ),
         ),
-      ),
-      home: NavigationScreen(),
-      debugShowCheckedModeBanner: false,
+        home: NavigationScreen(),
+        debugShowCheckedModeBanner: false,
     );
   }
 }
