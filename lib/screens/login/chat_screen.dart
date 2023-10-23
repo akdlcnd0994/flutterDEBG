@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:medicalapp/screens/login/constants.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -70,10 +71,12 @@ class _ChatScreenState extends State<ChatScreen> {
                   final message = snapshot.data?.docs;
                   List<MessageBubble> messages = [];
                   for (var msg in message!) {
+                    final msgTime = (msg.data())['msgTime'];
                     final messageTxt = (msg.data())['text'];
                     final messageSender = (msg.data())['sender'];
                     final currentUser = loggedInUser.email;
                     messages.add(MessageBubble(
+                        msgTime: msgTime,
                         messageTxt: messageTxt,
                         messageSender: messageSender,
                         isMe: currentUser == messageSender));
@@ -102,6 +105,9 @@ class _ChatScreenState extends State<ChatScreen> {
                       messageTextController.clear();
                       _firestore.collection('messages').add(
                         {
+                          'msgTime': DateFormat('aa hh:mm')
+                              .format(DateTime.now())
+                              .toString(),
                           'text': messageText,
                           'sender': loggedInUser.email,
                           'createdAt': DateTime.now(),
@@ -126,14 +132,16 @@ class _ChatScreenState extends State<ChatScreen> {
 class MessageBubble extends StatelessWidget {
   final String messageTxt;
   final String messageSender;
+  final String msgTime;
   final bool isMe;
 
-  const MessageBubble(
-      {Key? key,
-      required this.messageTxt,
-      required this.messageSender,
-      required this.isMe})
-      : super(key: key);
+  const MessageBubble({
+    Key? key,
+    required this.messageTxt,
+    required this.messageSender,
+    required this.isMe,
+    required this.msgTime,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -143,6 +151,10 @@ class MessageBubble extends StatelessWidget {
       children: [
         Text(
           messageSender,
+          style: const TextStyle(color: Colors.black54, fontSize: 12),
+        ),
+        Text(
+          "$msgTime ",
           style: const TextStyle(color: Colors.black54, fontSize: 12),
         ),
         Padding(

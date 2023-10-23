@@ -16,6 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final messageTextController = TextEditingController();
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
+  late bool isLogin = false;
   late User loggedInUser;
   late String messageText;
 
@@ -30,6 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
       final user = _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
+        isLogin = true;
+      } else {
+        isLogin = false;
       }
     } catch (e) {
       print(e);
@@ -220,6 +224,64 @@ class MessageBubble extends StatelessWidget {
                 messageTxt,
                 style: TextStyle(
                     color: isMe ? Colors.white : Colors.black54, fontSize: 20),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class DailyQuiz extends StatelessWidget {
+  final String messageTxt;
+  final String messageSender;
+  final String msgTime;
+  final bool isLogin;
+
+  const DailyQuiz({
+    Key? key,
+    required this.messageTxt,
+    required this.messageSender,
+    required this.isLogin,
+    required this.msgTime,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment:
+          isLogin ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      children: [
+        Text(
+          messageSender,
+          style: const TextStyle(color: Colors.black54, fontSize: 12),
+        ),
+        Text(
+          "$msgTime ",
+          style: const TextStyle(color: Colors.black54, fontSize: 12),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Material(
+            elevation: 5.0,
+            borderRadius: BorderRadius.only(
+                topLeft: isLogin
+                    ? const Radius.circular(30.0)
+                    : const Radius.circular(0),
+                bottomLeft: const Radius.circular(30.0),
+                bottomRight: const Radius.circular(30.0),
+                topRight: isLogin
+                    ? const Radius.circular(0)
+                    : const Radius.circular(30)),
+            color: isLogin ? Colors.lightBlueAccent : Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+              child: Text(
+                messageTxt,
+                style: TextStyle(
+                    color: isLogin ? Colors.white : Colors.black54,
+                    fontSize: 20),
               ),
             ),
           ),

@@ -68,12 +68,12 @@ class LoginScreenState extends State<LoginScreen> {
                     setState(() {
                       showSpinner = false;
                     });
-                    value.user!.emailVerified == true
-                        ? Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const ChatScreen()))
-                        : print(_auth.currentUser);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChatScreen(),
+                      ),
+                    );
                     return value;
                   });
                 } on FirebaseAuthException catch (e) {
