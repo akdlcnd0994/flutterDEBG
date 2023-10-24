@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -35,9 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         isLogin = false;
       }
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   @override
@@ -81,16 +81,87 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: height * 0.02,
                 ),
-                Container(
-                  padding: const EdgeInsets.all(10),
-                  height: height * 0.15,
-                  width: width * 0.90,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.rectangle,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
+                StreamBuilder(
+                    stream: _firestore
+                        .collection('quiz')
+                        .orderBy('id', descending: false)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else {
+                        int selectQuiz = Random().nextInt(14);
+                        final quiz = snapshot.data?.docs;
+                        List<DailyQuiz> quizs = [];
+                        for (var q in quiz!) {
+                          final id = (q.data())['id'];
+                          final quiz = (q.data())['quiz'];
+                          final answer = (q.data())['answer'];
+                          final comment = (q.data())['comment'];
+                          quizs.add(DailyQuiz(
+                            id: id,
+                            quiz: quiz,
+                            answer: answer,
+                            comment: comment,
+                            isLogin: isLogin,
+                          ));
+                        }
+                        return Container(
+                            padding: const EdgeInsets.all(10),
+                            width: width * 0.90,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.rectangle,
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Column(
+                              children: [
+                                Text(
+                                  "OX 퀴즈",
+                                  style: TextStyle(
+                                      color: Colors.teal[800],
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                quizs.elementAt(selectQuiz),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        if (quizs
+                                                .elementAt(selectQuiz)
+                                                .answer ==
+                                            "O") {
+                                          print("correct");
+                                        } else {
+                                          print("wrong");
+                                        }
+                                      },
+                                      icon: const Icon(Icons.circle_outlined),
+                                      iconSize: 35,
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        if (quizs
+                                                .elementAt(selectQuiz)
+                                                .answer ==
+                                            "X") {
+                                          print("correct");
+                                        } else {
+                                          print("wrong");
+                                        }
+                                      },
+                                      icon: const Icon(Icons.close),
+                                      iconSize: 40,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ));
+                      }
+                    }),
                 SizedBox(
                   height: height * 0.02,
                 )
@@ -182,107 +253,34 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-class MessageBubble extends StatelessWidget {
-  final String messageTxt;
-  final String messageSender;
-  final bool isMe;
+class DailyQuiz extends StatelessWidget {
+  final int id;
+  final String quiz;
+  final String answer;
+  final String comment;
+  final bool isLogin;
 
-  const MessageBubble(
+  const DailyQuiz(
       {Key? key,
-      required this.messageTxt,
-      required this.messageSender,
-      required this.isMe})
+      required this.isLogin,
+      required this.id,
+      required this.quiz,
+      required this.answer,
+      required this.comment})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment:
-          isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          messageSender,
-          style: const TextStyle(color: Colors.black54, fontSize: 12),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Material(
-            elevation: 5.0,
-            borderRadius: BorderRadius.only(
-                topLeft: isMe
-                    ? const Radius.circular(30.0)
-                    : const Radius.circular(0),
-                bottomLeft: const Radius.circular(30.0),
-                bottomRight: const Radius.circular(30.0),
-                topRight: isMe
-                    ? const Radius.circular(0)
-                    : const Radius.circular(30)),
-            color: isMe ? Colors.lightBlueAccent : Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: Text(
-                messageTxt,
-                style: TextStyle(
-                    color: isMe ? Colors.white : Colors.black54, fontSize: 20),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class DailyQuiz extends StatelessWidget {
-  final String messageTxt;
-  final String messageSender;
-  final String msgTime;
-  final bool isLogin;
-
-  const DailyQuiz({
-    Key? key,
-    required this.messageTxt,
-    required this.messageSender,
-    required this.isLogin,
-    required this.msgTime,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment:
-          isLogin ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-      children: [
-        Text(
-          messageSender,
-          style: const TextStyle(color: Colors.black54, fontSize: 12),
-        ),
-        Text(
-          "$msgTime ",
-          style: const TextStyle(color: Colors.black54, fontSize: 12),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Material(
-            elevation: 5.0,
-            borderRadius: BorderRadius.only(
-                topLeft: isLogin
-                    ? const Radius.circular(30.0)
-                    : const Radius.circular(0),
-                bottomLeft: const Radius.circular(30.0),
-                bottomRight: const Radius.circular(30.0),
-                topRight: isLogin
-                    ? const Radius.circular(0)
-                    : const Radius.circular(30)),
-            color: isLogin ? Colors.lightBlueAccent : Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              child: Text(
-                messageTxt,
-                style: TextStyle(
-                    color: isLogin ? Colors.white : Colors.black54,
-                    fontSize: 20),
-              ),
+        Material(
+          color: Colors.white,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+            child: Text(
+              "Q. $quiz",
+              style: const TextStyle(color: Colors.black, fontSize: 20),
             ),
           ),
         ),

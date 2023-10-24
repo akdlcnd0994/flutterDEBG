@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:medicalapp/screens/login/welcome_screen.dart';
 
-class MyInfoScreen extends StatelessWidget {
+class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({super.key});
 
+  @override
+  State<MyInfoScreen> createState() => _MyInfoScreenState();
+}
+
+class _MyInfoScreenState extends State<MyInfoScreen> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
