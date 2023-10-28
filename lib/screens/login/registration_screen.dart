@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/screens/login/chat_screen.dart';
@@ -16,6 +17,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   bool showSpinner = false;
   String _email = '';
   String _password = '';
+
+  late final userPoint = <String, dynamic>{
+    "email": _email,
+    "point": 0,
+  };
+  final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   String get email => _email;
   String get password => _password;
@@ -78,6 +85,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         ),
                       );
                       print('Successfully Created');
+                      _firestore
+                          .collection("mileages")
+                          .doc(_email)
+                          .set(
+                            userPoint,
+                            SetOptions(merge: true),
+                          )
+                          .onError(
+                            (e, _) => print("Error:$e"),
+                          );
                     });
                   } catch (e) {
                     print(e);

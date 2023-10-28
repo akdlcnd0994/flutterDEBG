@@ -21,6 +21,14 @@ class _HomeScreenState extends State<HomeScreen> {
   late bool isLogin = false;
   late User loggedInUser;
   late String messageText;
+  late String email;
+  late int point = 0;
+  bool quizSolve = false;
+  late bool quizResult;
+  late final userPoint = <String, dynamic>{
+    "email": email,
+    "point": point,
+  };
 
   @override
   void initState() {
@@ -34,6 +42,12 @@ class _HomeScreenState extends State<HomeScreen> {
       if (user != null) {
         loggedInUser = user;
         isLogin = true;
+        email = loggedInUser.email!;
+        _firestore
+            .collection("mileages")
+            .doc(loggedInUser.email)
+            .get()
+            .then((value) => userPoint["point"] = value.data()?["point"]);
       } else {
         isLogin = false;
       }
@@ -44,6 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
     double width = MediaQuery.of(context).size.width; // 화면의 가로
+    int selectQuiz = Random().nextInt(14);
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 40,
@@ -90,7 +106,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       if (!snapshot.hasData) {
                         return const Center(child: CircularProgressIndicator());
                       } else {
-                        int selectQuiz = Random().nextInt(14);
                         final quiz = snapshot.data?.docs;
                         List<DailyQuiz> quizs = [];
                         for (var q in quiz!) {
@@ -98,68 +113,29 @@ class _HomeScreenState extends State<HomeScreen> {
                           final quiz = (q.data())['quiz'];
                           final answer = (q.data())['answer'];
                           final comment = (q.data())['comment'];
-                          quizs.add(DailyQuiz(
-                            id: id,
-                            quiz: quiz,
-                            answer: answer,
-                            comment: comment,
-                            isLogin: isLogin,
-                          ));
+                          quizs.add(
+                            DailyQuiz(
+                              id: id,
+                              quiz: quiz,
+                              answer: answer,
+                              comment: comment,
+                              isLogin: isLogin,
+                            ),
+                          );
                         }
                         return Container(
-                            padding: const EdgeInsets.all(10),
-                            width: width * 0.90,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.rectangle,
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Column(
-                              children: [
-                                Text(
-                                  "OX 퀴즈",
-                                  style: TextStyle(
-                                      color: Colors.teal[800],
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                                quizs.elementAt(selectQuiz),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        if (quizs
-                                                .elementAt(selectQuiz)
-                                                .answer ==
-                                            "O") {
-                                          print("correct");
-                                        } else {
-                                          print("wrong");
-                                        }
-                                      },
-                                      icon: const Icon(Icons.circle_outlined),
-                                      iconSize: 35,
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        if (quizs
-                                                .elementAt(selectQuiz)
-                                                .answer ==
-                                            "X") {
-                                          print("correct");
-                                        } else {
-                                          print("wrong");
-                                        }
-                                      },
-                                      icon: const Icon(Icons.close),
-                                      iconSize: 40,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ));
+                          padding: const EdgeInsets.all(10),
+                          width: width * 0.90,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                          child: quizSolve
+                              ? quizAnswer(
+                                  quizResult, height, quizs, selectQuiz)
+                              : OXquiz(quizs, selectQuiz),
+                        );
                       }
                     }),
                 SizedBox(
@@ -249,6 +225,124 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  Column quizAnswer(quizResult, height, quizs, selectQuiz) {
+    return Column(
+      children: [
+        SizedBox(
+          height: quizResult ? null : height * 0.01,
+        ),
+        Text(
+          quizResult ? "정답입니다!" : "오답입니다..",
+          style: const TextStyle(fontSize: 18),
+        ),
+        SizedBox(
+          height: height * 0.03,
+        ),
+        Text(
+          quizResult ? "" : "Fact",
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
+        ),
+        SizedBox(
+          height: quizResult ? null : height * 0.01,
+        ),
+        Text(quizResult
+            ? "100point가 적립되었습니다!"
+            : quizs.elementAt(selectQuiz).comment),
+        SizedBox(
+          height: height * 0.01,
+        ),
+        IconButton(
+          onPressed: () {
+            quizSolve = false;
+            print(quizSolve);
+            setState(() {});
+          },
+          icon: Icon(
+            Icons.check,
+            color: Colors.teal[800],
+          ),
+          iconSize: 40,
+        ),
+      ],
+    );
+  }
+
+  Column OXquiz(List<DailyQuiz> quizs, int selectQuiz) {
+    return Column(
+      children: [
+        Text(
+          "OX 퀴즈",
+          style: TextStyle(
+              color: Colors.teal[800],
+              fontSize: 24,
+              fontWeight: FontWeight.w600),
+        ),
+        quizs.elementAt(selectQuiz),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            IconButton(
+              onPressed: () {
+                if (quizs.elementAt(selectQuiz).answer == "O") {
+                  print("correct");
+                  quizResult = true;
+                  userPoint["point"] += 100;
+
+                  _firestore
+                      .collection("mileages")
+                      .doc(loggedInUser.email)
+                      .set(
+                        userPoint,
+                        SetOptions(merge: true),
+                      )
+                      .onError(
+                        (e, _) => print("Error:$e"),
+                      );
+                } else {
+                  quizResult = false;
+                  print("wrong");
+                }
+                setState(() {
+                  quizSolve = true;
+                });
+              },
+              icon: const Icon(Icons.circle_outlined),
+              iconSize: 35,
+            ),
+            IconButton(
+              onPressed: () {
+                if (quizs.elementAt(selectQuiz).answer == "X") {
+                  quizResult = true;
+                  print("correct");
+                  userPoint["point"] += 100;
+
+                  _firestore
+                      .collection("mileages")
+                      .doc(loggedInUser.email)
+                      .set(
+                        userPoint,
+                        SetOptions(merge: true),
+                      )
+                      .onError(
+                        (e, _) => print("Error:$e"),
+                      );
+                } else {
+                  quizResult = false;
+                  print("wrong");
+                }
+                setState(() {
+                  quizSolve = true;
+                });
+              },
+              icon: const Icon(Icons.close),
+              iconSize: 40,
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
