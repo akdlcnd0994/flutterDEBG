@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
         leadingWidth: 10,
         title: ListTile(
           title: Text(
-            "${loggedInUser.email?.split("@")[0]}님 어서오세요",
+            isLogin ? "${loggedInUser.email?.split("@")[0]}님 어서오세요" : "Hello!!",
             style: const TextStyle(
                 fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
           ),
@@ -131,10 +131,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          child: quizSolve
-                              ? quizAnswer(
-                                  quizResult, height, quizs, selectQuiz)
-                              : OXquiz(quizs, selectQuiz),
+                          child: isLogin
+                              ? quizSolve
+                                  ? quizAnswer(
+                                      quizResult, height, quizs, selectQuiz)
+                                  : OXquiz(quizs, selectQuiz)
+                              : const Text("로그인 후 이용 가능합니다"),
                         );
                       }
                     }),
