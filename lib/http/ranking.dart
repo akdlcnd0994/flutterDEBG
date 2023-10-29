@@ -1,7 +1,9 @@
 import 'package:medicalapp/http/ip.dart';
 import 'package:http/http.dart' as http;
 
-class Duration {
+class Ranking {
+  List<String> temp = [];
+
   var url = Uri.parse(
       "${"http://${IP().getIp()}"}:8080/capstoneServer/webapp/ranking.jsp");
 
@@ -12,20 +14,20 @@ class Duration {
 
   Map<String, String> cookies = {};
 
-  Future<void> sendDataToJSP() async {
+  Future<String> sendDataToJSP() async {
+    String rank = '';
     var response = await http.post(
       url,
       body: {'start': "start"}, // diseaseName = 질병명임 | 질병명을 보내서 duration값을 1올림
     );
 
     if (response.statusCode == 200) {
-      List<String> temp = response.body.split("\n");
-      for (var t in temp) {
-        print(t); //랭킹순서대로 들어오므로 하나씩 처리 ( 최대 10개 )
-      }
+      rank = response.body;
+      // rank = response.body.split("㉾");
     } else {
-      // 전송 실패 시 처리할 내용을 작성해주세요
       print('Failed to send data!');
     }
+
+    return rank;
   }
 }

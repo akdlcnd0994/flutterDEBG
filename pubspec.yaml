@@ -12,10 +12,14 @@ dependencies:
     sdk: flutter
   http: ^0.13.4
   intl: ^0.18.1
+
   firebase_auth: ^4.10.1
   cloud_firestore: ^4.9.3
   firebase_core: ^2.17.0
   date_format: ^2.0.7
+
+  shared_preferences: ^2.2.2
+
 
 dev_dependencies:
   flutter_test:

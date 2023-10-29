@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medicalapp/model/global_members.dart';
-import 'package:medicalapp/screens/qna_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:medicalapp/screens/qna_screen.dart';
 
 const apiKey = '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';
 const apiUrl = 'https://api.openai.com/v1/completions';

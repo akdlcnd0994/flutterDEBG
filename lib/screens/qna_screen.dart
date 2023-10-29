@@ -5,7 +5,6 @@ import 'package:medicalapp/model/global_members.dart';
 import 'package:medicalapp/widget/chat/receiver_row_view.dart';
 import 'package:medicalapp/widget/chat/sender_row_view.dart';
 
-// chatbotimg
 var chatBotImg =
     'https://github.com/jongwon-kr/flutterDEBG/blob/main/lib/assets/chatbot.png?raw=true';
 var myQuestionImg =
