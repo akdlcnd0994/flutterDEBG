@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:medicalapp/model/global_members.dart';
 import 'package:medicalapp/screens/qna_screen.dart';
 
@@ -29,12 +30,12 @@ class SenderRowView extends StatelessWidget {
           ),
         ),
       ]),
-      subtitle: const Padding(
-        padding: EdgeInsets.only(right: 8, top: 4),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(right: 8, top: 4),
         child: Text(
-          '10:03 AM',
+          DateFormat('aa hh:mm').format(DateTime.now()),
           textAlign: TextAlign.right,
-          style: TextStyle(fontSize: 10),
+          style: const TextStyle(fontSize: 10),
         ),
       ),
       trailing: CircleAvatar(
