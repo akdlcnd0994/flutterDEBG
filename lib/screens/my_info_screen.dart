@@ -14,7 +14,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
     double width = MediaQuery.of(context).size.width; // 화
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         toolbarHeight: 40,
         elevation: 0,
@@ -24,172 +24,35 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           padding: EdgeInsets.all(8.0),
         ),
         leadingWidth: 10,
-        actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: Row(
-            children: [
-              IconButton(
-                icon: const Icon(
-                  Icons.savings,
-                  color: Colors.black,
-                ),
-                onPressed: () {},
-              ),
-              IconButton(
-                icon: const Icon(
-                  Icons.notifications_none,
-                  color: Colors.black,
-                ),
-                onPressed: () {},
-              ),
-            ],
-          ),
-        ),
-      ],
         title: const ListTile(
           title: Text(
-            'More',
+            '내 정보',
             style: TextStyle(
-                fontSize: 30,
-                color: Colors.black,
-                fontWeight: FontWeight.w900
-            ),
+                fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
-      ),
-      body: Column(
-        children: [
-          SizedBox(height: 40,),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.circle,
-                size: 190,
-                color: Colors.pinkAccent.shade100,
-              ),
-            ],
-          ),
-          SizedBox(height: 5,),
-          Column(
-            children: [
-              Text(
-                'NickName',
-                style:
-                TextStyle(
-                    fontSize: 20,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10),
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.savings,
                     color: Colors.black,
-                    fontWeight: FontWeight.w900
+                  ),
+                  onPressed: () {},
                 ),
-              ),
-              Text('ID:Email'),
-            ],
-          ),
-          SizedBox(height: 30,),
-          
-          Container( height:1.0,
-            width:400.0,
-            color:Colors.grey,
-          ),
-
-          SizedBox(height: 30,),
-          Column(
-            children: [
-              Row(
-                children: [
-                  SizedBox(width: 15,),
-                  IconButton(
-                    onPressed: () {
-                        print('1');
-                      },
-                    icon:
-                      Icon(
-                        Icons.account_circle_outlined,
-                        size: 35,
-                      ),
-                  ),
-                  SizedBox(width: 5,),
-                  Text('abcdefg',
-                  style: TextStyle(
+                IconButton(
+                  icon: const Icon(
+                    Icons.notifications_none,
                     color: Colors.black,
-                    fontSize: 17,
                   ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 15,),
-              Row(
-                children: [
-                  SizedBox(width: 15,),
-                  IconButton(
-                    onPressed: () {
-                      print('1');
-                    },
-                    icon:
-                    Icon(
-                      Icons.account_balance_wallet_outlined,
-                      size: 35,
-                    ),
-                  ),
-                  SizedBox(width: 5,),
-                  Text('abcdefg',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 17,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 15,),
-              Row(
-                children: [
-                  SizedBox(width: 15,),
-                  IconButton(
-                    onPressed: () {
-                      print('1');
-                    },
-                    icon:
-                    Icon(
-                      Icons.access_time_outlined,
-                      size: 35,
-                    ),
-                  ),
-                  SizedBox(width: 5,),
-                  Text('abcdefg',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 17,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 15,),
-              Row(
-                children: [
-                  SizedBox(width: 15,),
-                  IconButton(
-                    onPressed: () {
-                      print('1');
-                    },
-                    icon:
-                    Icon(
-                      Icons.add_card_outlined,
-                      size: 35,
-                    ),
-                  ),
-                  SizedBox(width: 5,),
-                  Text('abcdefg',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 17,
-                    ),
-                  ),
-                ],
-              ),
-            ],
+                  onPressed: () {},
+                ),
+              ],
+            ),
           ),
-
         ],
       ),
       body: ListView(

@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:medicalapp/screens/login/chat_screen.dart';
 import 'package:medicalapp/screens/login/constants.dart';
+import 'package:medicalapp/widget/navigation_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
   static String id = "Registration_screen";
@@ -81,7 +81,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ChatScreen(),
+                          builder: (context) => const NavigationScreen(),
                         ),
                       );
                       print('Successfully Created');

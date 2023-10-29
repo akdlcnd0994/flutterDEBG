@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/screens/login/login_screen.dart';
-import 'package:medicalapp/widget/navigation_screen.dart';
+import 'package:medicalapp/screens/login/welcome_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +14,6 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     WidgetsFlutterBinding.ensureInitialized();
     return MaterialApp(
       routes: {
@@ -25,22 +24,8 @@ class Main extends StatelessWidget {
           titleMedium: TextStyle(color: Colors.black),
         ),
       ),
-      home: const NavigationScreen(),
+      home: const WelcomeScreen(),
       debugShowCheckedModeBanner: false,
-
-      WidgetsFlutterBinding.ensureInitialized();
-      return MaterialApp(
-        routes: const {
-          //'/login': (context) => LoginScreen();
-        },
-        theme: ThemeData(
-          textTheme: const TextTheme(
-            titleMedium: TextStyle(color: Colors.black),
-          ),
-        ),
-        home: NavigationScreen(),
-        debugShowCheckedModeBanner: false,
-
     );
   }
 }
