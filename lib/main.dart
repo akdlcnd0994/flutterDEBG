@@ -14,7 +14,6 @@ class Main extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     WidgetsFlutterBinding.ensureInitialized();
     return MaterialApp(
       routes: {
@@ -27,20 +26,6 @@ class Main extends StatelessWidget {
       ),
       home: const NavigationScreen(),
       debugShowCheckedModeBanner: false,
-
-      WidgetsFlutterBinding.ensureInitialized();
-      return MaterialApp(
-        routes: const {
-          //'/login': (context) => LoginScreen();
-        },
-        theme: ThemeData(
-          textTheme: const TextTheme(
-            titleMedium: TextStyle(color: Colors.black),
-          ),
-        ),
-        home: NavigationScreen(),
-        debugShowCheckedModeBanner: false,
-
     );
   }
 }
