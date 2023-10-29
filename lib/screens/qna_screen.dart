@@ -1,4 +1,3 @@
-import 'package:bard_api/bard_api.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/model/ChatMessagesModel.dart';
 import 'package:medicalapp/model/global_members.dart';
@@ -134,11 +133,6 @@ class MyChatUIState extends State<QNAScreen> {
                 GestureDetector(
                   // send 버튼 한번 누르기
                   onTap: () async {
-                    final bard = ChatBot(
-                        sessionId:
-                            "bwjGxmcF-HqxN5N4ELL3gR9BM-qLsqfYcCaVvorhNstMksOb8y1CS2rtNHAhaiMzXqBoDw.");
-                    final result = bard.ask("Hello?");
-                    print(result);
                     setState(() {
                       chatModelList.add(ChatModel(controller.text, true));
                       animateList();
