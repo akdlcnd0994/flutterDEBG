@@ -19,6 +19,9 @@ dependencies:
 
   shared_preferences: ^2.2.2
   url_launcher: ^6.2.1
+  flutter_blue: ^0.8.0
+  flutter_bluetooth_serial: ^0.4.0
+  permission_handler: ^11.0.1
 
 
 dev_dependencies:

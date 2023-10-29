@@ -320,7 +320,32 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: const Text("아두이노 일일검진"),
+                      child: Material(
+                        color: Colors.white,
+                        child: InkWell(
+                          splashColor: Colors.grey,
+                          onTap: () {},
+                          child: SizedBox(
+                            width: width,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Flexible(
+                                  child: RichText(
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      text: const TextSpan(
+                                          text: "아두이노  일일검사",
+                                          style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500))),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(10),
