@@ -55,7 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
             .split("<span class=\"bbc-m04vo2\">")[0]
             .replaceAll("&#x27;", "'");
       }
-      String cnt = i.toString();
       String href = response.body
           .split("<div class=\"promo-text\">")[i]
           .split("href=\"")[1]
