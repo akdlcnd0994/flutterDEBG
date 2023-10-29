@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/screens/login/login_screen.dart';
-import 'package:medicalapp/screens/login/welcome_screen.dart';
+import 'package:medicalapp/widget/navigation_screen.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +24,7 @@ class Main extends StatelessWidget {
           titleMedium: TextStyle(color: Colors.black),
         ),
       ),
-      home: const WelcomeScreen(),
+      home: const NavigationScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
