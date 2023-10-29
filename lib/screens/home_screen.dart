@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
+import 'package:medicalapp/screens/login/chat_screen.dart';
+import 'package:medicalapp/screens/login/welcome_screen.dart';
+import 'package:medicalapp/widget/navigation_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = "chat_screen";
@@ -29,6 +32,17 @@ class _HomeScreenState extends State<HomeScreen> {
     "email": email,
     "point": point,
   };
+
+  Future signOut() async {
+    try {
+      print('sign out complete');
+      return await _auth.signOut();
+    } catch (e) {
+      print('sign out failed');
+      print(e.toString());
+      return null;
+    }
+  }
 
   @override
   void initState() {
@@ -79,11 +93,83 @@ class _HomeScreenState extends State<HomeScreen> {
                 fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(right: 10),
             child: Row(
-              children: [],
+              children: [
+                IconButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              //Dialog Main Title
+                              title: const Column(
+                                children: <Widget>[
+                                  Text("Logout"),
+                                ],
+                              ),
+                              //
+                              content: const Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    "로그아웃 하시겠습니까?",
+                                  ),
+                                ],
+                              ),
+                              actions: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    TextButton(
+                                      child: Text(
+                                        "예",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.teal[400],
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          signOut();
+                                          isLogin = false;
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text(
+                                        "아니오",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.teal[400],
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                )
+                              ],
+                            );
+                          });
+                    },
+                    icon: const Icon(
+                      Icons.logout,
+                      color: Colors.black,
+                      size: 24,
+                    ))
+              ],
             ),
           ),
         ],
@@ -136,7 +222,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ? quizAnswer(
                                       quizResult, height, quizs, selectQuiz)
                                   : OXquiz(quizs, selectQuiz)
-                              : const Text("로그인 후 이용 가능합니다"),
+                              : loginColumn(
+                                  height: height,
+                                  width: width,
+                                  isLogin: isLogin,
+                                ),
                         );
                       }
                     }),
@@ -194,12 +284,72 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 Container(
                   padding: const EdgeInsets.all(10),
-                  height: height * 0.15,
                   width: width * 0.90,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(15),
+                  ),
+                  // 채팅창 이동
+                  child: Column(
+                    children: [
+                      Container(
+                        width: width * 0.9,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(24.0),
+                        ),
+                        child: Material(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(24.0),
+                          child: InkWell(
+                            splashColor: Colors.white,
+                            borderRadius: BorderRadius.circular(24.0),
+                            onTap: () {
+                              isLogin
+                                  ? Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ChatScreen(),
+                                      ),
+                                    )
+                                  : Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const WelcomeScreen(),
+                                      ),
+                                    );
+                            },
+                            child: SizedBox(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: height * 0.01,
+                                  ),
+                                  Text(
+                                    isLogin ? "채팅방으로 이동하기" : "로그인 후 이용가능합니다.",
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                  Text(
+                                    isLogin ? "" : "회원 채팅방",
+                                    style: TextStyle(
+                                        fontSize: 12, color: Colors.grey[600]),
+                                  ),
+                                  SizedBox(
+                                    height: !isLogin ? height * 0.01 : 0,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
@@ -343,6 +493,69 @@ class _HomeScreenState extends State<HomeScreen> {
               iconSize: 40,
             ),
           ],
+        ),
+      ],
+    );
+  }
+}
+
+class loginColumn extends StatelessWidget {
+  const loginColumn({
+    super.key,
+    required this.height,
+    required this.width,
+    required this.isLogin,
+  });
+
+  final double height;
+  final double width;
+  final bool isLogin;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: width * 0.9,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(24.0), color: Colors.white),
+          child: Material(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(24.0),
+            child: InkWell(
+              splashColor: Colors.white,
+              borderRadius: BorderRadius.circular(24.0),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const WelcomeScreen(),
+                  ),
+                );
+              },
+              child: SizedBox(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      "로그인 후 이용가능합니다.",
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      "클릭 시 로그인으로 이동합니다",
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                    ),
+                    SizedBox(
+                      height: !isLogin ? height * 0.01 : 0,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ),
       ],
     );

@@ -19,7 +19,7 @@ class HealthInfoListScreen extends StatelessWidget {
       search();
     }
 
-        return Scaffold(
+    return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         appBar: AppBar(
