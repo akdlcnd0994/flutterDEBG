@@ -353,6 +353,24 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SizedBox(
+                    height: 30,
+                    child: IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        prefs.clear();
+                        recent = [];
+                        setState(() {
+                          myBox = newMethod(context, height, width, false);
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
               for (String str in recent)
                 if (str != '') poKeyword(context, str, height, width),
               SizedBox(
