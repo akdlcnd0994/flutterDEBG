@@ -6,12 +6,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:medicalapp/bluetooth/bluetooth.dart';
+
+import 'package:medicalapp/bluetooths/screens/bluetooth_screen.dart';
+import 'package:medicalapp/bluetooths/screens/blue_home_screen.dart';
 import 'package:medicalapp/screens/login/chat_screen.dart';
 import 'package:medicalapp/screens/login/welcome_screen.dart';
-import 'package:medicalapp/widget/navigation_screen.dart';
+
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = "chat_screen";
@@ -329,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const MyHomePage(),
+                                builder: (context) => const BluetoothScreen(),
                               ),
                             );
                           },
