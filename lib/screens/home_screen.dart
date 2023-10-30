@@ -45,26 +45,28 @@ class _HomeScreenState extends State<HomeScreen> {
   void crawling() async {
     var url = Uri.parse("https://www.bbc.com/korean/topics/c95y3gpd895t");
     http.Response response = await http.get(url);
-    for (int i = 1; i < 11; i++) {
-      String article = response.body
-          .split("<div class=\"promo-text\">")[i]
-          .split("bbc-uk8dsi e1d658bg0\">")[1]
-          .split("</a>")[0]
-          .replaceAll("&#x27;", "'");
-      if (article.contains("bbc-m04vo2")) {
-        article = article
-            .split("</span>")[1]
-            .split("<span class=\"bbc-m04vo2\">")[0]
+
+    setState(() {
+      for (int i = 1; i < 11; i++) {
+        String article = response.body
+            .split("<div class=\"promo-text\">")[i]
+            .split("bbc-uk8dsi e1d658bg0\">")[1]
+            .split("</a>")[0]
             .replaceAll("&#x27;", "'");
+        if (article.contains("bbc-m04vo2")) {
+          article = article
+              .split("</span>")[1]
+              .split("<span class=\"bbc-m04vo2\">")[0]
+              .replaceAll("&#x27;", "'");
+        }
+        String href = response.body
+            .split("<div class=\"promo-text\">")[i]
+            .split("href=\"")[1]
+            .split("\"")[0];
+        article = "$i $article";
+        topArticles.addAll({article: href});
       }
-      String href = response.body
-          .split("<div class=\"promo-text\">")[i]
-          .split("href=\"")[1]
-          .split("\"")[0];
-      article = "$i $article";
-      topArticles.addAll({article: href});
-    }
-    setState(() {});
+    });
   }
 
   Future signOut() async {
@@ -646,6 +648,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     backgroundColor: Colors.teal[700],
                     content: const Text('마일리지 100 적립!!'),
                     action: SnackBarAction(
+                      textColor: Colors.white,
                       label: '확인',
                       onPressed: () {},
                     ),
@@ -679,8 +682,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                   final snackBar = SnackBar(
                     backgroundColor: Colors.teal[700],
-                    content: const Text('마일리지 500 적립!!'),
+                    content: const Text('마일리지 100 적립!!'),
                     action: SnackBarAction(
+                      textColor: Colors.white,
                       label: '확인',
                       onPressed: () {},
                     ),
