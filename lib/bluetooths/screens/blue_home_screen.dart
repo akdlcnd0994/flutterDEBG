@@ -85,37 +85,92 @@ class _BlueHomeScreen extends State<BlueHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height; // 화면의 높이
+    double width = MediaQuery.of(context).size.width; // 화면의 가로
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.teal[600],
         title: const Text('일일 자가 진단'),
       ),
       body: Container(
         child: ListView(
           children: <Widget>[
             const Divider(),
-            const ListTile(title: Text('진단 가능 기기 찾기')),
-            ListTile(
-              title: ElevatedButton(
-                child: const Text('Connect to paired device to check'),
-                onPressed: () async {
-                  final BluetoothDevice? selectedDevice =
-                      await Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const SelectBondedDevicePage(
-                            checkAvailability: false);
-                      },
-                    ),
-                  );
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  height: 40,
+                ),
+                const Text(
+                  '진단 가능 기기 찾기',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.black87),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        blurRadius: 5.0,
+                        spreadRadius: 0.0,
+                        offset: const Offset(0, 7),
+                      )
+                    ],
+                    color: Colors.white,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Material(
+                    borderRadius: BorderRadius.circular(24.0),
+                    color: Colors.teal[100],
+                    child: InkWell(
+                      splashColor: Colors.white,
+                      borderRadius: BorderRadius.circular(24.0),
+                      onTap: () async {
+                        final BluetoothDevice? selectedDevice =
+                            await Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return const SelectBondedDevicePage(
+                                  checkAvailability: false);
+                            },
+                          ),
+                        );
 
-                  if (selectedDevice != null) {
-                    print('Connect -> selected ${selectedDevice.address}');
-                    _startChat(context, selectedDevice);
-                  } else {
-                    print('Connect -> no device selected');
-                  }
-                },
-              ),
+                        if (selectedDevice != null) {
+                          print(
+                              'Connect -> selected ${selectedDevice.address}');
+                          _startCheck(context, selectedDevice);
+                        } else {
+                          print('Connect -> no device selected');
+                        }
+                      },
+                      child: SizedBox(
+                        height: height * 0.06,
+                        width: width * 0.6,
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "장치 검색",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -123,7 +178,7 @@ class _BlueHomeScreen extends State<BlueHomeScreen> {
     );
   }
 
-  void _startChat(BuildContext context, BluetoothDevice device) {
+  void _startCheck(BuildContext context, BluetoothDevice device) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) {
@@ -131,34 +186,5 @@ class _BlueHomeScreen extends State<BlueHomeScreen> {
         },
       ),
     );
-  }
-
-  Future<void> _startBackgroundTask(
-    BuildContext context,
-    BluetoothDevice server,
-  ) async {
-    try {
-      _collectingTask = await BackgroundCollectingTask.connect(server);
-      await _collectingTask!.start();
-    } catch (ex) {
-      _collectingTask?.cancel();
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Error occured while connecting'),
-            content: Text(ex.toString()),
-            actions: <Widget>[
-              TextButton(
-                child: const Text("Close"),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
   }
 }

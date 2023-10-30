@@ -1,9 +1,6 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-
-import '../utils/snackbar.dart';
 
 class BluetoothOffScreen extends StatelessWidget {
   const BluetoothOffScreen({Key? key, this.adapterState}) : super(key: key);
@@ -21,7 +18,7 @@ class BluetoothOffScreen extends StatelessWidget {
   Widget buildTitle(BuildContext context) {
     String? state = adapterState?.toString().split(".").last;
     return Text(
-      'Bluetooth Adapter is ${state ?? 'not available'}',
+      '블루투스 상태 ${state ?? 'not available'}',
       style: Theme.of(context)
           .primaryTextTheme
           .titleSmall
@@ -33,16 +30,23 @@ class BluetoothOffScreen extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: ElevatedButton(
-        child: const Text('TURN ON'),
+        style: ButtonStyle(
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.pressed)) {
+                return Theme.of(context).colorScheme.primary.withOpacity(0.5);
+              }
+              return Colors.teal; // Use the component's default.
+            },
+          ),
+        ),
+        child: const Text('블루투스 ON'),
         onPressed: () async {
           try {
             if (Platform.isAndroid) {
               await FlutterBluePlus.turnOn();
             }
-          } catch (e) {
-            Snackbar.show(ABC.a, prettyException("Error Turning On:", e),
-                success: false);
-          }
+          } catch (e) {}
         },
       ),
     );
@@ -51,9 +55,8 @@ class BluetoothOffScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScaffoldMessenger(
-      key: Snackbar.snackBarKeyA,
       child: Scaffold(
-        backgroundColor: Colors.lightBlue,
+        backgroundColor: Colors.teal[200],
         body: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,

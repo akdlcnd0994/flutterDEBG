@@ -642,6 +642,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       .onError(
                         (e, _) => print("Error:$e"),
                       );
+                  final snackBar = SnackBar(
+                    backgroundColor: Colors.teal[700],
+                    content: const Text('마일리지 100 적립!!'),
+                    action: SnackBarAction(
+                      label: '확인',
+                      onPressed: () {},
+                    ),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 } else {
                   quizResult = false;
                 }
@@ -668,6 +677,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       .onError(
                         (e, _) => print("Error:$e"),
                       );
+                  final snackBar = SnackBar(
+                    backgroundColor: Colors.teal[700],
+                    content: const Text('마일리지 500 적립!!'),
+                    action: SnackBarAction(
+                      label: '확인',
+                      onPressed: () {},
+                    ),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 } else {
                   quizResult = false;
                 }

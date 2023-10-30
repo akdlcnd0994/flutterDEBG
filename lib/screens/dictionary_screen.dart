@@ -5,23 +5,6 @@ import 'package:medicalapp/screens/health_info_list_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List<String> diseases = <String>[];
-List<String> recentSearch = <String>[
-  "최근 1",
-  "최근 2",
-  "최근 3",
-  "최근 4",
-  "최근 5",
-  "최근 6",
-  "최근 7",
-  "최근 8",
-  "최근 9",
-  "최근 10",
-  "최근 11",
-  "최근 12",
-  "최근 13",
-  "최근 14",
-  "최근 15",
-];
 
 List<String> parts = <String>[
   "가슴",

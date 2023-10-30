@@ -121,7 +121,8 @@ class _SelectBondedDevicePage extends State<SelectBondedDevicePage> {
         .toList();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select device'),
+        backgroundColor: Colors.teal[600],
+        title: const Text('진단 장치 선택'),
         actions: <Widget>[
           _isDiscovering
               ? FittedBox(
