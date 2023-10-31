@@ -48,8 +48,6 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
       print(temp);
       recent = temp.split('\n');
     }
-
-    recent = recent.reversed.toList();
   }
 
   SizedBox myBox = const SizedBox();
@@ -223,7 +221,7 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
                                           r = r.replaceAll(
                                               RegExp('[\r\n]'), "");
                                           diseases = r.split("㉾");
-                                          print(diseases);
+
                                           setState(() {
                                             myBox = newMethod(
                                                 context, height, width, true);
@@ -312,6 +310,7 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
   }
 
   SizedBox newMethod(BuildContext context, height, double width, bool tf) {
+    List<String> stemp = List.from(recent.reversed);
     SizedBox sb = const SizedBox();
     if (tf) {
       sb = SizedBox(
@@ -320,8 +319,21 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    '많이찾는 질환',
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    '',
+                  ),
+                ],
+              ),
               for (String disease in diseases)
-                if (disease != '') poKeyword(context, disease, height, width),
+                if (disease != '')
+                  poKeyword(context, disease, height, width, tf),
               SizedBox(
                 height: height * 0.095,
               )
@@ -336,8 +348,40 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              for (String str in recent)
-                if (str != '') poKeyword(context, str, height, width),
+              Column(
+                children: [
+                  SizedBox(
+                    height: 30,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const Text(
+                          '최근 검색어',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        Row(
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                prefs.clear();
+                                recent = [];
+                                setState(() {
+                                  myBox = newMethod(context, height, width, tf);
+                                });
+                              },
+                              child: const Text('모두삭제',
+                                  style: TextStyle(color: Colors.black)),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              for (String str in stemp)
+                if (str != '') poKeyword(context, str, height, width, tf),
               SizedBox(
                 height: height * 0.095,
               )
@@ -349,8 +393,8 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
     return sb;
   }
 
-  Container poKeyword(
-      BuildContext context, String disease, double height, double width) {
+  Container poKeyword(BuildContext context, String disease, double height,
+      double width, bool tf) {
     return Container(
       decoration: BoxDecoration(
         border: Border(
@@ -362,7 +406,14 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
         child: InkWell(
           splashColor: Colors.grey,
           onTap: () {
-            DictionaryInfo().sendDataToJSP(context, disease);
+            if (tf) {
+              DictionaryInfo().sendDataToJSP(context, disease);
+            } else {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => HealthInfoListScreen('', disease)));
+            }
           },
           child: SizedBox(
             height: height * 0.0545,
@@ -370,13 +421,36 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
             child: Padding(
               padding: EdgeInsets.only(left: (width * 0.1)),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    disease,
-                    style: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.w600),
+                  Row(
+                    children: [
+                      const Icon(Icons.search),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      Text(
+                        disease,
+                        style: const TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   ),
+                  if (!tf)
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () {
+                        recent.remove(disease);
+                        String temp = '';
+                        for (String str in recent) {
+                          temp += '\n$str';
+                        }
+                        prefs.setString('recent', temp);
+                        setState(() {
+                          myBox = newMethod(context, height, width, tf);
+                        });
+                      },
+                    ),
                 ],
               ),
             ),
