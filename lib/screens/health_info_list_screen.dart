@@ -43,69 +43,90 @@ class _HealthInfoListScreenState extends State<HealthInfoListScreen> {
   }
 
   List<Widget> pageList(BuildContext context, double height, double width) {
+    int temp = list.length;
+    print(temp);
+    temp = temp ~/ 15;
+
     return <Widget>[
-      for (int i = page * 15; i < list.length && i < (page * 15) + 15; i++)
-        Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: Colors.grey.withOpacity(0.4)),
-            ),
-          ),
-          child: Material(
-            color: Colors.white,
-            child: InkWell(
-              splashColor: Colors.grey,
-              onTap: () {
-                DictionaryInfo().sendDataToJSP(context, list[i]);
-              },
-              child: SizedBox(
-                height: height * 0.0545,
-                width: width,
-                child: Padding(
-                  padding: EdgeInsets.only(left: (width * 0.1)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        list[i],
-                        style: const TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600),
+      Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Column(
+            children: [
+              for (int i = page * 15;
+                  i < list.length && i < (page * 15) + 15;
+                  i++)
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(color: Colors.grey.withOpacity(0.4)),
+                    ),
+                  ),
+                  child: Material(
+                    color: Colors.white,
+                    child: InkWell(
+                      splashColor: Colors.grey,
+                      onTap: () {
+                        DictionaryInfo().sendDataToJSP(context, list[i]);
+                      },
+                      child: SizedBox(
+                        height: height * 0.0545,
+                        width: width,
+                        child: Padding(
+                          padding: EdgeInsets.only(left: (width * 0.1)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                list[i],
+                                style: const TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ],
+                    ),
                   ),
                 ),
-              ),
-            ),
+            ],
           ),
-        ),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (page > 0)
-            TextButton(
-              child: const Text('<<'),
-              onPressed: () {
-                page -= 1;
-                lw = pageList(context, height, width);
-                setState(() {});
-              },
-            ),
-          if (page <= 0)
-            TextButton(
-              child: const Text(''),
-              onPressed: () {},
-            ),
-          const SizedBox(width: 20),
-          Text((page + 1).toString()),
-          const SizedBox(width: 20),
-          TextButton(
-            child: const Text('>>'),
-            onPressed: () {
-              page += 1;
-              lw = pageList(context, height, width);
-              setState(() {});
-            },
-          )
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (page > 0)
+                TextButton(
+                  child: const Text('<<'),
+                  onPressed: () {
+                    page -= 1;
+                    lw = pageList(context, height, width);
+                    setState(() {});
+                  },
+                )
+              else
+                TextButton(
+                  child: const Text(''),
+                  onPressed: () {},
+                ),
+              const SizedBox(width: 20),
+              Text((page + 1).toString()),
+              const SizedBox(width: 20),
+              if (page < temp)
+                TextButton(
+                  child: const Text('>>'),
+                  onPressed: () {
+                    page += 1;
+                    lw = pageList(context, height, width);
+                    setState(() {});
+                  },
+                )
+              else
+                TextButton(
+                  child: const Text(''),
+                  onPressed: () {},
+                )
+            ],
+          ),
         ],
       ),
     ];
