@@ -27,7 +27,6 @@ class Ranking {
     } else {
       print('Failed to send data!');
     }
-
     return rank;
   }
 }
