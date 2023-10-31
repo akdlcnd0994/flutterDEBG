@@ -5,7 +5,7 @@ import 'package:medicalapp/model/diseaseModel.dart';
 //ignore: must_be_immutable
 class HealthInfoListScreen extends StatelessWidget {
   final String part;
-  final String keyword;
+  String keyword;
   List<String> list = [];
   HealthInfoListScreen(this.part, this.keyword, {super.key});
 
@@ -13,6 +13,7 @@ class HealthInfoListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
     double width = MediaQuery.of(context).size.width; // 화면의 가로
+
     if (part != '') {
       choice();
     } else {
@@ -67,8 +68,10 @@ class HealthInfoListScreen extends StatelessWidget {
 
   void search() {
     // all에 포함되어있는 것만 찾아내서 list에 추가
+    keyword = keyword.toLowerCase();
     for (String str in all) {
-      if (str.contains(keyword)) {
+      String t = str.toLowerCase();
+      if (t.contains(keyword)) {
         list.add(str);
       }
     }
