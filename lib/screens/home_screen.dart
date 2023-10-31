@@ -1,18 +1,12 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-import 'package:medicalapp/bluetooths/screens/bluetooth_screen.dart';
-import 'package:medicalapp/bluetooths/screens/blue_home_screen.dart';
 import 'package:medicalapp/screens/login/chat_screen.dart';
 import 'package:medicalapp/screens/login/welcome_screen.dart';
-
-import 'package:url_launcher/url_launcher.dart';
+import 'package:medicalapp/widget/navigation_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   static String id = "chat_screen";
@@ -34,40 +28,10 @@ class _HomeScreenState extends State<HomeScreen> {
   late int point = 0;
   bool quizSolve = false;
   late bool quizResult;
-
   late final userPoint = <String, dynamic>{
     "email": email,
     "point": point,
   };
-
-  late final topArticles = <String, String>{};
-
-  void crawling() async {
-    var url = Uri.parse("https://www.bbc.com/korean/topics/c95y3gpd895t");
-    http.Response response = await http.get(url);
-
-    setState(() {
-      for (int i = 1; i < 11; i++) {
-        String article = response.body
-            .split("<div class=\"promo-text\">")[i]
-            .split("bbc-uk8dsi e1d658bg0\">")[1]
-            .split("</a>")[0]
-            .replaceAll("&#x27;", "'");
-        if (article.contains("bbc-m04vo2")) {
-          article = article
-              .split("</span>")[1]
-              .split("<span class=\"bbc-m04vo2\">")[0]
-              .replaceAll("&#x27;", "'");
-        }
-        String href = response.body
-            .split("<div class=\"promo-text\">")[i]
-            .split("href=\"")[1]
-            .split("\"")[0];
-        article = "$i $article";
-        topArticles.addAll({article: href});
-      }
-    });
-  }
 
   Future signOut() async {
     try {
@@ -83,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     getCurrentUser();
-    crawling();
     super.initState();
   }
 
@@ -118,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
         elevation: 0,
         titleSpacing: 10,
-        backgroundColor: Colors.teal[700],
+        backgroundColor: const Color.fromARGB(255, 189, 219, 244),
         leading: const Padding(
           padding: EdgeInsets.all(8.0),
         ),
@@ -126,10 +89,8 @@ class _HomeScreenState extends State<HomeScreen> {
         title: ListTile(
           title: Text(
             isLogin ? "${loggedInUser.email?.split("@")[0]}님 어서오세요" : "Hello!!",
-            style: TextStyle(
-                fontSize: 20,
-                color: Colors.grey[100],
-                fontWeight: FontWeight.w500),
+            style: const TextStyle(
+                fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
         actions: [
@@ -138,84 +99,83 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               children: [
                 IconButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
-                            //Dialog Main Title
-                            title: const Column(
-                              children: <Widget>[
-                                Text("Logout"),
-                              ],
-                            ),
-                            //
-                            content: const Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  "로그아웃 하시겠습니까?",
-                                ),
-                              ],
-                            ),
-                            actions: <Widget>[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  TextButton(
-                                    child: Text(
-                                      "예",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.teal[400],
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        signOut();
-                                        isLogin = false;
-                                      });
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: Text(
-                                      "아니오",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.teal[400],
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20.0)),
+                              //Dialog Main Title
+                              title: const Column(
+                                children: <Widget>[
+                                  Text("Logout"),
+                                ],
+                              ),
+                              //
+                              content: const Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    "로그아웃 하시겠습니까?",
                                   ),
                                 ],
-                              )
-                            ],
-                          );
-                        });
-                  },
-                  icon: Icon(
-                    Icons.logout,
-                    color: Colors.grey[100],
-                    size: 24,
-                  ),
-                ),
+                              ),
+                              actions: <Widget>[
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    TextButton(
+                                      child: Text(
+                                        "예",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.teal[400],
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          signOut();
+                                          isLogin = false;
+                                        });
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text(
+                                        "아니오",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.teal[400],
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                    ),
+                                  ],
+                                )
+                              ],
+                            );
+                          });
+                    },
+                    icon: const Icon(
+                      Icons.logout,
+                      color: Colors.black,
+                      size: 24,
+                    ))
               ],
             ),
           ),
         ],
       ),
       body: Container(
-        color: Colors.teal[50],
+        color: const Color.fromARGB(255, 210, 229, 245),
         child: ListView(
           children: <Widget>[
             Column(
@@ -253,14 +213,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.all(10),
                           width: width * 0.90,
                           decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.withOpacity(0.7),
-                                blurRadius: 5.0,
-                                spreadRadius: 0.0,
-                                offset: const Offset(0, 7),
-                              )
-                            ],
                             color: Colors.white,
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(15),
@@ -293,14 +245,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: height * 0.15,
                       width: width * 0.27,
                       decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.7),
-                            blurRadius: 5.0,
-                            spreadRadius: 0.0,
-                            offset: const Offset(0, 7),
-                          )
-                        ],
                         color: Colors.white,
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15),
@@ -312,65 +256,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: height * 0.15,
                       width: width * 0.27,
                       decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.7),
-                            blurRadius: 5.0,
-                            spreadRadius: 0.0,
-                            offset: const Offset(0, 7),
-                          )
-                        ],
                         color: Colors.white,
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: Material(
-                        color: Colors.white,
-                        child: InkWell(
-                          splashColor: Colors.grey,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const BluetoothScreen(),
-                              ),
-                            );
-                          },
-                          child: SizedBox(
-                            width: width,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Flexible(
-                                  child: RichText(
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      text: const TextSpan(
-                                          text: "아두이노  일일검사",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500))),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      child: const Text("아두이노 일일검진"),
                     ),
                     Container(
                       padding: const EdgeInsets.all(10),
                       height: height * 0.15,
                       width: width * 0.27,
                       decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.7),
-                            blurRadius: 5.0,
-                            spreadRadius: 0.0,
-                            offset: const Offset(0, 7),
-                          )
-                        ],
                         color: Colors.white,
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15),
@@ -390,14 +286,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(10),
                   width: width * 0.90,
                   decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.7),
-                        blurRadius: 5.0,
-                        spreadRadius: 0.0,
-                        offset: const Offset(0, 7),
-                      )
-                    ],
                     color: Colors.white,
                     shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(15),
@@ -469,105 +357,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 )
               ],
             ),
-            // BBC 건강 칼럼 top 10
             Column(
               children: [
                 Container(
-                    width: width * 0.9,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.7),
-                          blurRadius: 5.0,
-                          spreadRadius: 0.0,
-                          offset: const Offset(0, 7),
-                        )
-                      ],
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(18.0),
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: height * 0.01,
-                        ),
-                        const Text(
-                          "BBC 건강칼럼 top 10",
-                          style: TextStyle(
-                              color: Color.fromARGB(184, 184, 0, 0),
-                              fontSize: 18,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        Text(
-                          "기사를 눌러 더 자세히 볼 수 있습니다.",
-                          style:
-                              TextStyle(fontSize: 12, color: Colors.grey[800]),
-                        ),
-                        SizedBox(
-                          height: height * 0.01,
-                        ),
-                        for (String ar in topArticles.keys)
-                          Atricle(height, width, ar, topArticles[ar]),
-                        SizedBox(
-                          height: height * 0.02,
-                        ),
-                      ],
-                    )),
+                  padding: const EdgeInsets.all(10),
+                  height: height * 0.30,
+                  width: width * 0.90,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
                 SizedBox(
                   height: height * 0.02,
                 )
               ],
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  openArticle(href) async {
-    final url = Uri.parse(href);
-    await launchUrl(url);
-  }
-
-  Container Atricle(height, width, article, href) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(color: Colors.grey.withOpacity(0.4)),
-        ),
-      ),
-      child: Material(
-        color: Colors.white,
-        child: InkWell(
-          splashColor: Colors.grey,
-          onTap: () {
-            openArticle(href);
-          },
-          child: SizedBox(
-            width: width,
-            child: Padding(
-              padding: EdgeInsets.only(
-                  left: (width * 0.02),
-                  top: height * 0.01,
-                  bottom: height * 0.01),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Flexible(
-                    child: RichText(
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        text: TextSpan(
-                            text: article,
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500))),
-                  ),
-                ],
-              ),
-            ),
-          ),
         ),
       ),
     );
@@ -602,6 +409,7 @@ class _HomeScreenState extends State<HomeScreen> {
         IconButton(
           onPressed: () {
             quizSolve = false;
+            print(quizSolve);
             setState(() {});
           },
           icon: Icon(
@@ -631,6 +439,7 @@ class _HomeScreenState extends State<HomeScreen> {
             IconButton(
               onPressed: () {
                 if (quizs.elementAt(selectQuiz).answer == "O") {
+                  print("correct");
                   quizResult = true;
                   userPoint["point"] += 100;
 
@@ -644,18 +453,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       .onError(
                         (e, _) => print("Error:$e"),
                       );
-                  final snackBar = SnackBar(
-                    backgroundColor: Colors.teal[700],
-                    content: const Text('마일리지 100 적립!!'),
-                    action: SnackBarAction(
-                      textColor: Colors.white,
-                      label: '확인',
-                      onPressed: () {},
-                    ),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 } else {
                   quizResult = false;
+                  print("wrong");
                 }
                 setState(() {
                   quizSolve = true;
@@ -668,6 +468,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () {
                 if (quizs.elementAt(selectQuiz).answer == "X") {
                   quizResult = true;
+                  print("correct");
                   userPoint["point"] += 100;
 
                   _firestore
@@ -680,18 +481,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       .onError(
                         (e, _) => print("Error:$e"),
                       );
-                  final snackBar = SnackBar(
-                    backgroundColor: Colors.teal[700],
-                    content: const Text('마일리지 100 적립!!'),
-                    action: SnackBarAction(
-                      textColor: Colors.white,
-                      label: '확인',
-                      onPressed: () {},
-                    ),
-                  );
-                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
                 } else {
                   quizResult = false;
+                  print("wrong");
                 }
                 setState(() {
                   quizSolve = true;
