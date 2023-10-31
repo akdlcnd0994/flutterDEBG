@@ -319,17 +319,21 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
           physics: const BouncingScrollPhysics(),
           child: Column(
             children: [
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    '많이찾는 질환',
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    '',
-                  ),
-                ],
+              SizedBox(
+                height: height * 0.04,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: width * 0.03,
+                    ),
+                    const Text(
+                      '많이 찾는 질환',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                    ),
+                  ],
+                ),
               ),
               for (String disease in diseases)
                 if (disease != '')
@@ -359,6 +363,9 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
                           '최근 검색어',
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold),
+                        ),
+                        SizedBox(
+                          width: width * 0.5,
                         ),
                         TextButton(
                           onPressed: () {
@@ -415,23 +422,44 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
             height: height * 0.0545,
             width: width,
             child: Padding(
-              padding: EdgeInsets.only(left: (width * 0.1)),
+              padding: EdgeInsets.only(left: (width * 0.01)),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: tf
+                    ? MainAxisAlignment.start
+                    : MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.search),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        disease,
-                        style: const TextStyle(
-                            fontSize: 14, fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
+                  if (tf) const Icon(Icons.search),
+                  if (tf)
+                    const SizedBox(
+                      width: 10,
+                    ),
+                  tf
+                      ? Flexible(
+                          child: RichText(
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            text: TextSpan(
+                              text: disease,
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        )
+                      : Row(
+                          children: [
+                            const Icon(Icons.search),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text(
+                              disease,
+                              style: const TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
                   if (!tf)
                     IconButton(
                       icon: const Icon(Icons.close),
