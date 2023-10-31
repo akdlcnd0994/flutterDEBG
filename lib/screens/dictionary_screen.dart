@@ -162,6 +162,9 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
                             temp += '\n$str';
                           }
                           prefs.setString('recent', temp);
+                          setState(() {
+                            myBox = newMethod(context, height, width, false);
+                          });
                         },
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
