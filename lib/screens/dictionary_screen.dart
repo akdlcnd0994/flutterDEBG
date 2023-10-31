@@ -351,7 +351,7 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
               Column(
                 children: [
                   SizedBox(
-                    height: 30,
+                    height: height * 0.04,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -360,20 +360,16 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
                           style: TextStyle(
                               fontSize: 15, fontWeight: FontWeight.bold),
                         ),
-                        Row(
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                prefs.clear();
-                                recent = [];
-                                setState(() {
-                                  myBox = newMethod(context, height, width, tf);
-                                });
-                              },
-                              child: const Text('모두삭제',
-                                  style: TextStyle(color: Colors.black)),
-                            ),
-                          ],
+                        TextButton(
+                          onPressed: () {
+                            prefs.clear();
+                            recent = [];
+                            setState(() {
+                              myBox = newMethod(context, height, width, tf);
+                            });
+                          },
+                          child: const Text('모두삭제',
+                              style: TextStyle(color: Colors.black)),
                         ),
                       ],
                     ),
