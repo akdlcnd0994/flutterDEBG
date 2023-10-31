@@ -28,7 +28,7 @@ class HealthInfoListScreen extends StatelessWidget {
         ),
         body: ListView(
           children: <Widget>[
-            for (int i = 0; i < list.length; i++)
+            for (int i = 0; i < list.length && i < 10; i++)
               Container(
                 decoration: BoxDecoration(
                   border: Border(
