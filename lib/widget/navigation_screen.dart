@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:medicalapp/screens/chat_body.dart';
 import 'package:medicalapp/screens/dictionary_screen.dart';
 import 'package:medicalapp/screens/home_screen.dart';
 import 'package:medicalapp/screens/qna_screen.dart';
@@ -18,7 +19,7 @@ List<Widget> screens = <Widget>[
   const DicionaryScreen(),
   const healthCheckScreen(),
   const HomeScreen(),
-  const QNAScreen(),
+  const ChatPage(),
   const MyInfoScreen(),
 ];
 

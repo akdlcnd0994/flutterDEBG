@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:medicalapp/screens/login/chat_screen.dart';
 import 'package:medicalapp/screens/login/constants.dart';
+import 'package:medicalapp/widget/navigation_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   static String id = "login_screen";
@@ -71,7 +72,7 @@ class LoginScreenState extends State<LoginScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ChatScreen(),
+                        builder: (context) => const NavigationScreen(),
                       ),
                     );
                     return value;
