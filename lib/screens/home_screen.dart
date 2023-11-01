@@ -9,7 +9,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:medicalapp/bluetooths/screens/bluetooth_screen.dart';
 import 'package:medicalapp/bluetooths/screens/blue_home_screen.dart';
-import 'package:medicalapp/chatGPT/ui/chat_body.dart';
+import 'package:medicalapp/screens/chat_body.dart';
 import 'package:medicalapp/screens/login/chat_screen.dart';
 import 'package:medicalapp/screens/login/welcome_screen.dart';
 
@@ -422,7 +422,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ? Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => const ChatPage(),
+                                        builder: (context) =>
+                                            const ChatScreen(),
                                       ),
                                     )
                                   : Navigator.push(

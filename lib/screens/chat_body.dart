@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../model/model.dart';
-import '../network/chat_repository.dart';
-import '../utils/colors.dart';
-import 'chat_message.dart';
+import '../chatGPT/model/model.dart';
+import '../chatGPT/network/chat_repository.dart';
+import '../chatGPT/utils/colors.dart';
+import '../chatGPT/ui/chat_message.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
