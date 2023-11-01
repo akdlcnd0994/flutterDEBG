@@ -9,6 +9,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:medicalapp/bluetooths/screens/bluetooth_screen.dart';
 import 'package:medicalapp/bluetooths/screens/blue_home_screen.dart';
+import 'package:medicalapp/screens/chat_body.dart';
 import 'package:medicalapp/screens/login/chat_screen.dart';
 import 'package:medicalapp/screens/login/welcome_screen.dart';
 
