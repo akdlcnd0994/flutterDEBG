@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class HealthCheck {
   var url = Uri.parse(
-      "${"http://${IP().getIp()}"}:8080/capstoneServer/webapp/queDB.jsp");
+      "${"http://${IP().getIp()}"}:8080/capstoneServer/webapp/quedb.jsp");
 
   Map<String, String> headers = {
     'Content-Type': 'applicaiton/json',
@@ -23,8 +23,13 @@ class HealthCheck {
     );
 
     if (response.statusCode == 200) {
-      //데이터 삽입만 함
+      print("성공");
+      String t = response.body;
+      List<String> temp = t.split("§");
+
+      print("info = $temp");
     } else {
+      List<String> fail = ['fail_data'];
       // 전송 실패 시 처리할 내용을 작성해주세요
       print('Failed to send data!');
     }

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medicalapp/screens/login/welcome_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({super.key});
@@ -9,6 +11,27 @@ class MyInfoScreen extends StatefulWidget {
 }
 
 class _MyInfoScreenState extends State<MyInfoScreen> {
+  final messageTextController = TextEditingController();
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  late bool isLogin = false;
+  late User loggedInUser;
+  late String messageText;
+  late String email;
+
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        isLogin = true;
+        email = loggedInUser.email!;
+      } else {
+        isLogin = false;
+      }
+    } catch (e) {}
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
@@ -86,13 +109,17 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                       child: const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          /*
                           Text(
-                            "로그인 후 이용이 가능합니다.",
+                            isLogin 
+                            ? "${loggedInUser.email?.split("@")[0] ?? "이메일 없음"}" 
+                            : "로그인후 사용가능",
                             style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
                                 fontWeight: FontWeight.w600),
                           ),
+                          */
                         ],
                       ),
                     ),
