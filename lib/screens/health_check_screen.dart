@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medicalapp/http/healthCheck.dart';
-import 'package:medicalapp/screens/my_info_screen.dart';
+//import 'package:medicalapp/screens/my_info_screen.dart';
 
 class healthCheckScreen extends StatefulWidget {
   healthCheckScreen({super.key});
@@ -188,10 +188,12 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
     }
     if (result.split(",").length >= 4) {
       HealthCheck().sendDataToJSP(name, result);
+      /*
       Navigator.of(context).push(
         MaterialPageRoute(
             builder: (context) => MyInfoScreen()), // MyInfoScreen로 이동
       );
+      */
     } else {
       showDialog(
         context: context,
