@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:medicalapp/http/healthCheck.dart';
 import 'package:medicalapp/screens/my_info_screen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class healthCheckScreen extends StatefulWidget {
-  healthCheckScreen({super.key});
+  const healthCheckScreen({super.key});
 
   @override
   State<healthCheckScreen> createState() => _healthCheckScreenState();
@@ -54,14 +56,38 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
   ];
 
   int check = 0;
-
+  final _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+  late bool isLogin = false;
+  late User loggedInUser;
+  late int point = 0;
   static List<bool> responses = [];
-
+  late final userPoint = <String, dynamic>{
+    "point": point,
+  };
   @override
   void initState() {
     // TODO: implement initState
+    getCurrentUser();
     super.initState();
     responses = List.filled(que.length, false);
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        _firestore
+            .collection("mileages")
+            .doc(loggedInUser.email)
+            .get()
+            .then((value) => userPoint["point"] = value.data()?["point"]);
+        isLogin = true;
+      } else {
+        isLogin = false;
+      }
+    } catch (e) {}
   }
 
   @override
@@ -113,14 +139,14 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Column(
               children: [
                 for (int i = 0; i < que.length; i++) buildQuestion(i, que[i]),
                 IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.arrow_forward,
                       size: 40,
                     ),
@@ -141,12 +167,12 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
         if (index <= 30)
           Text(
             "${index + 1}. $question 이/가 있습니까?",
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
           ),
         if (index > 30)
           Text(
             "${index + 1}. $question 에 통증이 있습니까?",
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
           ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -160,7 +186,7 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
                 });
               },
             ),
-            Text("Y"),
+            const Text("Y"),
             Radio(
               value: false,
               groupValue: responses[index],
@@ -170,10 +196,10 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
                 });
               },
             ),
-            Text("N"),
+            const Text("N"),
           ],
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
       ],
     );
   }
@@ -183,20 +209,35 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
     String name = '용가리';
     for (int i = 0; i < que.length; i++) {
       if (responses[i] == true) {
-        result += que[i] + ",";
+        result += "${que[i]},";
       }
     }
     if (result.split(",").length >= 4) {
       HealthCheck().sendDataToJSP(name, result);
+      //마일리지 올리기
+      userPoint["point"] += 500;
+      isLogin
+          ? _firestore
+              .collection("mileages")
+              .doc(loggedInUser.email)
+              .set(
+                userPoint,
+                SetOptions(merge: true),
+              )
+              .onError(
+                (e, _) => print("Error:$e"),
+              )
+          : print("not login!");
+
       Navigator.of(context).push(
         MaterialPageRoute(
-            builder: (context) => MyInfoScreen()), // MyInfoScreen로 이동
+            builder: (context) => const MyInfoScreen()), // MyInfoScreen로 이동
       );
     } else {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
+          return const AlertDialog(
             content: Text("증상을 3개 이상 선택해주세요"),
           );
         },
