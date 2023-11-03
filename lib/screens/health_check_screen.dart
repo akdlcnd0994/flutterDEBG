@@ -54,17 +54,19 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
     "눈",
     "골반"
   ];
-
+  static List<bool> responses = [];
   int check = 0;
+
   final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   late bool isLogin = false;
   late User loggedInUser;
   late int point = 0;
-  static List<bool> responses = [];
+
   late final userPoint = <String, dynamic>{
     "point": point,
   };
+
   @override
   void initState() {
     // TODO: implement initState
@@ -216,6 +218,8 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
       HealthCheck().sendDataToJSP(name, result);
       //마일리지 올리기
       userPoint["point"] += 500;
+      print('check\n');
+      print(userPoint["point"]);
       isLogin
           ? _firestore
               .collection("mileages")
