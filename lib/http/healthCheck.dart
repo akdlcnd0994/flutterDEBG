@@ -1,5 +1,6 @@
 import 'package:medicalapp/http/ip.dart';
 import 'package:http/http.dart' as http;
+//import 'package:medicalapp/widget/result_list.dart';
 
 class HealthCheck {
   var url = Uri.parse(
@@ -29,7 +30,6 @@ class HealthCheck {
 
       print("info = $temp");
     } else {
-      List<String> fail = ['fail_data'];
       // 전송 실패 시 처리할 내용을 작성해주세요
       print('Failed to send data!');
     }
