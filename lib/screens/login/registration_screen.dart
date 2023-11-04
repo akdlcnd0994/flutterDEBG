@@ -30,6 +30,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     false,
     false,
   ];
+
   List<String> questionList = [
     '---- 질문을 선택해주세요 ----',
     '가장 좋아하는 것은?',
@@ -40,6 +41,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     '가장 좋아하는 계절은?',
     '감명깊게 본 영화 제목은?',
   ];
+
   DateTime _selectedDate = DateTime.now();
   bool showSpinner = false;
   String _email = '';
@@ -125,7 +127,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                   },
                   decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(),
-                    hintText: "비밀번호를 입력해주세요.",
+                    hintText: "비밀번호를 입력해주세요.(6자리이상)",
                   ),
                 ),
                 const Text(

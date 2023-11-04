@@ -8,8 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:medicalapp/bluetooths/screens/bluetooth_screen.dart';
-import 'package:medicalapp/bluetooths/screens/blue_home_screen.dart';
-import 'package:medicalapp/screens/chat_body.dart';
+
 import 'package:medicalapp/screens/login/chat_screen.dart';
 import 'package:medicalapp/screens/login/welcome_screen.dart';
 
@@ -35,10 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
   late int point = 0;
   bool quizSolve = false;
   late bool quizResult;
-
+  String nickname = '';
   late final userPoint = <String, dynamic>{
     "email": email,
     "point": point,
+  };
+
+  late final userInfo = <String, dynamic>{
+    "nickname": nickname,
   };
 
   late final topArticles = <String, String>{};
@@ -100,6 +103,11 @@ class _HomeScreenState extends State<HomeScreen> {
             .doc(loggedInUser.email)
             .get()
             .then((value) => userPoint["point"] = value.data()?["point"]);
+        _firestore
+            .collection("userinfo")
+            .doc(loggedInUser.email)
+            .get()
+            .then((value) => userInfo["nickname"] = value.data()?["nickname"]);
       } else {
         isLogin = false;
       }
@@ -126,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
         leadingWidth: 10,
         title: ListTile(
           title: Text(
-            isLogin ? "${loggedInUser.email?.split("@")[0]}님 어서오세요" : "Hello!!",
+            isLogin ? "${userInfo["nickname"]}님 어서오세요" : "Hello!!",
             style: TextStyle(
                 fontSize: 20,
                 color: Colors.grey[100],

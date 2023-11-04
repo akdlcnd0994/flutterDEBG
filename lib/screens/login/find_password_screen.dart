@@ -4,21 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:medicalapp/screens/login/chat_screen.dart';
 import 'package:medicalapp/widget/navigation_screen.dart';
 
-class LoginScreen extends StatefulWidget {
+class findPasswordScreen extends StatefulWidget {
   static String id = "login_screen";
 
-  const LoginScreen({super.key});
+  const findPasswordScreen({super.key});
 
   @override
-  LoginScreenState createState() => LoginScreenState();
+  findPasswordScreenState createState() => findPasswordScreenState();
 }
 
-class LoginScreenState extends State<LoginScreen> {
-  List<bool> checkList = [false, false];
+class findPasswordScreenState extends State<findPasswordScreen> {
+  bool checkEmail = false;
   bool showSpinner = false;
   String email = '';
   String password = '';
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  @override
+  Future<void> resetPassword(String email) async {
+    await _auth.sendPasswordResetEmail(email: email);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +32,7 @@ class LoginScreenState extends State<LoginScreen> {
         centerTitle: true,
         backgroundColor: Colors.cyan[600],
         title: const Text(
-          '로그인',
+          '비밀번호 변경',
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
         ),
         actions: const <Widget>[],
@@ -36,11 +41,14 @@ class LoginScreenState extends State<LoginScreen> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            const SizedBox(
+              height: 100,
+            ),
             const Text(
-              "이메일",
+              "본인 이메일",
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             TextField(
@@ -49,48 +57,13 @@ class LoginScreenState extends State<LoginScreen> {
               onChanged: (value) {
                 setState(() {
                   email = value;
-                  checkList[0] = true;
+                  checkEmail = true;
                 });
               },
               decoration: const InputDecoration(
                 enabledBorder: UnderlineInputBorder(),
                 hintText: "이메일를 입력해주세요.",
               ),
-            ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            const Text(
-              "비밀번호",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-            TextField(
-              textAlign: TextAlign.center,
-              obscureText: true,
-              onChanged: (value) {
-                setState(() {
-                  password = value;
-                  checkList[1] = true;
-                });
-              },
-              decoration: const InputDecoration(
-                enabledBorder: UnderlineInputBorder(),
-                hintText: "비밀번호를 입력해주세요.",
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    '비밀번호 찾기',
-                    style: TextStyle(
-                        color: Colors.black,
-                        decoration: TextDecoration.underline),
-                  ),
-                ),
-              ],
             ),
             const SizedBox(
               height: 24.0,
@@ -105,42 +78,16 @@ class LoginScreenState extends State<LoginScreen> {
                           .primary
                           .withOpacity(0.5);
                     }
-                    return checkList[0] && checkList[1]
+                    return checkEmail
                         ? const Color.fromRGBO(0, 172, 193, 1)
                         : Colors.grey;
                   },
                 ),
               ),
-              child: const Text('Log in'),
-              onPressed: () async {
-                setState(() {
-                  showSpinner = true;
-                });
-                //Login to existing account
-                try {
-                  await _auth
-                      .signInWithEmailAndPassword(
-                          email: email, password: password)
-                      .then((value) {
-                    setState(() {
-                      showSpinner = false;
-                    });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const NavigationScreen(),
-                      ),
-                    );
-                    return value;
-                  });
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'user-not-found') {
-                    print('등록되지 않은 이메일입니다');
-                  } else if (e.code == 'wrong-password') {
-                    print('비밀번호가 틀렸습니다');
-                  } else {
-                    print(e.code);
-                  }
+              child: const Text('비밀번호 재설정 메일전송'),
+              onPressed: () {
+                if (email.isNotEmpty) {
+                  resetPassword(email);
                 }
               },
             ),
