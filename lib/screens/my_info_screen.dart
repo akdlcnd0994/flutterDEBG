@@ -103,64 +103,68 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                       Icons.savings,
                       color: Colors.white,
                     ),
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
-                            //Dialog Main Title
-                            title: const Column(
-                              children: <Widget>[
-                                Text(
-                                  "보유 마일리지",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ],
-                            ),
-                            //
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  '${userPoint["point"]}p',
-                                  style: const TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                            actions: <Widget>[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  TextButton(
-                                    child: Text(
-                                      "확인",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.purple[800],
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
+                    onPressed: isLogin
+                        ? () {
+                            showDialog(
+                              context: context,
+                              //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+                              barrierDismissible: false,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(20.0)),
+                                  //Dialog Main Title
+                                  title: const Column(
+                                    children: <Widget>[
+                                      Text(
+                                        "보유 마일리지",
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ],
                                   ),
-                                ],
-                              )
-                            ],
-                          );
-                        },
-                      );
-                    },
+                                  //
+                                  content: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      Text(
+                                        '${userPoint["point"]}p',
+                                        style: const TextStyle(
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.w600),
+                                      ),
+                                    ],
+                                  ),
+                                  actions: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        TextButton(
+                                          child: Text(
+                                            "확인",
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Colors.purple[800],
+                                                fontWeight: FontWeight.w600),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                        : () {},
                   ),
                 ],
               ),
