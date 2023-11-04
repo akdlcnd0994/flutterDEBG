@@ -23,25 +23,13 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
 
   void initState() {
     getCurrentUser();
-    Future.delayed(Duration.zero, () {
-      show_result();
-    });
+    show_result();
     super.initState();
   }
 
   Future<void> show_result() async {
     result = await resultList().sendDataToJSP(name);
-    //print(text);
-
-    if (result.isEmpty) {
-      check = false;
-    } else {
-      for (int i = 0; i < 4; i++) {
-        //parts[i] = text.substring(text.indexOf('§'));
-        //print("$i = ");
-        //print(parts[i]);
-      }
-    }
+    setState(() {});
   }
 
   void getCurrentUser() async {
@@ -60,7 +48,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width; // 화
+    double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 58, 56, 56),
@@ -192,7 +180,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     return [
       for (info in result)
         Text(
-          "$info",
+          isLogin ? "$info" : "  ",
           style: TextStyle(
               fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
         )

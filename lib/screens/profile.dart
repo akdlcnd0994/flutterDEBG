@@ -80,6 +80,7 @@ class _Y_LoginState extends State<profile> {
                 final multiImage = await picker.pickMultiImage();
                 if (multiImage.isNotEmpty) {
                   imageProvider.setImage(multiImage.first); // 첫 번째 이미지를 업데이트
+                  setState(() {}); // 화면을 다시 그립니다.
                 }
                 Navigator.pop(context); // 이미지를 선택한 후 바텀 시트를 닫습니다.
               },
