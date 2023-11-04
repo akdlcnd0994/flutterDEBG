@@ -62,6 +62,8 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
   late User loggedInUser;
   late int point = 0;
   static List<bool> responses = [];
+  String name = '용가리'; //임의 닉네임
+  String result = "";
   late final userPoint = <String, dynamic>{
     "point": point,
   };
@@ -150,8 +152,17 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
                       Icons.arrow_forward,
                       size: 40,
                     ),
-                    onPressed: () {
-                      validateAndSubmit();
+                    onPressed: () async {
+                      isLogin
+                          ? validateAndSubmit()
+                          : showDialog(
+                              context: context,
+                              builder: (context) {
+                                return const AlertDialog(
+                                  content: Text("로그인이 필요한 서비스 입니다."),
+                                );
+                              },
+                            );
                     }),
               ],
             ),
@@ -205,8 +216,6 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
   }
 
   void validateAndSubmit() {
-    String result = "";
-    String name = '용가리';
     for (int i = 0; i < que.length; i++) {
       if (responses[i] == true) {
         result += "${que[i]},";
@@ -216,22 +225,19 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
       HealthCheck().sendDataToJSP(name, result);
       //마일리지 올리기
       userPoint["point"] += 500;
-      isLogin
-          ? _firestore
-              .collection("mileages")
-              .doc(loggedInUser.email)
-              .set(
-                userPoint,
-                SetOptions(merge: true),
-              )
-              .onError(
-                (e, _) => print("Error:$e"),
-              )
-          : print("not login!");
-
-      Navigator.of(context).push(
-        MaterialPageRoute(
-            builder: (context) => const MyInfoScreen()), // MyInfoScreen로 이동
+      _firestore
+          .collection("mileages")
+          .doc(loggedInUser.email)
+          .set(
+            userPoint,
+            SetOptions(merge: true),
+          )
+          .onError(
+            (e, _) => print("Error:$e"),
+          );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => MyInfoScreen()),
       );
     } else {
       showDialog(

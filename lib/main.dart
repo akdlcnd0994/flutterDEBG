@@ -1,8 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:medicalapp/image/image_provider.dart'
-    as MyAppImageProvider; // 별칭을 붙임
+import 'package:medicalapp/image/image_provider.dart' as MyAppImageProvider;
 import 'package:medicalapp/screens/login/login_screen.dart';
 import 'package:medicalapp/widget/navigation_screen.dart';
 

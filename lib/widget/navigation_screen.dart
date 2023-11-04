@@ -20,7 +20,7 @@ List<Widget> screens = <Widget>[
   healthCheckScreen(),
   const HomeScreen(),
   const ChatPage(),
-  const MyInfoScreen(),
+  MyInfoScreen(),
 ];
 
 class NavigationScreen extends StatefulWidget {

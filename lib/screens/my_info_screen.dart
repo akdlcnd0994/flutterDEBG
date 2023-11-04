@@ -1,33 +1,47 @@
-import 'package:date_format/date_format.dart';
 import 'package:flutter/material.dart';
-import 'package:medicalapp/screens/login/welcome_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:io';
-import 'package:image_picker/image_picker.dart';
+import 'package:medicalapp/screens/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:medicalapp/image/image_provider.dart' as MyAppImageProvider;
-import 'package:medicalapp/widget/result_list.dart';
+import 'package:medicalapp/http/result_list.dart';
 
 class MyInfoScreen extends StatefulWidget {
-  const MyInfoScreen({super.key});
+  MyInfoScreen({super.key});
 
   @override
   State<MyInfoScreen> createState() => _MyInfoScreenState();
 }
 
 class _MyInfoScreenState extends State<MyInfoScreen> {
-  final messageTextController = TextEditingController();
-  final _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
   late bool isLogin = false;
   late User loggedInUser;
   late String email;
-  List<String> tempData = [];
+  String name = '용가리'; //임시 닉네임
+  List<String> result = [];
+  bool check = true;
 
   void initState() {
     getCurrentUser();
+    Future.delayed(Duration.zero, () {
+      show_result();
+    });
     super.initState();
+  }
+
+  Future<void> show_result() async {
+    result = await resultList().sendDataToJSP(name);
+    //print(text);
+
+    if (result.isEmpty) {
+      check = false;
+    } else {
+      for (int i = 0; i < 4; i++) {
+        //parts[i] = text.substring(text.indexOf('§'));
+        //print("$i = ");
+        //print(parts[i]);
+      }
+    }
   }
 
   void getCurrentUser() async {
@@ -45,8 +59,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height; // 화면의 높이
+    double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width; // 화
+
     return Scaffold(
         backgroundColor: Color.fromARGB(255, 58, 56, 56),
         appBar: AppBar(
@@ -91,164 +106,96 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
             ),
           ],
         ),
-        body: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            SizedBox(
-              height: 40,
+        body: MultiProvider(
+          providers: [
+            ChangeNotifierProvider<MyAppImageProvider.ImageProvider>(
+              create: (context) => MyAppImageProvider.ImageProvider(),
             ),
-            Row(
+          ],
+          child: SingleChildScrollView(
+            child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                isLogin ? Y_Login(loggedInUser: loggedInUser) : N_Login()
+                SizedBox(
+                  height: 40,
+                ),
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    isLogin
+                        ? profile(loggedInUser: loggedInUser)
+                        : Text(
+                            'Login',
+                            style: TextStyle(
+                                fontSize: 30,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          )
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  isLogin
+                      ? "ID : ${loggedInUser.email?.split("@")[0]}"
+                      : "ID : default",
+                  style: TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  isLogin ? "의심 증상" : "로그인이 필요합니다.",
+                  style: TextStyle(
+                      fontSize: 23,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                    padding: const EdgeInsets.all(10),
+                    height: height * 0.35,
+                    width: width * 0.9,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.7),
+                          blurRadius: 5.0,
+                          spreadRadius: 0.0,
+                          offset: const Offset(0, 7),
+                        )
+                      ],
+                      color: Colors.white,
+                      shape: BoxShape.rectangle,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: infoList,
+                    )),
               ],
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              isLogin
-                  ? "ID : ${loggedInUser.email?.split("@")[0]}"
-                  : "ID : default",
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.white,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              isLogin ? "문진 결과" : "로그인이 필요합니다.",
-              style: TextStyle(
-                  fontSize: 23,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w900),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: tempData.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    title: Text(tempData[index]),
-                  );
-                },
-              ),
-            ),
-          ],
+          ),
         ));
   }
-}
 
-class N_Login extends StatelessWidget {
-  const N_Login({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Text(
-            'Login',
-            style: TextStyle(
-                fontSize: 30, color: Colors.white, fontWeight: FontWeight.bold),
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class Y_Login extends StatefulWidget {
-  final User loggedInUser;
-  Y_Login({Key? key, required this.loggedInUser}) : super(key: key);
-
-  @override
-  State<Y_Login> createState() => _Y_LoginState();
-}
-
-class _Y_LoginState extends State<Y_Login> {
-  @override
-  Widget build(BuildContext context) {
-    final imageSize = MediaQuery.of(context).size.width / 3;
-    final imageProvider =
-        Provider.of<MyAppImageProvider.ImageProvider>(context, listen: false);
-
-    return Column(
-      children: [
-        Container(
-          child: GestureDetector(
-            onTap: () {
-              _showBottomSheet();
-            },
-            child: Container(
-              width: imageSize,
-              height: imageSize,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color.fromARGB(255, 58, 56, 56),
-              ),
-              child: imageProvider.image != null // 이미지가 선택되었는지 확인
-                  ? ClipOval(
-                      child: Image.file(
-                        File(imageProvider.image!.path), // 이미지를 표시합니다.
-                        width: imageSize,
-                        height: imageSize,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                  : Icon(
-                      Icons.account_circle,
-                      color: Colors.white,
-                      size: imageSize,
-                    ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  _showBottomSheet() {
-    final picker = ImagePicker();
-    final imageProvider =
-        Provider.of<MyAppImageProvider.ImageProvider>(context, listen: false);
-
-    showModalBottomSheet(
-      context: context,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(25),
-        ),
-      ),
-      builder: (context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            IconButton(
-              onPressed: () async {
-                final multiImage = await picker.pickMultiImage();
-                if (multiImage.isNotEmpty) {
-                  imageProvider.setImage(multiImage.first); // 첫 번째 이미지를 업데이트
-                }
-                Navigator.pop(context); // 이미지를 선택한 후 바텀 시트를 닫습니다.
-              },
-              icon: Icon(
-                Icons.add_photo_alternate_outlined,
-                size: 30,
-                color: Colors.black,
-              ),
-            )
-          ],
-        );
-      },
-    );
+  List<Widget> get infoList {
+    String info;
+    int i = 0;
+    return [
+      for (info in result)
+        Text(
+          "$info",
+          style: TextStyle(
+              fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+        )
+    ];
   }
 }

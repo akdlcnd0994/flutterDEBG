@@ -14,23 +14,19 @@ class HealthCheck {
   Map<String, String> cookies = {};
 
   Future<void> sendDataToJSP(String name, String result) async {
+    List<String> temp = [];
     var response = await http.post(
       url,
       body: {
         'NM': name,
         'RT': result,
       },
-      // 이름과 질병명 리스트를 보냄
     );
 
     if (response.statusCode == 200) {
       print("성공");
-      String t = response.body;
-      List<String> temp = t.split("§");
-
-      print("info = $temp");
     } else {
-      // 전송 실패 시 처리할 내용을 작성해주세요
+      List<String> fali_msg = ["Failde to send data"];
       print('Failed to send data!');
     }
   }
