@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:medicalapp/http/dictionaryInfo.dart';
 import 'package:medicalapp/screens/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:medicalapp/image/image_provider.dart' as MyAppImageProvider;
@@ -241,24 +242,58 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: infoList,
+                      children: [
+                        for (int i = 0; i < result.length - 1; i++)
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                    color: Colors.grey.withOpacity(0.4)),
+                              ),
+                            ),
+                            child: Material(
+                              color: Colors.white,
+                              child: InkWell(
+                                splashColor: Colors.grey,
+                                onTap: () {
+                                  DictionaryInfo()
+                                      .sendDataToJSP(context, result[i]);
+                                },
+                                child: SizedBox(
+                                  height: height * 0.06,
+                                  width: width,
+                                  child: Padding(
+                                    padding:
+                                        EdgeInsets.only(left: (width * 0.1)),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Flexible(
+                                          child: RichText(
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            text: TextSpan(
+                                              text: result[i],
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
                     )),
               ],
             ),
           ),
         ));
-  }
-
-  List<Widget> get infoList {
-    String info;
-    int i = 0;
-    return [
-      for (info in result)
-        Text(
-          isLogin ? info : "  ",
-          style: const TextStyle(
-              fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
-        )
-    ];
   }
 }
