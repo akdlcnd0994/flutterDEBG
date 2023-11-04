@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_format/date_format.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
@@ -35,6 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool quizSolve = false;
   late bool quizResult;
   String nickname = '';
+  late int selectQuiz;
+
   late final userPoint = <String, dynamic>{
     "email": email,
     "point": point,
@@ -116,9 +117,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (!quizSolve) {
+      selectQuiz = Random().nextInt(14);
+    }
+
     double height = MediaQuery.of(context).size.height; // 화면의 높이
     double width = MediaQuery.of(context).size.width; // 화면의 가로
-    int selectQuiz = Random().nextInt(14);
 
     return Scaffold(
       appBar: AppBar(
@@ -611,6 +615,7 @@ class _HomeScreenState extends State<HomeScreen> {
         IconButton(
           onPressed: () {
             quizSolve = false;
+            selectQuiz = Random().nextInt(14);
             setState(() {});
           },
           icon: Icon(

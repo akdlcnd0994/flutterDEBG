@@ -186,13 +186,19 @@ class MessageBubble extends StatelessWidget {
       crossAxisAlignment:
           isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
       children: [
-        Text(
-          messageSender,
-          style: const TextStyle(color: Colors.black54, fontSize: 12),
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Text(
+            messageSender,
+            style: const TextStyle(color: Colors.black54, fontSize: 12),
+          ),
         ),
-        Text(
-          "$msgTime ",
-          style: const TextStyle(color: Colors.black54, fontSize: 12),
+        Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10),
+          child: Text(
+            "$msgTime ",
+            style: const TextStyle(color: Colors.black54, fontSize: 12),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(10.0),

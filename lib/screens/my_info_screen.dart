@@ -23,10 +23,16 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   List<String> result = [];
   bool check = true;
   String nickname = '';
+  late int point = 0;
   final _firestore = FirebaseFirestore.instance;
   late final userInfo = <String, dynamic>{
     "nickname": nickname,
   };
+
+  late final userPoint = <String, dynamic>{
+    "point": point,
+  };
+
   @override
   void initState() {
     getCurrentUser();
@@ -46,12 +52,16 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
         loggedInUser = user;
         isLogin = true;
         email = loggedInUser.email!;
-
         _firestore
             .collection("userinfo")
             .doc(loggedInUser.email)
             .get()
             .then((value) => userInfo["nickname"] = value.data()?["nickname"]);
+        _firestore
+            .collection("mileages")
+            .doc(loggedInUser.email)
+            .get()
+            .then((value) => userPoint["point"] = value.data()?["point"]);
       } else {
         isLogin = false;
       }
@@ -93,7 +103,64 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                       Icons.savings,
                       color: Colors.white,
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0)),
+                            //Dialog Main Title
+                            title: const Column(
+                              children: <Widget>[
+                                Text(
+                                  "보유 마일리지",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                            //
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  '${userPoint["point"]}p',
+                                  style: const TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                            actions: <Widget>[
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  TextButton(
+                                    child: Text(
+                                      "확인",
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Colors.purple[800],
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ],
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    },
                   ),
                 ],
               ),
