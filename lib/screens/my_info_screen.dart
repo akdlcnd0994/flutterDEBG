@@ -6,7 +6,7 @@ import 'package:medicalapp/image/image_provider.dart' as MyAppImageProvider;
 import 'package:medicalapp/http/result_list.dart';
 
 class MyInfoScreen extends StatefulWidget {
-  const MyInfoScreen({super.key});
+  MyInfoScreen({super.key});
 
   @override
   State<MyInfoScreen> createState() => _MyInfoScreenState();
@@ -98,7 +98,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                const SizedBox(
+
+                SizedBox(
+
                   height: 40,
                 ),
                 Row(
@@ -107,7 +109,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                   children: [
                     isLogin
                         ? profile(loggedInUser: loggedInUser)
-                        : const Text(
+
+                        : Text(
+
                             'Login',
                             style: TextStyle(
                                 fontSize: 30,
@@ -116,29 +120,36 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                           )
                   ],
                 ),
-                const SizedBox(
+
+                SizedBox(
+
                   height: 10,
                 ),
                 Text(
                   isLogin
                       ? "ID : ${loggedInUser.email?.split("@")[0]}"
                       : "ID : default",
-                  style: const TextStyle(
+
+                  style: TextStyle(
+
                     fontSize: 15,
                     color: Colors.white,
                   ),
                 ),
-                const SizedBox(
+
+                SizedBox(
+
                   height: 10,
                 ),
                 Text(
                   isLogin ? "의심 증상" : "로그인이 필요합니다.",
-                  style: const TextStyle(
+
+                  style: TextStyle(
                       fontSize: 23,
                       color: Colors.white,
                       fontWeight: FontWeight.w900),
                 ),
-                const SizedBox(
+                SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -155,6 +166,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         )
                       ],
                       color: Colors.white,
+
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -174,8 +186,10 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     return [
       for (info in result)
         Text(
-          isLogin ? info : "  ",
-          style: const TextStyle(
+
+          isLogin ? "$info" : "  ",
+          style: TextStyle(
+
               fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
         )
     ];

@@ -214,7 +214,9 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
           );
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const MyInfoScreen()),
+
+        MaterialPageRoute(builder: (context) => MyInfoScreen()),
+
       );
     } else {
       showDialog(
