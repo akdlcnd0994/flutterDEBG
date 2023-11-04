@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:medicalapp/screens/login/chat_screen.dart';
+import 'package:medicalapp/screens/login/find_password_screen.dart';
 import 'package:medicalapp/widget/navigation_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -82,9 +83,15 @@ class LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const findPasswordScreen()),
+                    );
+                  },
                   child: const Text(
-                    '비밀번호 찾기',
+                    '비밀번호 재설정',
                     style: TextStyle(
                         color: Colors.black,
                         decoration: TextDecoration.underline),
