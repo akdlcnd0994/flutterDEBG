@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:medicalapp/chatGPT/model/model.dart';
 import 'package:medicalapp/chatGPT/utils/colors.dart';
-import 'package:medicalapp/screens/qna_screen.dart';
+
+var chatBotImg =
+    'https://github.com/jongwon-kr/flutterDEBG/blob/main/lib/assets/chatbot.png?raw=true';
+var myQuestionImg =
+    'https://github.com/jongwon-kr/flutterDEBG/blob/main/lib/assets/yellow%20question%20mark.png?raw=true';
 
 class ChatMessageWidget extends StatelessWidget {
   const ChatMessageWidget(

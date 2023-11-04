@@ -141,68 +141,68 @@ class _HomeScreenState extends State<HomeScreen> {
                 IconButton(
                   onPressed: () {
                     showDialog(
-                        context: context,
-                        //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
-                        barrierDismissible: false,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0)),
-                            //Dialog Main Title
-                            title: const Column(
-                              children: <Widget>[
-                                Text("Logout"),
-                              ],
-                            ),
-                            //
-                            content: const Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                Text(
-                                  "로그아웃 하시겠습니까?",
+                      context: context,
+                      //barrierDismissible - Dialog를 제외한 다른 화면 터치 x
+                      barrierDismissible: false,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          // RoundedRectangleBorder - Dialog 화면 모서리 둥글게 조절
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0)),
+                          //Dialog Main Title
+                          title: const Column(
+                            children: <Widget>[
+                              Text("Logout"),
+                            ],
+                          ),
+                          //
+                          content: const Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "로그아웃 하시겠습니까?",
+                              ),
+                            ],
+                          ),
+                          actions: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                TextButton(
+                                  child: Text(
+                                    "예",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.teal[400],
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      signOut();
+                                      isLogin = false;
+                                    });
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                TextButton(
+                                  child: Text(
+                                    "아니오",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.teal[400],
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
                                 ),
                               ],
-                            ),
-                            actions: <Widget>[
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  TextButton(
-                                    child: Text(
-                                      "예",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.teal[400],
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        signOut();
-                                        isLogin = false;
-                                      });
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  TextButton(
-                                    child: Text(
-                                      "아니오",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.teal[400],
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                ],
-                              )
-                            ],
-                          );
-                        });
+                            )
+                          ],
+                        );
+                      },
+                    );
                   },
                   icon: Icon(
                     Icons.logout,
@@ -735,6 +735,7 @@ class loginColumn extends StatelessWidget {
               splashColor: Colors.white,
               borderRadius: BorderRadius.circular(24.0),
               onTap: () {
+                Navigator.pushNamedAndRemoveUntil(context, '/', (_) => false);
                 Navigator.push(
                   context,
                   MaterialPageRoute(

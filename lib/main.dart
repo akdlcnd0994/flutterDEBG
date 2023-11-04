@@ -19,9 +19,6 @@ class Main extends StatelessWidget {
   Widget build(BuildContext context) {
     WidgetsFlutterBinding.ensureInitialized();
     return MaterialApp(
-      routes: {
-        '/login': (context) => const LoginScreen(),
-      },
       theme: ThemeData(
         textTheme: const TextTheme(
           titleMedium: TextStyle(color: Colors.black),

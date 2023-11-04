@@ -385,7 +385,7 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
                               myBox = newMethod(context, height, width, tf);
                             });
                           },
-                          child: const Text('모두삭제',
+                          child: const Text('모두지우기',
                               style: TextStyle(color: Colors.black)),
                         ),
                       ],

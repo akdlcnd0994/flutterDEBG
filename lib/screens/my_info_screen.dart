@@ -25,8 +25,10 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   late String email;
   List<String> tempData = [];
 
+  @override
   void initState() {
     getCurrentUser();
+
     super.initState();
   }
 
@@ -48,7 +50,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     double height = MediaQuery.of(context).size.height; // 화면의 높이
     double width = MediaQuery.of(context).size.width; // 화
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 58, 56, 56),
+        backgroundColor: const Color.fromARGB(255, 58, 56, 56),
         appBar: AppBar(
           toolbarHeight: 40,
           elevation: 0,
@@ -61,7 +63,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           title: ListTile(
             title: Text(
               isLogin ? "${loggedInUser.email?.split("@")[0]}" : "Login",
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 25,
                   color: Colors.white,
                   fontWeight: FontWeight.w800),
@@ -94,39 +96,39 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 40,
             ),
             Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                isLogin ? Y_Login(loggedInUser: loggedInUser) : N_Login()
+                isLogin ? Y_Login(loggedInUser: loggedInUser) : const N_Login()
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
               isLogin
                   ? "ID : ${loggedInUser.email?.split("@")[0]}"
                   : "ID : default",
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 15,
                 color: Colors.white,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
               isLogin ? "문진 결과" : "로그인이 필요합니다.",
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 23,
                   color: Colors.white,
                   fontWeight: FontWeight.w900),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Expanded(
@@ -150,7 +152,7 @@ class N_Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Column(
+      child: const Column(
         children: [
           Text(
             'Login',
@@ -165,7 +167,7 @@ class N_Login extends StatelessWidget {
 
 class Y_Login extends StatefulWidget {
   final User loggedInUser;
-  Y_Login({Key? key, required this.loggedInUser}) : super(key: key);
+  const Y_Login({Key? key, required this.loggedInUser}) : super(key: key);
 
   @override
   State<Y_Login> createState() => _Y_LoginState();
@@ -188,7 +190,7 @@ class _Y_LoginState extends State<Y_Login> {
             child: Container(
               width: imageSize,
               height: imageSize,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Color.fromARGB(255, 58, 56, 56),
               ),
@@ -238,9 +240,12 @@ class _Y_LoginState extends State<Y_Login> {
                 if (multiImage.isNotEmpty) {
                   imageProvider.setImage(multiImage.first); // 첫 번째 이미지를 업데이트
                 }
+                setState(() {
+                  imageProvider.image;
+                });
                 Navigator.pop(context); // 이미지를 선택한 후 바텀 시트를 닫습니다.
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.add_photo_alternate_outlined,
                 size: 30,
                 color: Colors.black,
