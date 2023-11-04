@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:medicalapp/screens/login/chat_screen.dart';
-import 'package:medicalapp/screens/login/constants.dart';
 import 'package:medicalapp/widget/navigation_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,6 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginScreenState extends State<LoginScreen> {
+  List<bool> checkList = [false, false];
   bool showSpinner = false;
   String email = '';
   String password = '';
@@ -23,6 +23,15 @@ class LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.cyan[600],
+        title: const Text(
+          '로그인',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+        ),
+        actions: const <Widget>[],
+      ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -30,31 +39,78 @@ class LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            const Text(
+              "이메일",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
             TextField(
               textAlign: TextAlign.center,
               keyboardType: TextInputType.emailAddress,
               onChanged: (value) {
-                email = value;
+                setState(() {
+                  email = value;
+                  checkList[0] = true;
+                });
               },
-              decoration:
-                  kTextFieldDecoration.copyWith(hintText: 'Enter your email '),
+              decoration: const InputDecoration(
+                enabledBorder: UnderlineInputBorder(),
+                hintText: "이메일를 입력해주세요.",
+              ),
             ),
             const SizedBox(
               height: 8.0,
+            ),
+            const Text(
+              "비밀번호",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
             ),
             TextField(
               textAlign: TextAlign.center,
               obscureText: true,
               onChanged: (value) {
-                password = value;
+                setState(() {
+                  password = value;
+                  checkList[1] = true;
+                });
               },
-              decoration: kTextFieldDecoration.copyWith(
-                  hintText: 'Enter your password '),
+              decoration: const InputDecoration(
+                enabledBorder: UnderlineInputBorder(),
+                hintText: "비밀번호를 입력해주세요.",
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    '비밀번호 찾기',
+                    style: TextStyle(
+                        color: Colors.black,
+                        decoration: TextDecoration.underline),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(
               height: 24.0,
             ),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.5);
+                    }
+                    return checkList[0] && checkList[1]
+                        ? const Color.fromRGBO(0, 172, 193, 1)
+                        : Colors.grey;
+                  },
+                ),
+              ),
               child: const Text('Log in'),
               onPressed: () async {
                 setState(() {
@@ -69,11 +125,12 @@ class LoginScreenState extends State<LoginScreen> {
                     setState(() {
                       showSpinner = false;
                     });
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, '/', (_) => false);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const NavigationScreen(),
-                      ),
+                          builder: (context) => const NavigationScreen()),
                     );
                     return value;
                   });

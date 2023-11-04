@@ -15,6 +15,15 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.cyan[700],
+        title: const Text(
+          '로그인/회원가입 하기',
+          style: TextStyle(fontSize: 24, fontWeight: FontWeight.w600),
+        ),
+        actions: const <Widget>[],
+      ),
       backgroundColor: Colors.white,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -22,38 +31,55 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            const Center(
-              child: DefaultTextStyle(
-                style: TextStyle(
-                  fontSize: 40.0,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.black54,
-                ),
-                child: Text(
-                  'Firebase Tutorial',
+            ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.5);
+                    }
+                    return const Color.fromRGBO(0, 151, 167, 1);
+                  },
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 48.0,
-            ),
-            ElevatedButton(
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: ((context) => const LoginScreen())));
               },
-              child: const Text('Log in'),
+              child: const Text(
+                '로그인',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              ),
             ),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                  (Set<MaterialState> states) {
+                    if (states.contains(MaterialState.pressed)) {
+                      return Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.5);
+                    }
+                    return const Color.fromRGBO(0, 151, 167, 1);
+                  },
+                ),
+              ),
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: ((context) => const RegistrationScreen())));
               },
-              child: const Text('Register'),
+              child: const Text(
+                '회원가입',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              ),
             ),
           ],
         ),

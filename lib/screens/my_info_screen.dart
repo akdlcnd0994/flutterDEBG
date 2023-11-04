@@ -21,6 +21,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   List<String> result = [];
   bool check = true;
 
+  @override
   void initState() {
     getCurrentUser();
     show_result();
@@ -51,7 +52,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     double width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-        backgroundColor: Color.fromARGB(255, 58, 56, 56),
+        backgroundColor: const Color.fromARGB(255, 58, 56, 56),
         appBar: AppBar(
           toolbarHeight: 40,
           elevation: 0,
@@ -64,7 +65,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           title: ListTile(
             title: Text(
               isLogin ? "${loggedInUser.email?.split("@")[0]}" : "Login",
-              style: TextStyle(
+              style: const TextStyle(
                   fontSize: 25,
                   color: Colors.white,
                   fontWeight: FontWeight.w800),
@@ -78,13 +79,6 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                   IconButton(
                     icon: const Icon(
                       Icons.savings,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.notifications_none,
                       color: Colors.white,
                     ),
                     onPressed: () {},
@@ -104,7 +98,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
+
                 SizedBox(
+
                   height: 40,
                 ),
                 Row(
@@ -113,7 +109,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                   children: [
                     isLogin
                         ? profile(loggedInUser: loggedInUser)
+
                         : Text(
+
                             'Login',
                             style: TextStyle(
                                 fontSize: 30,
@@ -122,23 +120,30 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                           )
                   ],
                 ),
+
                 SizedBox(
+
                   height: 10,
                 ),
                 Text(
                   isLogin
                       ? "ID : ${loggedInUser.email?.split("@")[0]}"
                       : "ID : default",
+
                   style: TextStyle(
+
                     fontSize: 15,
                     color: Colors.white,
                   ),
                 ),
+
                 SizedBox(
+
                   height: 10,
                 ),
                 Text(
                   isLogin ? "의심 증상" : "로그인이 필요합니다.",
+
                   style: TextStyle(
                       fontSize: 23,
                       color: Colors.white,
@@ -161,6 +166,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         )
                       ],
                       color: Colors.white,
+
                       shape: BoxShape.rectangle,
                       borderRadius: BorderRadius.circular(15),
                     ),
@@ -180,8 +186,10 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     return [
       for (info in result)
         Text(
+
           isLogin ? "$info" : "  ",
           style: TextStyle(
+
               fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
         )
     ];

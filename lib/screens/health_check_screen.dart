@@ -114,29 +114,6 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
                 fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.savings,
-                    color: Colors.black,
-                  ),
-                  onPressed: () {},
-                ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.notifications_none,
-                    color: Colors.black,
-                  ),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -237,7 +214,9 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
           );
       Navigator.push(
         context,
+
         MaterialPageRoute(builder: (context) => MyInfoScreen()),
+
       );
     } else {
       showDialog(
