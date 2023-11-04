@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:medicalapp/image/image_provider.dart' as MyAppImageProvider;
 import 'package:medicalapp/http/result_list.dart';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({super.key});
 
@@ -20,7 +22,11 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   String name = '용가리'; //임시 닉네임
   List<String> result = [];
   bool check = true;
-
+  String nickname = '';
+  final _firestore = FirebaseFirestore.instance;
+  late final userInfo = <String, dynamic>{
+    "nickname": nickname,
+  };
   @override
   void initState() {
     getCurrentUser();
@@ -40,6 +46,12 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
         loggedInUser = user;
         isLogin = true;
         email = loggedInUser.email!;
+
+        _firestore
+            .collection("userinfo")
+            .doc(loggedInUser.email)
+            .get()
+            .then((value) => userInfo["nickname"] = value.data()?["nickname"]);
       } else {
         isLogin = false;
       }
@@ -64,7 +76,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           leadingWidth: 10,
           title: ListTile(
             title: Text(
-              isLogin ? "${loggedInUser.email?.split("@")[0]}" : "Login",
+              isLogin ? "내 정보" : "Login",
               style: const TextStyle(
                   fontSize: 25,
                   color: Colors.white,
@@ -120,9 +132,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                   height: 10,
                 ),
                 Text(
-                  isLogin
-                      ? "ID : ${loggedInUser.email?.split("@")[0]}"
-                      : "ID : default",
+                  isLogin ? "${userInfo["nickname"]}" : "ID : default",
                   style: const TextStyle(
                     fontSize: 15,
                     color: Colors.white,
