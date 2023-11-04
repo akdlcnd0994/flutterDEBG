@@ -62,8 +62,11 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
   late User loggedInUser;
   late int point = 0;
   static List<bool> responses = [];
-  String name = '용가리'; //임의 닉네임
+  String nickname = '';
   String result = "";
+  late final userInfo = <String, dynamic>{
+    "nickname": nickname,
+  };
   late final userPoint = <String, dynamic>{
     "point": point,
   };
@@ -80,12 +83,17 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
       final user = _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
+        isLogin = true;
+        _firestore
+            .collection("userinfo")
+            .doc(loggedInUser.email)
+            .get()
+            .then((value) => userInfo["nickname"] = value.data()?["nickname"]);
         _firestore
             .collection("mileages")
             .doc(loggedInUser.email)
             .get()
             .then((value) => userPoint["point"] = value.data()?["point"]);
-        isLogin = true;
       } else {
         isLogin = false;
       }
@@ -199,7 +207,8 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
       }
     }
     if (result.split(",").length >= 4) {
-      HealthCheck().sendDataToJSP(name, result);
+      print(userInfo["nickname"]);
+      HealthCheck().sendDataToJSP(userInfo["nickname"], result);
       //마일리지 올리기
       userPoint["point"] += 500;
       _firestore
