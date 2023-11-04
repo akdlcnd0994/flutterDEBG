@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:medicalapp/screens/chat_body.dart';
+import 'package:medicalapp/screens/qna_screen.dart';
 import 'package:medicalapp/screens/dictionary_screen.dart';
 import 'package:medicalapp/screens/home_screen.dart';
 
@@ -20,7 +20,7 @@ List<Widget> screens = <Widget>[
   const healthCheckScreen(),
   const HomeScreen(),
   const ChatPage(),
-  MyInfoScreen(),
+  const MyInfoScreen(),
 ];
 
 class NavigationScreen extends StatefulWidget {

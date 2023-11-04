@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:medicalapp/http/dictionaryInfo.dart';
-import 'package:medicalapp/screens/profile.dart';
+import 'package:medicalapp/widget/profile.dart';
 import 'package:provider/provider.dart';
 import 'package:medicalapp/image/image_provider.dart' as MyAppImageProvider;
 import 'package:medicalapp/http/result_list.dart';
@@ -224,73 +224,72 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                   height: 20,
                 ),
                 Container(
-                    padding: const EdgeInsets.all(10),
-                    height: height * 0.35,
-                    width: width * 0.9,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.7),
-                          blurRadius: 5.0,
-                          spreadRadius: 0.0,
-                          offset: const Offset(0, 7),
-                        )
-                      ],
-                      color: Colors.white,
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        for (int i = 0; i < result.length - 1; i++)
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                    color: Colors.grey.withOpacity(0.4)),
-                              ),
+                  padding: const EdgeInsets.all(10),
+                  height: height * 0.35,
+                  width: width * 0.9,
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.7),
+                        blurRadius: 5.0,
+                        spreadRadius: 0.0,
+                        offset: const Offset(0, 7),
+                      )
+                    ],
+                    color: Colors.white,
+                    shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      for (int i = 0; i < result.length - 1; i++)
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                  color: Colors.grey.withOpacity(0.4)),
                             ),
-                            child: Material(
-                              color: Colors.white,
-                              child: InkWell(
-                                splashColor: Colors.grey,
-                                onTap: () {
-                                  DictionaryInfo()
-                                      .sendDataToJSP(context, result[i]);
-                                },
-                                child: SizedBox(
-                                  height: height * 0.06,
-                                  width: width,
-                                  child: Padding(
-                                    padding:
-                                        EdgeInsets.only(left: (width * 0.1)),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Flexible(
-                                          child: RichText(
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            text: TextSpan(
-                                              text: result[i],
-                                              style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w600),
-                                            ),
+                          ),
+                          child: Material(
+                            color: Colors.white,
+                            child: InkWell(
+                              splashColor: Colors.grey,
+                              onTap: () {
+                                DictionaryInfo()
+                                    .sendDataToJSP(context, result[i]);
+                              },
+                              child: SizedBox(
+                                height: height * 0.06,
+                                width: width,
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: (width * 0.1)),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Flexible(
+                                        child: RichText(
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          text: TextSpan(
+                                            text: result[i],
+                                            style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w600),
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                      ],
-                    )),
+                        ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

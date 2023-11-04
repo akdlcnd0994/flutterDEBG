@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 import 'package:medicalapp/bluetooths/screens/bluetooth_screen.dart';
 
@@ -35,6 +36,11 @@ class _HomeScreenState extends State<HomeScreen> {
   late bool quizResult;
   String nickname = '';
   late int selectQuiz;
+  late bool checkhealth = false;
+  late bool checkarduino = false;
+  late int oxquiz = 0;
+  late Timestamp date = Timestamp.now();
+  late bool todayCheck = false;
 
   late final userPoint = <String, dynamic>{
     "email": email,
@@ -43,6 +49,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late final userInfo = <String, dynamic>{
     "nickname": nickname,
+  };
+
+  late final dailyquest = <String, dynamic>{
+    "checkhealth": checkhealth,
+    "checkarduino": checkarduino,
+    "oxquiz": oxquiz,
+    "date": date,
   };
 
   late final topArticles = <String, String>{};
@@ -99,16 +112,30 @@ class _HomeScreenState extends State<HomeScreen> {
         loggedInUser = user;
         isLogin = true;
         email = loggedInUser.email!;
-        _firestore
+        await _firestore
             .collection("mileages")
             .doc(loggedInUser.email)
             .get()
             .then((value) => userPoint["point"] = value.data()?["point"]);
-        _firestore
+        await _firestore
             .collection("userinfo")
             .doc(loggedInUser.email)
             .get()
             .then((value) => userInfo["nickname"] = value.data()?["nickname"]);
+        final quest =
+            _firestore.collection("dailyquest").doc(loggedInUser.email).get();
+        await quest.then((value) =>
+            dailyquest["checkhealth"] = value.data()?["checkhealth"]);
+        await quest.then((value) =>
+            dailyquest["checkarduino"] = value.data()?["checkarduino"]);
+        await quest
+            .then((value) => dailyquest["oxquiz"] = value.data()?["oxquiz"]);
+        await quest.then((value) => dailyquest["date"] = value.data()?["date"]);
+
+        setState(() {
+          todayCheck = dailyquest["date"].toDate().toString().split(" ")[0] ==
+              DateTime.now().toString().split(" ")[0];
+        });
       } else {
         isLogin = false;
       }
@@ -278,16 +305,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          child: isLogin
-                              ? quizSolve
-                                  ? quizAnswer(
-                                      quizResult, height, quizs, selectQuiz)
-                                  : OXquiz(quizs, selectQuiz)
-                              : loginColumn(
-                                  height: height,
-                                  width: width,
-                                  isLogin: isLogin,
-                                ),
+                          child: !(dailyquest["oxquiz"] < 5 && todayCheck)
+                              ? const Column(
+                                  children: [Text("일일 OX퀴즈 완료")],
+                                )
+                              : isLogin
+                                  ? quizSolve
+                                      ? quizAnswer(
+                                          quizResult, height, quizs, selectQuiz)
+                                      : OXquiz(quizs, selectQuiz)
+                                  : loginColumn(
+                                      height: height,
+                                      width: width,
+                                      isLogin: isLogin,
+                                    ),
                         );
                       }
                     }),
@@ -318,7 +349,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: const Text("문진"),
+                      child: !dailyquest["checkhealth"] && todayCheck
+                          ? const Text(
+                              "일일 문진표\n작성 X",
+                              style: TextStyle(fontSize: 16),
+                            )
+                          : const Text(
+                              "일일 문진표\n작성 O",
+                              style: TextStyle(fontSize: 16),
+                            ),
                     ),
                     Container(
                       padding: const EdgeInsets.all(10),
@@ -341,29 +380,42 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white,
                         child: InkWell(
                           splashColor: Colors.grey,
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const BluetoothScreen(),
-                              ),
-                            );
-                          },
+                          onTap: !dailyquest["checkarduino"] && todayCheck
+                              ? () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const BluetoothScreen(),
+                                    ),
+                                  );
+                                }
+                              : () {},
                           child: SizedBox(
                             width: width,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Flexible(
                                   child: RichText(
-                                      maxLines: 2,
+                                      maxLines: 3,
                                       overflow: TextOverflow.ellipsis,
-                                      text: const TextSpan(
-                                          text: "아두이노  일일검사",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w500))),
+                                      text: !dailyquest["checkarduino"] &&
+                                              todayCheck
+                                          ? const TextSpan(
+                                              text: "자가 진단\n이동하기",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.w500))
+                                          : const TextSpan(
+                                              text: "자가진단\n마일리지\n지급O",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 16,
+                                                  fontWeight:
+                                                      FontWeight.w500))),
                                 ),
                               ],
                             ),
@@ -388,7 +440,26 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: const Text("OX퀴즈"),
+                      child: dailyquest["oxquiz"] < 5 && todayCheck
+                          ? Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "OX 퀴즈\n",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Text(
+                                  "정답: ${dailyquest["oxquiz"]}개",
+                                  style: const TextStyle(fontSize: 16),
+                                ),
+                              ],
+                            )
+                          : const Column(
+                              children: [
+                                Text("OX 퀴즈\n마일리지 500\n지급완료"),
+                              ],
+                            ),
                     ),
                   ],
                 ),
@@ -658,6 +729,19 @@ class _HomeScreenState extends State<HomeScreen> {
                       .onError(
                         (e, _) => print("Error:$e"),
                       );
+                  dailyquest["oxquiz"] += 1;
+                  dailyquest["date"] = DateTime.now();
+                  _firestore
+                      .collection("dailyquest")
+                      .doc(loggedInUser.email)
+                      .set(
+                        dailyquest,
+                        SetOptions(merge: true),
+                      )
+                      .onError(
+                        (e, _) => print("Error:$e"),
+                      );
+                  print(dailyquest);
                   final snackBar = SnackBar(
                     backgroundColor: Colors.teal[700],
                     content: const Text('마일리지 100 적립!!'),
@@ -683,12 +767,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (quizs.elementAt(selectQuiz).answer == "X") {
                   quizResult = true;
                   userPoint["point"] += 100;
-
                   _firestore
                       .collection("mileages")
                       .doc(loggedInUser.email)
                       .set(
                         userPoint,
+                        SetOptions(merge: true),
+                      )
+                      .onError(
+                        (e, _) => print("Error:$e"),
+                      );
+                  dailyquest["oxquiz"] += 1;
+                  dailyquest["date"] = DateTime.now();
+                  _firestore
+                      .collection("dailyquest")
+                      .doc(loggedInUser.email)
+                      .set(
+                        dailyquest,
                         SetOptions(merge: true),
                       )
                       .onError(
