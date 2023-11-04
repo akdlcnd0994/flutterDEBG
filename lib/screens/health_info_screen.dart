@@ -15,7 +15,7 @@ class HealthInfoScreen extends StatelessWidget {
     Duration().sendDataToJSP(info[0]);
 
     for (int i = 0; i < info.length; i++) {
-      info[i] = info[i].replaceAll('. ', '.\n');
+      info[i] = info[i].replaceAll(RegExp(r'(?<=\D)\.\s|\.(?=\d)'), '.\n');
     }
     return Scaffold(
       appBar: AppBar(
