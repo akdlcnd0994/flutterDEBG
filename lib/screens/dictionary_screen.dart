@@ -156,12 +156,20 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
                               MaterialPageRoute(
                                   builder: (context) =>
                                       HealthInfoListScreen('', value)));
+                          if (recent.contains(value)) {
+                            recent.remove(value);
+                          }
+
                           recent.add(value);
+
                           String temp = '';
                           for (String str in recent) {
                             temp += '\n$str';
                           }
                           prefs.setString('recent', temp);
+                          setState(() {
+                            myBox = newMethod(context, height, width, false);
+                          });
                         },
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
@@ -310,7 +318,9 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
   }
 
   SizedBox newMethod(BuildContext context, height, double width, bool tf) {
-    List<String> stemp = List.from(recent.reversed);
+    List<String> stemp = recent;
+    stemp = stemp.toSet().toList();
+    stemp = List.from(stemp.reversed);
     SizedBox sb = const SizedBox();
     if (tf) {
       sb = SizedBox(
@@ -416,6 +426,18 @@ class _DicionaryScreenState extends State<DicionaryScreen> {
                   context,
                   MaterialPageRoute(
                       builder: (context) => HealthInfoListScreen('', disease)));
+              if (recent.contains(disease)) {
+                recent.remove(disease);
+              }
+              recent.add(disease);
+              String temp = '';
+              for (String str in recent) {
+                temp += '\n$str';
+              }
+              prefs.setString('recent', temp);
+              setState(() {
+                myBox = newMethod(context, height, width, false);
+              });
             }
           },
           child: SizedBox(

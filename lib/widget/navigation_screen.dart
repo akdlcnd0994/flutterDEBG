@@ -17,7 +17,7 @@ List<String> titles = <String>[
 
 List<Widget> screens = <Widget>[
   const DicionaryScreen(),
-  const healthCheckScreen(),
+  healthCheckScreen(),
   const HomeScreen(),
   const ChatPage(),
   const MyInfoScreen(),
