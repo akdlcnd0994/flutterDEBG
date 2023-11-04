@@ -19,7 +19,6 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   late bool isLogin = false;
   late User loggedInUser;
   late String email;
-  String name = '용가리'; //임시 닉네임
   List<String> result = [];
   bool check = true;
   String nickname = '';
@@ -36,36 +35,37 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   @override
   void initState() {
     getCurrentUser();
-    show_result();
     super.initState();
   }
 
-  Future<void> show_result() async {
-    result = await resultList().sendDataToJSP(name);
-    setState(() {});
-  }
-
-  void getCurrentUser() async {
+  Future<void> getCurrentUser() async {
     try {
       final user = _auth.currentUser;
       if (user != null) {
         loggedInUser = user;
         isLogin = true;
         email = loggedInUser.email!;
-        _firestore
+        final userData = await _firestore
             .collection("userinfo")
             .doc(loggedInUser.email)
-            .get()
-            .then((value) => userInfo["nickname"] = value.data()?["nickname"]);
-        _firestore
+            .get();
+        userInfo["nickname"] = userData.data()?["nickname"];
+
+        final pointData = await _firestore
             .collection("mileages")
             .doc(loggedInUser.email)
-            .get()
-            .then((value) => userPoint["point"] = value.data()?["point"]);
+            .get();
+        userPoint["point"] = pointData.data()?["point"];
+        show_result();
       } else {
         isLogin = false;
       }
     } catch (e) {}
+  }
+
+  Future<void> show_result() async {
+    result = await resultList().sendDataToJSP(userInfo["nickname"]);
+    setState(() {});
   }
 
   @override
