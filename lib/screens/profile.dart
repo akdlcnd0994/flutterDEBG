@@ -7,7 +7,7 @@ import 'package:medicalapp/image/image_provider.dart' as MyAppImageProvider;
 
 class profile extends StatefulWidget {
   final User loggedInUser;
-  profile({Key? key, required this.loggedInUser}) : super(key: key);
+  const profile({Key? key, required this.loggedInUser}) : super(key: key);
 
   @override
   State<profile> createState() => _Y_LoginState();
@@ -31,7 +31,7 @@ class _Y_LoginState extends State<profile> {
             child: Container(
               width: imageSize,
               height: imageSize,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Color.fromARGB(255, 58, 56, 56),
               ),
@@ -84,7 +84,7 @@ class _Y_LoginState extends State<profile> {
                 }
                 Navigator.pop(context); // 이미지를 선택한 후 바텀 시트를 닫습니다.
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.add_photo_alternate_outlined,
                 size: 30,
                 color: Colors.black,

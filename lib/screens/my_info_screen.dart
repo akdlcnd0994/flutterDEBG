@@ -83,13 +83,6 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                     ),
                     onPressed: () {},
                   ),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.notifications_none,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {},
-                  ),
                 ],
               ),
             ),
