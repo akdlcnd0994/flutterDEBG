@@ -64,12 +64,20 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
   static List<bool> responses = [];
   String nickname = '';
   String result = "";
+  late bool checkhealth = false;
+  late Timestamp date = Timestamp.now();
+  late bool todayCheck = false;
   late final userInfo = <String, dynamic>{
     "nickname": nickname,
   };
   late final userPoint = <String, dynamic>{
     "point": point,
   };
+  late final dailyquest = <String, dynamic>{
+    "checkhealth": checkhealth,
+    "date": date,
+  };
+
   @override
   void initState() {
     // TODO: implement initState
@@ -94,6 +102,15 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
             .doc(loggedInUser.email)
             .get()
             .then((value) => userPoint["point"] = value.data()?["point"]);
+        final quest =
+            _firestore.collection("dailyquest").doc(loggedInUser.email).get();
+        await quest.then((value) =>
+            dailyquest["checkhealth"] = value.data()?["checkhealth"]);
+        await quest.then((value) => dailyquest["date"] = value.data()?["date"]);
+        setState(() {
+          todayCheck = dailyquest["date"].toDate().toString().split(" ")[0] ==
+              DateTime.now().toString().split(" ")[0];
+        });
       } else {
         isLogin = false;
       }
@@ -221,6 +238,14 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
           .onError(
             (e, _) => print("Error:$e"),
           );
+      dailyquest["checkhealth"] = true;
+      dailyquest["date"] = DateTime.now();
+      isLogin
+          ? _firestore.collection("dailyquest").doc(loggedInUser.email).set(
+                dailyquest,
+                SetOptions(merge: true),
+              )
+          : print("not login!");
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => const MyInfoScreen()),

@@ -131,7 +131,6 @@ class _HomeScreenState extends State<HomeScreen> {
         await quest
             .then((value) => dailyquest["oxquiz"] = value.data()?["oxquiz"]);
         await quest.then((value) => dailyquest["date"] = value.data()?["date"]);
-
         setState(() {
           todayCheck = dailyquest["date"].toDate().toString().split(" ")[0] ==
               DateTime.now().toString().split(" ")[0];
@@ -219,6 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onPressed: () {
                                     setState(() {
                                       signOut();
+                                      quizSolve = false;
                                       isLogin = false;
                                     });
                                     Navigator.pop(context);
@@ -305,20 +305,19 @@ class _HomeScreenState extends State<HomeScreen> {
                             shape: BoxShape.rectangle,
                             borderRadius: BorderRadius.circular(15),
                           ),
-                          child: !(dailyquest["oxquiz"] < 5 && todayCheck)
-                              ? const Column(
-                                  children: [Text("일일 OX퀴즈 완료")],
-                                )
-                              : isLogin
+                          child: isLogin
+                              ? !(dailyquest["oxquiz"] >= 5 && todayCheck)
                                   ? quizSolve
                                       ? quizAnswer(
                                           quizResult, height, quizs, selectQuiz)
                                       : OXquiz(quizs, selectQuiz)
-                                  : loginColumn(
-                                      height: height,
-                                      width: width,
-                                      isLogin: isLogin,
-                                    ),
+                                  : const Column(
+                                      children: [Text("일일 OX퀴즈 완료")],
+                                    )
+                              : loginColumn(
+                                  height: height,
+                                  width: width,
+                                  isLogin: isLogin),
                         );
                       }
                     }),
@@ -349,14 +348,37 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: !dailyquest["checkhealth"] && todayCheck
-                          ? const Text(
-                              "일일 문진표\n작성 X",
-                              style: TextStyle(fontSize: 16),
-                            )
-                          : const Text(
-                              "일일 문진표\n작성 O",
-                              style: TextStyle(fontSize: 16),
+                      child: isLogin
+                          ? !dailyquest["checkhealth"] && todayCheck
+                              ? const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "일일 문진표\n작성 X",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ],
+                                )
+                              : const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "일일 문진표\n작성 O",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                  ],
+                                )
+                          : const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "로그인 후\n일일문진\n이용가능",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ],
                             ),
                     ),
                     Container(
@@ -380,7 +402,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white,
                         child: InkWell(
                           splashColor: Colors.grey,
-                          onTap: !dailyquest["checkarduino"] && todayCheck
+                          onTap: isLogin &&
+                                  !dailyquest["checkarduino"] &&
+                                  todayCheck
                               ? () {
                                   Navigator.push(
                                     context,
@@ -394,28 +418,40 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: SizedBox(
                             width: width,
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Flexible(
                                   child: RichText(
-                                      maxLines: 3,
-                                      overflow: TextOverflow.ellipsis,
-                                      text: !dailyquest["checkarduino"] &&
-                                              todayCheck
-                                          ? const TextSpan(
-                                              text: "자가 진단\n이동하기",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16,
-                                                  fontWeight: FontWeight.w500))
-                                          : const TextSpan(
-                                              text: "자가진단\n마일리지\n지급O",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 16,
-                                                  fontWeight:
-                                                      FontWeight.w500))),
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    text: isLogin
+                                        ? !dailyquest["checkarduino"] &&
+                                                todayCheck
+                                            ? const TextSpan(
+                                                text: "자가 진단\n이동하기",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              )
+                                            : const TextSpan(
+                                                text: "자가진단\n마일리지\n지급O",
+                                                style: TextStyle(
+                                                    color: Colors.black,
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.w500),
+                                              )
+                                        : const TextSpan(
+                                            text: "로그인 후\n자가진단\n이용가능",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.w500),
+                                          ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -440,24 +476,37 @@ class _HomeScreenState extends State<HomeScreen> {
                         shape: BoxShape.rectangle,
                         borderRadius: BorderRadius.circular(15),
                       ),
-                      child: dailyquest["oxquiz"] < 5 && todayCheck
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      child: isLogin
+                          ? dailyquest["oxquiz"] < 5 && todayCheck
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Text(
+                                      "OX 퀴즈\n",
+                                      style: TextStyle(fontSize: 16),
+                                    ),
+                                    Text(
+                                      "정답: ${dailyquest["oxquiz"]}개",
+                                      style: const TextStyle(fontSize: 16),
+                                    ),
+                                  ],
+                                )
+                              : const Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text("OX 퀴즈\n마일리지 500\n지급완료"),
+                                  ],
+                                )
+                          : const Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const Text(
-                                  "OX 퀴즈\n",
+                                Text(
+                                  "로그인 후\nOX 퀴즈\n이용가능",
                                   style: TextStyle(fontSize: 16),
                                 ),
-                                Text(
-                                  "정답: ${dailyquest["oxquiz"]}개",
-                                  style: const TextStyle(fontSize: 16),
-                                ),
-                              ],
-                            )
-                          : const Column(
-                              children: [
-                                Text("OX 퀴즈\n마일리지 500\n지급완료"),
                               ],
                             ),
                     ),
