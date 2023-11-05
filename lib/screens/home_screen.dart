@@ -767,7 +767,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (quizs.elementAt(selectQuiz).answer == "O") {
                   quizResult = true;
                   userPoint["point"] += 100;
-
                   _firestore
                       .collection("mileages")
                       .doc(loggedInUser.email)

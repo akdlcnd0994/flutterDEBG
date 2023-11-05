@@ -52,6 +52,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String nickname = '';
   String answer = '';
   String hint = '---- 질문을 선택해주세요 ----';
+
+  late bool checkhealth = false;
+  late bool checkarduino = false;
+  late int oxquiz = 0;
+  late Timestamp date = Timestamp.now();
+  late bool todayCheck = false;
+
   late final userPoint = <String, dynamic>{
     "email": _email,
     "point": 0,
@@ -63,6 +70,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     "hint": hint,
     "answer": answer,
     "nickname": nickname,
+  };
+
+  late final dailyquest = <String, dynamic>{
+    "checkhealth": checkhealth,
+    "checkarduino": checkarduino,
+    "oxquiz": oxquiz,
+    "date": date,
   };
 
   String get email => _email;
@@ -320,6 +334,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     .doc(_email)
                                     .set(
                                       userInfo,
+                                      SetOptions(merge: true),
+                                    )
+                                    .onError(
+                                      (e, _) => print("Error:$e"),
+                                    );
+                                _firestore
+                                    .collection("dailyquest")
+                                    .doc(_email)
+                                    .set(
+                                      dailyquest,
                                       SetOptions(merge: true),
                                     )
                                     .onError(
