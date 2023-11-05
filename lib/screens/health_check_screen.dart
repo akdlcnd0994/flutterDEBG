@@ -119,7 +119,7 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
           title: Text(
             '문진',
             style: TextStyle(
-                fontSize: 20, color: Colors.black, fontWeight: FontWeight.bold),
+                fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
       ),
@@ -223,7 +223,7 @@ class _healthCheckScreenState extends State<healthCheckScreen> {
           );
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MyInfoScreen()),
+        MaterialPageRoute(builder: (context) => const MyInfoScreen()),
       );
     } else {
       showDialog(

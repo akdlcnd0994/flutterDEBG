@@ -53,6 +53,11 @@ class _CheckHealthScreen extends State<CheckHealthScreen> {
   bool bCheck = false;
   bool tCheck = false;
   bool allCheck = false;
+
+  late bool checkarduino = false;
+  late Timestamp date = Timestamp.now();
+  late bool todayCheck = false;
+
   late final hScore = <String, String>{
     "최소": "",
     "평균": "",
@@ -70,6 +75,11 @@ class _CheckHealthScreen extends State<CheckHealthScreen> {
   late final tScore = <String, String>{
     "외부 온도": "",
     "체온": "",
+  };
+
+  late final dailyquest = <String, dynamic>{
+    "checkarduino": checkarduino,
+    "date": date,
   };
 
   @override
@@ -119,7 +129,16 @@ class _CheckHealthScreen extends State<CheckHealthScreen> {
             .doc(loggedInUser.email)
             .get()
             .then((value) => userPoint["point"] = value.data()?["point"]);
+        final quest =
+            _firestore.collection("dailyquest").doc(loggedInUser.email).get();
+        await quest.then((value) =>
+            dailyquest["checkarduino"] = value.data()?["checkarduino"]);
+        await quest.then((value) => dailyquest["date"] = value.data()?["date"]);
+        todayCheck = dailyquest["date"].toDate().toString().split(" ")[0] ==
+            DateTime.now().toString().split(" ")[0];
         isLogin = true;
+
+        setState(() {});
       } else {
         isLogin = false;
       }
@@ -473,7 +492,9 @@ class _CheckHealthScreen extends State<CheckHealthScreen> {
                             ),
                           ),
                           child: const Text('일일 자가 진단 마일리지 500 받기'),
-                          onPressed: allCheck
+                          onPressed: allCheck &&
+                                  todayCheck &&
+                                  !dailyquest["checkarduino"]
                               ? () {
                                   userPoint["point"] += 500;
                                   isLogin
@@ -484,8 +505,16 @@ class _CheckHealthScreen extends State<CheckHealthScreen> {
                                             userPoint,
                                             SetOptions(merge: true),
                                           )
-                                          .onError(
-                                            (e, _) => print("Error:$e"),
+                                      : print("not login!");
+                                  dailyquest["checkarduino"] = true;
+                                  dailyquest["date"] = DateTime.now();
+                                  isLogin
+                                      ? _firestore
+                                          .collection("dailyquest")
+                                          .doc(loggedInUser.email)
+                                          .set(
+                                            dailyquest,
+                                            SetOptions(merge: true),
                                           )
                                       : print("not login!");
                                   final snackBar = SnackBar(
