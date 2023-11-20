@@ -13,7 +13,7 @@ App 개발(ppt 19, 61~66)
 - Tomcat을 통해 웹 서버를 구축하고 java & jsp를 이용하여 android <-> DB 간 통신을 담당하는 기능 개발
 - App(질환백과, 자주찾는 질병정보) 개발
 ### 개발 환경 및 언어 : 
-- Visual Studio
+- Visual Studio Code
 - Flutter
 - Eclipse
 - Tomcat
