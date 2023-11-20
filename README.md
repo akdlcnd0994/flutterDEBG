@@ -15,12 +15,8 @@ App 개발(ppt 19, 61~66)
 ### 개발 환경 및 언어 : 
 - Visual Studio Code
 - Flutter
-- Eclipse
-- Tomcat
-- Oracle Cloud
 - Dart
-- Java
-- JSP
+- 
 # 주요 스크린샷
 - 질환백과
 <br><br>
