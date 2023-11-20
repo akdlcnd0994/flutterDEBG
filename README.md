@@ -16,7 +16,7 @@ App 개발(ppt 19, 61~66)
 - Visual Studio Code
 - Flutter
 - Dart
-- 
+  
 # 주요 스크린샷
 - 질환백과
 <br><br>
